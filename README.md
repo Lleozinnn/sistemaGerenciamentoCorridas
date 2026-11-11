@@ -1,4 +1,3 @@
-[readme_do_projeto.md](https://github.com/user-attachments/files/34632356/readme_do_projeto.md)
 # 🏃 Sistema de Gerenciamento de Competições de Corridas
 
 Trabalho Interdisciplinar desenvolvido para o **2º período do curso de Tecnologia em Sistemas para Internet (TSI)** do Instituto Federal do Espírito Santo (**Ifes**).
@@ -189,6 +188,7 @@ Por ser uma aplicação baseada em tecnologias web nativas (HTML, CSS e JavaScri
 - **Leonardo Silva Beling**
 - **Gabriel Zanotti Ratunde Westfal**
 - **Miguel Perini Broetto**
+- **José Henrique Pereira Loose**
 
 ---
 *Instituto Federal do Espírito Santo (Ifes) - Campus Serra/Cefor - 2026/02*
