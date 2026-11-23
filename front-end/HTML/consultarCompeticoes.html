@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Competições</title>
+    <link rel="icon" href="../assets/competition.png" />
+    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+    <link rel="stylesheet" href="../CSS/telasSistema.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h2 class="site-header__brand">Área do organizador</h2>
+        <nav class="site-nav" aria-label="Navegação principal">
+          <details class="site-nav__group"><summary>Competições</summary><div class="site-nav__menu">
+            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
+          </div></details>
+          <details class="site-nav__group"><summary>Atletas</summary><div class="site-nav__menu">
+            <a href="consultarAtletas.html">Consultar atletas</a><a href="inscricoesAtivas.html">Inscrições ativas</a>
+          </div></details>
+          <details class="site-nav__group"><summary>Inscrições</summary><div class="site-nav__menu"><a href="inscreverAtleta.html">Inscrever atleta</a></div></details>
+          <details class="site-nav__group"><summary>Relatórios</summary><div class="site-nav__menu"><a href="relatoriosCompeticao.html">Relatórios da competição</a></div></details>
+        </nav>
+      </div>
+    </header>
+
+    <main class="screen screen--wide">
+      <div class="screen-heading">
+        <h1>Competições</h1>
+        <p>Encontre provas por modalidade e consulte a relação de inscritos.</p>
+      </div>
+
+      <!-- JS: aplicar o texto e a modalidade selecionada à consulta. -->
+      <form class="filter-panel filter-panel--inline" action="">
+        <div class="filter-field">
+          <label for="competition-search">Pesquisar competição</label>
+          <input id="competition-search" type="search" placeholder="Nome da competição" />
+        </div>
+        <div class="filter-field">
+          <label for="competition-modality">Modalidade</label>
+          <select id="competition-modality">
+            <option>Todas as modalidades</option>
+            <option selected>Maratona Urbana</option>
+            <option>Trail Running</option>
+          </select>
+        </div>
+        <button class="button button--primary" type="submit">Pesquisar</button>
+        <a class="button button--secondary" href="consultarCompeticoes.html">Limpar filtros</a>
+        <p class="filter-caption">Filtro aplicado: Maratona Urbana</p>
+      </form>
+
+      <section class="table-card">
+        <div class="card-heading">
+          <div><h2>Competições encontradas</h2><p>3 competições na modalidade Maratona Urbana</p></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Competição</th><th>Modalidade</th><th>Inscritos / limite</th><th>Status da prova</th><th>Ações</th></tr></thead>
+            <!-- JS: renderizar aqui os resultados e respectivos estados de vagas. -->
+            <tbody>
+              <tr><td>Corrida da Cidade 2027</td><td>Maratona Urbana</td><td>300 / 300</td><td><span class="status status--danger">Vagas esgotadas</span></td><td><a class="button button--small button--secondary" href="inscritosCompeticao.html">Ver inscritos</a></td></tr>
+              <tr><td>Maratona da Primavera 2027</td><td>Maratona Urbana</td><td>180 / 250</td><td><span class="status status--ok">Vagas disponíveis</span></td><td><a class="button button--small button--secondary" href="inscritosCompeticao.html">Ver inscritos</a></td></tr>
+              <tr><td>Circuito Urbano 2027</td><td>Maratona Urbana</td><td>96 / 200</td><td><span class="status status--ok">Vagas disponíveis</span></td><td><a class="button button--small button--secondary" href="inscritosCompeticao.html">Ver inscritos</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer"><span>Exibindo todas as 3 competições</span></div>
+      </section>
+    </main>
+  </body>
+</html>

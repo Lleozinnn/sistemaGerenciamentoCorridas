@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscritos da competição</title>
+    <link rel="icon" href="../assets/competition.png" />
+    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+    <link rel="stylesheet" href="../CSS/telasSistema.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h2 class="site-header__brand">Área do organizador</h2>
+        <nav class="site-nav" aria-label="Navegação principal">
+          <details class="site-nav__group"><summary>Competições</summary><div class="site-nav__menu">
+            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
+          </div></details>
+          <details class="site-nav__group"><summary>Atletas</summary><div class="site-nav__menu">
+            <a href="consultarAtletas.html">Consultar atletas</a><a href="inscricoesAtivas.html">Inscrições ativas</a>
+          </div></details>
+          <details class="site-nav__group"><summary>Inscrições</summary><div class="site-nav__menu"><a href="inscreverAtleta.html">Inscrever atleta</a></div></details>
+          <details class="site-nav__group"><summary>Relatórios</summary><div class="site-nav__menu"><a href="relatoriosCompeticao.html">Relatórios da competição</a></div></details>
+        </nav>
+      </div>
+    </header>
+
+    <main class="screen">
+      <div class="screen-heading">
+        <h1>Inscritos da competição</h1>
+        <p>Consulte todos os atletas com inscrição ativa na prova selecionada.</p>
+      </div>
+      <a class="text-link" href="consultarCompeticoes.html">Voltar para competições</a>
+
+      <!-- JS: carregar os dados e a capacidade da competição selecionada. -->
+      <section class="event-banner">
+        <h2>Corrida da Cidade 2027</h2>
+        <p>Maratona Urbana <span aria-hidden="true">•</span> São Paulo <span aria-hidden="true">•</span> 300 / 300 inscritos</p>
+        <span class="status status--danger">Vagas esgotadas</span>
+      </section>
+
+      <!-- JS: filtrar a lista de inscritos pelo nome ou identificação informados. -->
+      <form class="search-row" action="">
+        <div class="filter-field">
+          <label for="entrant-search">Pesquisar nesta prova</label>
+          <input id="entrant-search" type="search" placeholder="Nome ou identificação do atleta" />
+        </div>
+        <button class="button button--primary" type="submit">Pesquisar</button>
+      </form>
+
+      <section class="table-card">
+        <div class="card-heading">
+          <div><h2>Atletas inscritos</h2><p>300 inscrições ativas <span aria-hidden="true">•</span> Lista completa disponível nas páginas abaixo</p></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Atleta</th><th>Identificação</th><th>Inscrição</th><th>Status da inscrição</th><th>Ações</th></tr></thead>
+            <!-- JS: preencher com as inscrições ativas da competição selecionada. -->
+            <tbody>
+              <tr><td>Ana Ribeiro</td><td>#1041</td><td>INS-2027-1041</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Beatriz Lima</td><td>#1035</td><td>INS-2027-1035</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Bruno Santos</td><td>#1036</td><td>INS-2027-1036</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Carla Oliveira</td><td>#1037</td><td>INS-2027-1037</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Lucas Almeida</td><td>#1043</td><td>INS-2027-1043</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Mariana Costa</td><td>#1042</td><td>INS-2027-1042</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Paulo Ferreira</td><td>#1038</td><td>INS-2027-1038</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Pedro Santos</td><td>#1040</td><td>INS-2027-1040</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Rafael Souza</td><td>#1039</td><td>INS-2027-1039</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+              <tr><td>Renata Alves</td><td>#1034</td><td>INS-2027-1034</td><td><span class="status status--ok">Ativa</span></td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver atleta</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span>Exibindo 1–10 de 300 inscritos <span aria-hidden="true">•</span> Página 1 de 30</span>
+          <!-- JS: paginar os resultados sem criar uma página para cada estado. -->
+          <nav class="pagination" aria-label="Paginação">
+            <button type="button" disabled>Anterior</button><button class="is-current" type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">Próxima</button>
+          </nav>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

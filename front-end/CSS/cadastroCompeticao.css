@@ -1,0 +1,247 @@
+main {
+  display: grid;
+  width: min(100% - 48px, 1110px);
+  grid-template-areas:
+    "intro intro"
+    "form help";
+  grid-template-columns: minmax(0, 1.7fr) minmax(250px, 0.9fr);
+  align-items: start;
+  gap: 24px;
+  margin: 0 auto;
+  padding: 38px 0 42px;
+}
+
+main > article {
+  grid-area: intro;
+}
+
+main > article h1 {
+  margin-bottom: 8px;
+  color: #303838;
+  font-size: 30px;
+}
+
+main > article p {
+  margin: 0;
+  color: #788181;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+main form {
+  display: grid;
+  min-width: 0;
+  grid-area: form;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid #dfe7e6;
+  border-radius: 10px;
+}
+
+main form > article {
+  display: flex;
+  grid-column: span 2;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 2px;
+}
+
+main form > article h2 {
+  color: #343c3c;
+  font-size: 18px;
+}
+
+main form > article p {
+  margin: 0;
+  color: #71807e;
+  font-size: 11px;
+}
+
+main form > div:not(.actions) {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+main form > div label {
+  color: #374240;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+main form > div input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid #cbd6d5;
+  border-radius: 6px;
+  background: #fff;
+  color: #374342;
+  font: inherit;
+  font-size: 13px;
+}
+
+main form > div input:focus {
+  border-color: #18aea2;
+  outline: 2px solid rgb(24 174 162 / 16%);
+}
+
+main form > div small {
+  color: #788181;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+main form > div span {
+  position: absolute;
+  top: 31px;
+  right: 10px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: #fff;
+  color: #66716f;
+  font-size: 12px;
+}
+
+.nomeComp,
+.localComp {
+  grid-column: span 2;
+}
+
+.actions {
+  display: flex;
+  grid-column: span 2;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.actions button {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid #d5dfde;
+  border-radius: 6px;
+  background: #fff;
+  color: #4a5b59;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.actions button:last-child {
+  border-color: #18aea2;
+  background: #18aea2;
+  color: #073f3b;
+}
+
+main > section {
+  display: flex;
+  grid-area: help;
+  flex-direction: column;
+  gap: 16px;
+}
+
+main > section article {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 9px;
+  background: #eaf7f5;
+}
+
+main > section article:nth-child(2) {
+  background: #f5f8f7;
+}
+
+main > section article h2 {
+  margin-bottom: 12px;
+  color: #34403f;
+  font-size: 16px;
+}
+
+main > section article p,
+main > section article b {
+  margin: 3px 0;
+  color: #6f7d7a;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+main > section article b {
+  margin-top: 12px;
+  color: #455350;
+}
+
+main > section article span {
+  display: inline-flex;
+  justify-content: center;
+  min-width: 58px;
+  margin-left: 6px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  background: #f9ead8;
+  color: #77542f;
+  font-size: 11px;
+}
+
+@media (max-width: 820px) {
+  main {
+    width: min(100% - 32px, 680px);
+    grid-template-areas:
+      "intro"
+      "form"
+      "help";
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 28px;
+  }
+
+  main > section {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  main {
+    width: min(100% - 28px, 500px);
+    gap: 18px;
+    padding-top: 26px;
+  }
+
+  main > article h1 {
+    font-size: 25px;
+  }
+
+  main form {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 18px;
+  }
+
+  main form > article,
+  .nomeComp,
+  .localComp,
+  .actions {
+    grid-column: 1;
+  }
+
+  main form > article {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  main > section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+}
