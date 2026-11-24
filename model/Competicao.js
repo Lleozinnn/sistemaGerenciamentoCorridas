@@ -1,4 +1,4 @@
-import { Atleta } from "./Atleta.js";
+import Atleta  from "./Atleta.js";
 
 export class Competicao {
     static #qtCompeticoes = 0;

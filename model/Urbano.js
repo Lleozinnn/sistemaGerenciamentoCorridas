@@ -1,4 +1,4 @@
-import { Competicao } from "./Competicao";
+import Competicao from "./Competicao.js";
 
 export class Urbano extends Competicao {
     #altimetriaAcumulada;
