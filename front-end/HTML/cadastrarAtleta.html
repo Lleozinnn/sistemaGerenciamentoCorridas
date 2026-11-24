@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastrar atleta</title>
+    <link rel="icon" href="../assets/competition.png" />
+    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+    <link rel="stylesheet" href="../CSS/telasSistema.css" />
+    <link rel="stylesheet" href="../CSS/cadastrarAtleta.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h2 class="site-header__brand">Área do organizador</h2>
+        <nav class="site-nav" aria-label="Navegação principal">
+          <details class="site-nav__group">
+            <summary>Competições</summary>
+            <div class="site-nav__menu">
+              <a href="consultarCompeticoes.html">Consultar competições</a>
+              <a href="cadastroCompeticao.html">Cadastrar competição</a>
+              <a href="configurarModalidade.html">Configurar modalidade</a>
+              <a href="inscritosCompeticao.html">Atletas inscritos</a>
+              <a href="inscricoesVagas.html">Inscrições e vagas</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Atletas</summary>
+            <div class="site-nav__menu">
+              <a href="consultarAtletas.html">Consultar atletas</a>
+              <a href="cadastrarAtleta.html">Cadastrar atleta</a>
+              <a href="inscricoesAtivas.html">Inscrições ativas</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Inscrições</summary>
+            <div class="site-nav__menu">
+              <a href="inscreverAtleta.html">Inscrever atleta</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Relatórios</summary>
+            <div class="site-nav__menu">
+              <a href="relatoriosCompeticao.html">Relatórios da competição</a>
+            </div>
+          </details>
+        </nav>
+      </div>
+    </header>
+
+    <main class="screen">
+      <div class="screen-heading">
+        <h1>Cadastrar atleta</h1>
+        <p>Informe os dados pessoais e selecione as modalidades praticadas pelo atleta.</p>
+      </div>
+
+      <div class="columns-layout athlete-registration-layout">
+        <!-- JS: validar os dados e chamar atletaController.cadastrarAtleta(...) -->
+        <form class="panel athlete-registration-form" id="athlete-registration-form">
+          <div class="form-heading">
+            <h2>Dados do atleta</h2>
+            <small>Todos os campos são obrigatórios</small>
+          </div>
+
+          <div class="field field--wide">
+            <label for="athlete-name">Nome completo *</label>
+            <input
+              id="athlete-name"
+              name="nome"
+              type="text"
+              autocomplete="name"
+              placeholder="Ex.: Ana Ribeiro"
+            />
+          </div>
+
+          <div class="field">
+            <label for="athlete-cpf">CPF *</label>
+            <input
+              id="athlete-cpf"
+              name="cpf"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              maxlength="14"
+              placeholder="000.000.000-00"
+            />
+          </div>
+
+          <div class="field">
+            <label for="athlete-birth-date">Data de nascimento *</label>
+            <input
+              id="athlete-birth-date"
+              name="dtNascimento"
+              type="date"
+            />
+          </div>
+
+          <div class="field field--wide">
+            <label for="athlete-nationality">Nacionalidade *</label>
+            <input
+              id="athlete-nationality"
+              name="nacionalidade"
+              type="text"
+              autocomplete="country-name"
+              placeholder="Ex.: Brasileira"
+            />
+          </div>
+
+          <fieldset class="modality-field field--wide">
+            <legend>Modalidade *</legend>
+            <p>Selecione uma modalidade.</p>
+            <div class="modality-options">
+              <label class="modality-option" for="modality-urban">
+                <input
+                  id="modality-urban"
+                  name="modalidade"
+                  type="radio"
+                  value="urbano"
+                />
+                <span>
+                  <strong>Urbano</strong>
+                  <small>Corridas em vias urbanas e circuito de rua</small>
+                </span>
+              </label>
+              <label class="modality-option" for="modality-trail">
+                <input
+                  id="modality-trail"
+                  name="modalidade"
+                  type="radio"
+                  value="trailRunning"
+                />
+                <span>
+                  <strong>Trail Running</strong>
+                  <small>Corridas em trilhas e terrenos naturais</small>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-actions field--wide">
+            <button class="button button--secondary" type="reset">Cancelar</button>
+            <button id = "btCadastrar" class="button button--primary" type="submit">Cadastrar atleta</button>
+          </div>
+
+          <div
+            class="athlete-registration-message field--wide"
+            id="mensagemAtleta"
+            role="alert"
+            aria-live="polite"
+            hidden
+          >
+            <h3 id="mensagemAtletaTitulo"></h3>
+            <p id="mensagemAtletaTexto"></p>
+          </div>
+        </form>
+
+        <aside class="side-stack">
+          <section class="panel athlete-info">
+            <h2>Cadastro do atleta</h2>
+            <p>Os dados ficam disponíveis para consulta e inscrição em competições.</p>
+            <dl>
+              <div><dt>Identificação</dt><dd>Gerada automaticamente pelo sistema</dd></div>
+              <div><dt>CPF</dt><dd>Deve ser único para cada atleta</dd></div>
+              <div><dt>Modalidades</dt><dd>Urbano e Trail Running</dd></div>
+            </dl>
+          </section>
+
+          <section class="side-note">
+            <h2>Antes de cadastrar</h2>
+            <p>Preencha todos os campos pessoais e selecione pelo menos uma modalidade.</p>
+          </section>
+        </aside>
+      </div>
+
+      <p class="page-note">* Preenchimento obrigatório. A modalidade poderá ser alterada posteriormente pelo organizador.</p>
+    </main>
+
+    <script type="module" src="../JS/atletaView.js"></script>
+  </body>
+</html>
