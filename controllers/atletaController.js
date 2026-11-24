@@ -106,4 +106,18 @@ export default class AtletaController {
             mensagem:"Atleta não enocntrado"
         };
     }
+    listarAtletasPorModalidade(modalidade) {
+        const modalidades = ["Urbano", "Trail Running"];
+        if(!modalidades.includes(modalidade)){
+            return {
+                tipo: "ERRO",
+                mensagem: "Modalidade inválida. Selecione 'Urbano' ou 'Trail Running'."
+            }
+        }
+        return {
+            tipo: "SUCESSO",
+            mensagem: "Atletas encontrados com sucesso!",
+            atletas: this.#vetAtletas.filter((atleta) => atleta.modalidade === modalidade)
+        };
+    }
 }
