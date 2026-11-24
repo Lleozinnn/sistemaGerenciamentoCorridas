@@ -8,7 +8,14 @@ export default class AtletaController {
         if (this.buscarCpf(cpf) !== undefined) {
             return {
                 tipo: "ERRO",
-                mensagem: "Cpf já está cadastrado."
+                mensagem: "CPF já está cadastrado."
+            }
+        }
+        const modalidades = ["Urbano", "Trail Running"];
+        if(!modalidades.includes(modalidade)){
+            return {
+                tipo: "ERRO",
+                mensagem: "Modalidade inválida. Selecione 'Urbano' ou 'Trail Running'."
             }
         }
         const novoAtleta = new Atleta(nome,
