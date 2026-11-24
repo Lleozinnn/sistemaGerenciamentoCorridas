@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscrever atleta</title>
+    <link rel="icon" href="../assets/competition.png" />
+    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+    <link rel="stylesheet" href="../CSS/telasSistema.css" />
+    <script src="../JS/telasSistema.js" defer></script>
+  </head>
+  <body>
+    <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h2 class="site-header__brand">Área do organizador</h2>
+        <nav class="site-nav" aria-label="Navegação principal">
+          <details class="site-nav__group"><summary>Competições</summary><div class="site-nav__menu">
+            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
+          </div></details>
+          <details class="site-nav__group"><summary>Atletas</summary><div class="site-nav__menu">
+            <a href="consultarAtletas.html">Consultar atletas</a><a href="inscricoesAtivas.html">Inscrições ativas</a>
+          </div></details>
+          <details class="site-nav__group"><summary>Inscrições</summary><div class="site-nav__menu"><a href="inscreverAtleta.html">Inscrever atleta</a></div></details>
+          <details class="site-nav__group"><summary>Relatórios</summary><div class="site-nav__menu"><a href="relatoriosCompeticao.html">Relatórios da competição</a></div></details>
+        </nav>
+      </div>
+    </header>
+
+    <main class="screen">
+      <div class="screen-heading">
+        <h1>Inscrever atleta</h1>
+        <p>Selecione o atleta e a competição. As regras são validadas automaticamente ao inscrever.</p>
+      </div>
+
+      <div class="columns-layout enrollment-layout">
+        <form class="panel enrollment-form" id="enrollment-form">
+          <h2>Dados da inscrição</h2>
+          <!-- JS: carregar atletas cadastrados e suas modalidades na lista. -->
+          <div class="field">
+            <label for="enrollment-athlete">Atleta cadastrado *</label>
+            <select id="enrollment-athlete" name="athlete" required>
+              <option value="mariana" selected>Mariana Costa • Atleta #1042</option>
+              <option value="ana">Ana Ribeiro • Atleta #1041</option>
+              <option value="pedro">Pedro Santos • Atleta #1040 — Corrida de Montanha</option>
+              <option value="unknown">Atleta #9999 — cadastro não encontrado</option>
+            </select>
+          </div>
+          <!-- JS: carregar competições disponíveis e atualizar o resumo ao selecionar. -->
+          <div class="field">
+            <label for="enrollment-competition">Competição *</label>
+            <select id="enrollment-competition" name="competition" required>
+              <option value="cidade" selected>Corrida da Cidade 2027 • Maratona Urbana</option>
+              <option value="primavera">Maratona da Primavera 2027 • Maratona Urbana</option>
+              <option value="circuito">Circuito Urbano 2027 • Maratona Urbana</option>
+            </select>
+          </div>
+
+          <!-- JS: atualizar este resumo conforme atleta e competição selecionados. -->
+          <section class="selection-summary" aria-labelledby="selection-title">
+            <h3 id="selection-title">Resumo da seleção</h3>
+            <p id="athlete-summary">Modalidade do atleta: Maratona Urbana</p>
+            <p id="competition-summary">Modalidade da competição: Maratona Urbana</p>
+            <strong id="capacity-summary">Participantes: 299 / 300 • 1 vaga disponível</strong>
+          </section>
+
+          <!-- JS: exibir aqui o resultado da validação; os estados compartilham esta tela. -->
+          <section class="notice notice--error" id="enrollment-notice" aria-live="polite">
+            <h3 id="notice-title">Atleta já inscrito</h3>
+            <p id="notice-description">Não foi possível criar outra inscrição: Mariana Costa já está inscrita nesta competição.</p>
+            <small id="notice-detail">Inscrição existente: INS-2027-1042. Nenhuma inscrição duplicada foi criada.</small>
+          </section>
+
+          <div class="form-actions">
+            <button class="button button--secondary" type="button" id="change-selection">Alterar seleção</button>
+            <a class="button button--primary" id="enrollment-action" href="inscricoesAtivas.html">Ver inscrição existente</a>
+          </div>
+        </form>
+
+        <aside class="side-stack">
+          <section class="panel validation-panel">
+            <h2>Validação automática</h2>
+            <p class="validation-message" id="validation-message">A inscrição não foi concluída.</p>
+            <!-- JS: atualizar cada regra de acordo com o resultado da validação da inscrição. -->
+            <dl class="validation-list">
+              <div><dt>Cadastro prévio</dt><dd class="validation-result" id="check-athlete">Validado</dd><dd id="check-athlete-detail">Atleta encontrado no sistema.</dd></div>
+              <div><dt>Mesma modalidade</dt><dd class="validation-result" id="check-modality">Validado</dd><dd id="check-modality-detail">Maratona Urbana em ambos os cadastros.</dd></div>
+              <div><dt>Disponibilidade de vagas</dt><dd class="validation-result" id="check-capacity">Validado</dd><dd id="check-capacity-detail">1 vaga disponível na competição.</dd></div>
+              <div><dt>Sem duplicidade</dt><dd class="validation-result" id="check-duplicate">Bloqueado</dd><dd id="check-duplicate-detail">Já existe inscrição nesta competição.</dd></div>
+            </dl>
+          </section>
+          <section class="side-note">
+            <h2>Sem etapa de pagamento</h2>
+            <p>Ao inscrever, o sistema valida as quatro regras e confirma a inscrição imediatamente se todas forem atendidas.</p>
+          </section>
+        </aside>
+      </div>
+      <p class="page-note">* Campos obrigatórios. A inscrição é confirmada no ato da validação, sem etapa intermediária de pagamento.</p>
+    </main>
+  </body>
+</html>

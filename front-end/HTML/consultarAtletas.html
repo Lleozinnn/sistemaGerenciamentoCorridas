@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atletas</title>
+    <link rel="icon" href="../assets/competition.png" />
+    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+    <link rel="stylesheet" href="../CSS/telasSistema.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h2 class="site-header__brand">Área do organizador</h2>
+        <nav class="site-nav" aria-label="Navegação principal">
+          <details class="site-nav__group"><summary>Competições</summary><div class="site-nav__menu">
+            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
+          </div></details>
+          <details class="site-nav__group"><summary>Atletas</summary><div class="site-nav__menu">
+            <a href="consultarAtletas.html">Consultar atletas</a><a href="inscricoesAtivas.html">Inscrições ativas</a>
+          </div></details>
+          <details class="site-nav__group"><summary>Inscrições</summary><div class="site-nav__menu"><a href="inscreverAtleta.html">Inscrever atleta</a></div></details>
+          <details class="site-nav__group"><summary>Relatórios</summary><div class="site-nav__menu"><a href="relatoriosCompeticao.html">Relatórios da competição</a></div></details>
+        </nav>
+      </div>
+    </header>
+
+    <main class="screen screen--wide">
+      <div class="screen-heading">
+        <h1>Atletas</h1>
+        <p>Pesquise os cadastros e consulte as competições de cada atleta.</p>
+      </div>
+
+      <!-- JS: aplicar os filtros à consulta sem recarregar a página. -->
+      <form class="filter-panel" action="">
+        <div class="filter-field">
+          <label for="athlete-search">Pesquisar atleta</label>
+          <input id="athlete-search" type="search" placeholder="Nome ou identificação do atleta" />
+        </div>
+        <div class="filter-field">
+          <label for="athlete-modality">Modalidade</label>
+          <select id="athlete-modality">
+            <option>Todas as modalidades</option>
+            <option selected>Maratona Urbana</option>
+            <option>Trail Running</option>
+          </select>
+        </div>
+        <button class="button button--primary" type="submit">Pesquisar</button>
+        <a class="button button--secondary" href="consultarAtletas.html">Limpar filtros</a>
+        <p class="filter-caption">Filtro aplicado: Maratona Urbana</p>
+      </form>
+
+      <section class="table-card">
+        <div class="card-heading">
+          <div>
+            <h2>Atletas encontrados</h2>
+            <p>300 atletas na modalidade Maratona Urbana</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Atleta</th><th>Identificação</th><th>Modalidade</th><th>Inscrições ativas</th><th>Ações</th></tr>
+            </thead>
+            <!-- JS: substituir as linhas de exemplo pelos atletas retornados pela consulta. -->
+            <tbody>
+              <tr><td>Ana Ribeiro</td><td>#1041</td><td>Maratona Urbana</td><td>1</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Beatriz Lima</td><td>#1035</td><td>Maratona Urbana</td><td>2</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Bruno Santos</td><td>#1036</td><td>Maratona Urbana</td><td>1</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Carla Oliveira</td><td>#1037</td><td>Maratona Urbana</td><td>2</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Lucas Almeida</td><td>#1043</td><td>Maratona Urbana</td><td>1</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Mariana Costa</td><td>#1042</td><td>Maratona Urbana</td><td>3</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Paulo Ferreira</td><td>#1038</td><td>Maratona Urbana</td><td>1</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Pedro Santos</td><td>#1040</td><td>Maratona Urbana</td><td>2</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Rafael Souza</td><td>#1039</td><td>Maratona Urbana</td><td>1</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+              <tr><td>Renata Alves</td><td>#1034</td><td>Maratona Urbana</td><td>2</td><td><a class="button button--small button--secondary" href="inscricoesAtivas.html">Ver inscrições</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span>Exibindo 1–10 de 300 atletas</span>
+          <!-- JS: controlar a página atual e os estados dos botões de paginação. -->
+          <nav class="pagination" aria-label="Paginação">
+            <button type="button" disabled>Anterior</button><button class="is-current" type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">Próxima</button>
+          </nav>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

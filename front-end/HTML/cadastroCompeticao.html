@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastrar competição</title>
+    <link rel="icon" href="../assets/competition.png" />
+    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+    <link rel="stylesheet" href="../CSS/cadastroCompeticao.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h2 class="site-header__brand">Área do organizador</h2>
+        <nav class="site-nav" aria-label="Navegação principal">
+          <details class="site-nav__group">
+            <summary>Competições</summary>
+            <div class="site-nav__menu">
+              <a href="consultarCompeticoes.html">Consultar competições</a>
+              <a href="cadastroCompeticao.html">Cadastrar competição</a>
+              <a href="configurarModalidade.html">Configurar modalidade</a>
+              <a href="inscritosCompeticao.html">Atletas inscritos</a>
+              <a href="inscricoesVagas.html">Inscrições e vagas</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Atletas</summary>
+            <div class="site-nav__menu">
+              <a href="consultarAtletas.html">Consultar atletas</a>
+              <a href="inscricoesAtivas.html">Inscrições ativas</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Inscrições</summary>
+            <div class="site-nav__menu">
+              <a href="inscreverAtleta.html">Inscrever atleta</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Relatórios</summary>
+            <div class="site-nav__menu">
+              <a href="relatoriosCompeticao.html">Relatórios da competição</a>
+            </div>
+          </details>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <h1>Cadastrar Evento</h1>
+        <p>
+          Cadastre os dados gerais da competição para preparar as modalidades e
+          inscrições.
+        </p>
+      </article>
+      <!-- JS: validar e enviar os dados do formulário ao controller/serviço de competições. -->
+      <form action="">
+        <article>
+          <h2>Informações gerais</h2>
+          <p>Todos os campos são obrigatórios</p>
+        </article>
+
+        <div class="nomeComp">
+          <label for="">Nome da competição</label>
+          <input type="text" placeholder="Ex.: Corrida da Cidade 2027" />
+        </div>
+        <div class="localComp">
+          <label for="">Local / Endereço</label>
+          <input
+            type="text"
+            placeholder="Informe o local, a rua, o número e a cidade"
+          />
+        </div>
+        <div>
+          <label for="">Data e Horário</label>
+          <input type="datetime-local" />
+          <small>Deve ser posterior ao momento do cadastro.</small>
+        </div>
+        <div>
+          <label for=""> Distância</label>
+          <input type="number" placeholder="Ex.: 5" />
+          <span>KM</span>
+        </div>
+        <div>
+          <label for="">Número máximo de vagas</label>
+          <input type="number" placeholder="Ex.: 300" />
+          <small>Somente número inteiro maior que zero.</small>
+          <span>Vagas</span>
+        </div>
+        <div>
+          <label for="">Valor da inscrição</label>
+          <input type="number" placeholder="0,00" />
+          <small>Informe o valor em reais.</small>
+          <span>R$</span>
+        </div>
+
+        <div class="actions">
+          <button>Cancelar</button>
+          <button>Salvar Evento</button>
+        </div>
+      </form>
+      <!-- JS: substituir as mensagens fixas pelo retorno da criação ou por erros de validação. -->
+      <section>
+        <article>
+          <h2>Depois de salvar</h2>
+          <p>O evento será criado com status: <span>Ativo</span></p>
+
+          <b>Disponível para vinculação de modalidades e inscrições</b>
+        </article>
+        <article>
+          <h2>Antes de salvar</h2>
+          <b>Preenchimento completo</b>
+          <p>Informe os seis campos obrigatórios.</p>
+          <b>Data e horários futuros</b>
+          <p>A competição deve ocorrer após o momento do cadastro.</p>
+          <b>Vagas válidas</b>
+          <p>Use um número inteiro estritamente positivo: 1, 2, 3…</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
