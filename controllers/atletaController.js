@@ -35,6 +35,68 @@ export default class AtletaController {
             // inscricoesAtivas: atleta.listarCompeticoes().length
         }));
     }
-    consultarAtleta() {}
+    consultarAtleta(cpf) {
+        let atleta = this.buscarCpf(cpf);
+        if (atleta === undefined) {
+            return {
+                tipo: "ERRO",
+                mensagem: "Cpf não encontrado"
+            }
+        }
+        return {
+            tipo: "SUCESSO",
+            mensagem:"Atleta encontrado com sucesso",
+            atleta: {
+                id: atleta.id,
+                nome: atleta.nome,
+                cpf: atleta.cpf,
+                dtNascimento: atleta.dtNascimento,
+                idade: atleta.calcularIdade(),
+                nacionalidade: atleta.nacionalidade,
+                modalidade: atleta.modalidade
+            }
+        };
+    }
+    editarAtleta(cpf,nome,nacionalidade){
+        let atleta = this.buscarCpf(cpf);
+        if(atleta == undefined){
+            return {
+                tipo:"ERRO",
+                mensagem:"Atleta não encontrado"
+            };
+        }
+        atleta.nome = nome;
+        atleta.nacionalidade = nacionalidade;
 
+        return {
+            tipo:"SUCESSO",
+            mensagem:"Atleta editado com sucesso!",
+            atleta: {
+                id: atleta.id,
+                nome: atleta.nome,
+                cpf: atleta.cpf,
+                dtNascimento: atleta.dtNascimento,
+                idade: atleta.calcularIdade(),
+                nacionalidade: atleta.nacionalidade,
+                modalidade: atleta.modalidade
+            }
+            
+        }   
+    }
+    excluirAtleta(cpf) {
+        let indAtletaExcluido = this.#vetAtletas.findIndex(
+            (atleta) => atleta.cpf == cpf
+        );
+        if (indAtletaExcluido != -1) {
+            this.#vetAtletas.splice(indAtletaExcluido, 1)
+            return {
+                tipo:"SUCESSO",
+                mensagem:"Atleta excluido com sucesso!"
+            };
+        }
+        return{
+            tipo:"ERRO",
+            mensagem:"Atleta não enocntrado"
+        };
+    }
 }
