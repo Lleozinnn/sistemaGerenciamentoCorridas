@@ -1,4 +1,4 @@
-export  class Atleta {
+export default class Atleta {
     static qtAtletas = 0;
     #id;
     #nome;
@@ -6,6 +6,7 @@ export  class Atleta {
     #dtNascimento;
     #nacionalidade;
     #modalidade;
+    #competicoesInscritas = [];
     constructor(nome, cpf, dtNascimento, nacionalidade, modalidade) {
         this.#id = ++Atleta.qtAtletas;
         this.#nome = nome;
@@ -48,6 +49,14 @@ export  class Atleta {
         }
         return idade;
     }
+    adicionarCompeticao(competicao) {
+        this.#competicoesInscritas.push(competicao);
+    }
+
+    listarCompeticoes() {
+        return [...this.#competicoesInscritas];
+    }
+
     toString() {
         return `ID: ${this.#id},
          Nome: ${this.#nome},
@@ -64,4 +73,5 @@ export  class Atleta {
         ${this.#nacionalidade};
         ${this.#modalidade}`;
     }
+
 }
