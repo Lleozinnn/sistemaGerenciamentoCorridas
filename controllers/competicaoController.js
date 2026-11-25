@@ -54,4 +54,41 @@ export class competicaoController {
             }
         }
     }
+    listarCompeticoes() {
+        return this.#vetCompeticoes.map((competicao) => ({
+            id: competicao.id,
+            nome: competicao.nome,
+            local: competicao.local,
+            dataHorario: competicao.dataHorario,
+            distanciaKm: competicao.distanciaKm,
+            valorInscricao: competicao.valorInscricao,
+            limiteVagas: competicao.limiteVagas,
+            status: competicao.status
+        }));
+    }
+    relatorioCompeticao(competicao) {
+        let comp = this.buscarCompeticaoPorId(competicao.id);
+        if (comp != undefined) {
+            return {
+                tipo: "SUCESSO",
+                mensagem: "Relatório da competição gerado com sucesso.",
+                relatorio: {
+                    id: comp.id,
+                    nome: comp.nome,
+                    local: comp.local,
+                    dataHorario: comp.dataHorario,
+                    distanciaKm: comp.distanciaKm,
+                    valorInscricao: comp.valorInscricao,
+                    limiteVagas: comp.limiteVagas,
+                    status: comp.status,
+                    atletasInscritos: comp.atletasInscritos
+                }
+            }
+        } else {
+            return {
+                tipo: "ERRO",
+                mensagem: "Competição não encontrada."
+            }
+        }
+    }
 }
