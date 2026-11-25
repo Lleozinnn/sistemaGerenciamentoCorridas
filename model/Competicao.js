@@ -64,4 +64,12 @@ export class Competicao {
     set status(status) {
         this.#status = status;
     }
+
+    inscreverAtleta (atleta) {
+        if () {
+            
+        }
+        this.#atletasInscritos.push(atleta);
+        return true;
+    }
 }  
