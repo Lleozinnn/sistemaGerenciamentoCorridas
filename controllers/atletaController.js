@@ -12,7 +12,7 @@ export default class AtletaController {
             }
         }
         const modalidades = ["Urbano", "Trail Running"];
-        if(!modalidades.includes(modalidade)){
+        if (!modalidades.includes(modalidade)) {
             return {
                 tipo: "ERRO",
                 mensagem: "Modalidade inválida. Selecione 'Urbano' ou 'Trail Running'."
@@ -52,7 +52,7 @@ export default class AtletaController {
         }
         return {
             tipo: "SUCESSO",
-            mensagem:"Atleta encontrado com sucesso",
+            mensagem: "Atleta encontrado com sucesso",
             atleta: {
                 id: atleta.id,
                 nome: atleta.nome,
@@ -64,20 +64,20 @@ export default class AtletaController {
             }
         };
     }
-    editarAtleta(cpf,nome,nacionalidade){
+    editarAtleta(cpf, nome, nacionalidade) {
         let atleta = this.buscarCpf(cpf);
-        if(atleta == undefined){
+        if (atleta == undefined) {
             return {
-                tipo:"ERRO",
-                mensagem:"Atleta não encontrado"
+                tipo: "ERRO",
+                mensagem: "Atleta não encontrado"
             };
         }
         atleta.nome = nome;
         atleta.nacionalidade = nacionalidade;
 
         return {
-            tipo:"SUCESSO",
-            mensagem:"Atleta editado com sucesso!",
+            tipo: "SUCESSO",
+            mensagem: "Atleta editado com sucesso!",
             atleta: {
                 id: atleta.id,
                 nome: atleta.nome,
@@ -87,8 +87,8 @@ export default class AtletaController {
                 nacionalidade: atleta.nacionalidade,
                 modalidade: atleta.modalidade
             }
-            
-        }   
+
+        }
     }
     excluirAtleta(cpf) {
         let indAtletaExcluido = this.#vetAtletas.findIndex(
@@ -97,18 +97,18 @@ export default class AtletaController {
         if (indAtletaExcluido != -1) {
             this.#vetAtletas.splice(indAtletaExcluido, 1)
             return {
-                tipo:"SUCESSO",
-                mensagem:"Atleta excluido com sucesso!"
+                tipo: "SUCESSO",
+                mensagem: "Atleta excluido com sucesso!"
             };
         }
-        return{
-            tipo:"ERRO",
-            mensagem:"Atleta não enocntrado"
+        return {
+            tipo: "ERRO",
+            mensagem: "Atleta não enocntrado"
         };
     }
     listarAtletasPorModalidade(modalidade) {
         const modalidades = ["Urbano", "Trail Running"];
-        if(!modalidades.includes(modalidade)){
+        if (!modalidades.includes(modalidade)) {
             return {
                 tipo: "ERRO",
                 mensagem: "Modalidade inválida. Selecione 'Urbano' ou 'Trail Running'."

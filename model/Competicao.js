@@ -1,4 +1,4 @@
-import Atleta  from "./Atleta.js";
+import Atleta from "./Atleta.js";
 
 export class Competicao {
     static #qtCompeticoes = 0;
@@ -21,7 +21,7 @@ export class Competicao {
         this.limiteVagas = limiteVagas;
         this.#status = "Aberta";
         this.#atletasInscritos = [];
-    } 
+    }
     get id() {
         return this.#id;
     }
@@ -65,11 +65,47 @@ export class Competicao {
         this.#status = status;
     }
 
-    inscreverAtleta (atleta) {
+    inscreverAtleta(atleta) {
         if () {
-            
+
         }
         this.#atletasInscritos.push(atleta);
         return true;
+    }
+
+    vagasDisponiveis() {
+        return this.#limiteVagas - this.#atletasInscritos.length;
+    }
+
+    atualizarStatusCompeticao() {
+        if (this.vagasDisponiveis() <= 0) {
+            this.#status = "Encerrada";
+        } else {
+            this.#status = "Aberta";
+        }
+    }
+
+    quantidadeAtletasInscritos() {
+        return this.#atletasInscritos.length;
+    }
+
+    listarAtletasInscritos() {
+        return this.#atletasInscritos;
+    }
+
+    gerarRelatorioAtletasInscritos() {
+        if (this.#atletasInscritos.length === 0) {
+            return "Nenhum atleta inscrito nesta competição.";
+        }
+
+        let relatorio = `Relatório de Atletas Inscritos na Competição: ${this.#nome}\n`;
+        relatorio += "--------------------------------------------------\n";
+        this.#atletasInscritos.forEach((atleta, index) => {
+            relatorio += `${index + 1}. Nome: ${atleta.nome}, CPF: ${atleta.cpf}, Modalidade: ${atleta.modalidade}\n`;
+        });
+        relatorio += "--------------------------------------------------\n";
+        relatorio += `Total de Atletas Inscritos: ${this.#atletasInscritos.length}\n`;
+
+        return relatorio;
     }
 }  

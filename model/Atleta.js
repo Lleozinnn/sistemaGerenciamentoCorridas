@@ -6,7 +6,6 @@ export default class Atleta {
     #dtNascimento;
     #nacionalidade;
     #modalidade;
-    #competicoesInscritas = [];
     constructor(nome, cpf, dtNascimento, nacionalidade, modalidade) {
         this.#id = ++Atleta.qtAtletas;
         this.#nome = nome;
@@ -39,6 +38,7 @@ export default class Atleta {
     set nacionalidade(nacionalidade) {
         this.#nacionalidade = nacionalidade;
     }
+
     calcularIdade() {
         const hoje = new Date();
         const nasc = new Date(this.#dtNascimento);
@@ -49,12 +49,10 @@ export default class Atleta {
         }
         return idade;
     }
-    adicionarCompeticao(competicao) {
-        this.#competicoesInscritas.push(competicao);
-    }
 
-    listarCompeticoes() {
-        return [...this.#competicoesInscritas];
+    validarCPF() {
+        // Implementar lógica de validação de CPF
+        return true; // Retornar true se o CPF for válido, false caso contrário
     }
 
     toString() {
@@ -73,5 +71,4 @@ export default class Atleta {
         ${this.#nacionalidade};
         ${this.#modalidade}`;
     }
-
 }

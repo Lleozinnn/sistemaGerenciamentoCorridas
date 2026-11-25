@@ -54,4 +54,20 @@ export class competicaoController {
             }
         }
     }
+
+    vagasDisponiveis(IdCompeticao) {
+        let comp = this.buscarCompeticaoPorId(IdCompeticao);
+        if (comp.tipo == "SUCESSO") {
+            return {
+                tipo: "SUCESSO",
+                mensagem: "Vagas disponíveis.",
+                vagas: comp.competicao.vagasDisponiveis()
+            }
+        } else {
+            return {
+                tipo: "ERRO",
+                mensagem: "Competição não encontrada."
+            }
+        }
+    }
 }
