@@ -1,4 +1,6 @@
 import { Atleta } from "../model/Atleta";
+import { TrailRunning } from "../model/TrailRunning";
+import { Urbano } from "../model/Urbano";
 
 export class competicaoController {
     #vetCompeticoes = [];
@@ -19,8 +21,28 @@ export class competicaoController {
             mensagem: "A inscrição não pode ser realizada."
         }
     }
-    registrarCompeticao (nome, local, dataHorario, distancia, valor, limiteVagas) {
-        
+    registrarCompeticao (nome, local, dataHorario, distancia, valor, limiteVagas, modalidade) {
+        const modalidades = ["Trail Running", "Urbano"];
+        if (modalidades.includes(modalidade)) {
+            switch (modalidade) {
+                case "Trail Running":
+                    competicao = new TrailRunning(nome, local, dataHorario, distancia, valor, limiteVagas);
+                    this.#vetCompeticoes.push(competicao);
+                    break;
+                case "Urbano":
+                    competicao = new Urbano(nome, local, dataHorario, distancia, valor, limiteVagas);
+                    this.#vetCompeticoes.push(competicao);
+                    break;
+            }
+            return {
+                tipo: "SUCESSO",
+                mensagem: "Competição registrada com sucesso."
+            }
+        }
+        return {
+            tipo: "ERRO",
+            mensagem: "Modalidade inválida."
+        }
     }
 
 }

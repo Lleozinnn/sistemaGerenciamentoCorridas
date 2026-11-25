@@ -66,10 +66,10 @@ export class Competicao {
     }
 
     inscreverAtleta (atleta) {
-        if () {
-            
+        if (atleta instanceof Atleta) {
+            this.#atletasInscritos.push(atleta);
+            return true;
         }
-        this.#atletasInscritos.push(atleta);
-        return true;
+        return false;
     }
 }  
