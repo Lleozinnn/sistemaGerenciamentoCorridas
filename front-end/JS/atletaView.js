@@ -104,6 +104,59 @@ if (formCadastroAtleta) {
 }
 
 const athleteFilterForm = document.querySelector("#athlete-filter-form");
+const athleteEditForm = document.querySelector("#athlete-edit-form");
+
+if (athleteEditForm) {
+    carregarAtletas();
+
+    const athleteEditCpf = document.querySelector("#athlete-edit-cpf");
+    const athleteEditName = document.querySelector("#athlete-edit-name");
+    const athleteEditNationality = document.querySelector("#athlete-edit-nationality");
+    const athleteEditSubmit = document.querySelector("#btSalvarEdicao");
+    const cpf = new URLSearchParams(window.location.search).get("cpf");
+    const resultadoConsulta = cpf
+        ? atletaController.consultarAtleta(cpf)
+        : { tipo: "ERRO", mensagem: "CPF do atleta não informado." };
+
+    if (resultadoConsulta.tipo === "SUCESSO") {
+        athleteEditCpf.value = resultadoConsulta.atleta.cpf;
+        athleteEditName.value = resultadoConsulta.atleta.nome;
+        athleteEditNationality.value = resultadoConsulta.atleta.nacionalidade;
+    } else {
+        exibirMensagem("error", "Não foi possível carregar o atleta", resultadoConsulta.mensagem);
+        athleteEditSubmit.disabled = true;
+    }
+
+    athleteEditForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const nome = athleteEditName.value.trim();
+        const nacionalidade = athleteEditNationality.value.trim();
+
+        if (!nome) {
+            exibirMensagem("error", "Nome obrigatório", "Informe o nome completo do atleta.");
+            athleteEditName.focus();
+            return;
+        }
+
+        if (!nacionalidade) {
+            exibirMensagem("error", "Nacionalidade obrigatória", "Informe a nacionalidade do atleta.");
+            athleteEditNationality.focus();
+            return;
+        }
+
+        const resultado = atletaController.editarAtleta(cpf, nome, nacionalidade);
+
+        if (resultado.tipo === "SUCESSO") {
+            exibirMensagem("success", "Edição realizada", resultado.mensagem);
+            athleteEditName.value = resultado.atleta.nome;
+            athleteEditNationality.value = resultado.atleta.nacionalidade;
+            salvarAtletas();
+        } else {
+            exibirMensagem("error", "Edição não realizada", resultado.mensagem);
+        }
+    });
+}
 
 if (athleteFilterForm) {
     carregarAtletas();
@@ -144,9 +197,14 @@ if (athleteFilterForm) {
                     <td>0</td>
                     <td>
                         <a class="button button--small button--secondary"
+                           href="editarAtleta.html?cpf=${encodeURIComponent(atleta.cpf)}">Editar</a>
+                        <button class="button button--small button--secondary"
+                                type="button" data-delete-athlete>Excluir</button>
+                        <a class="button button--small button--secondary"
                            href="inscricoesAtivas.html">Ver inscrições</a>
                     </td>
                 `;
+                linha.querySelector("[data-delete-athlete]").dataset.cpf = atleta.cpf;
                 athleteTableBody.appendChild(linha);
             });
         }
@@ -156,6 +214,29 @@ if (athleteFilterForm) {
         athleteTableSummary.textContent =
             `${atletas.length} ${atletas.length === 1 ? "atleta listado" : "atletas listados"}`;
     };
+
+    athleteTableBody.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-delete-athlete]");
+
+        if (!button) {
+            return;
+        }
+
+        const cpf = button.dataset.cpf;
+        if (!window.confirm("Tem certeza de que deseja excluir este atleta?")) {
+            return;
+        }
+
+        const resultado = atletaController.excluirAtleta(cpf);
+
+        if (resultado.tipo === "SUCESSO") {
+            salvarAtletas();
+            window.alert(resultado.mensagem);
+            athleteFilterForm.dispatchEvent(new Event("submit", { cancelable: true }));
+        } else {
+            window.alert(resultado.mensagem);
+        }
+    });
 
     athleteFilterForm.addEventListener("submit", (event) => {
         event.preventDefault();
