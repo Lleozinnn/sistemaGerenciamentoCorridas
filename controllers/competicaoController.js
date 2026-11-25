@@ -62,6 +62,18 @@ export class competicaoController {
                 tipo: "SUCESSO",
                 mensagem: "Vagas disponíveis.",
                 vagas: comp.competicao.vagasDisponiveis()
+                mensagem: "Vagas esgotadas."
+            }
+        }
+    }
+
+    buscarCompeticaoPorId(IdCompeticao) {
+        let comp = this.#vetCompeticoes.find((competicao) => competicao.id == IdCompeticao);
+        if (comp != undefined) {
+            return {
+                tipo: "SUCESSO",
+                mensagem: "Competição encontrada.",
+                competicao: comp
             }
         } else {
             return {

@@ -106,6 +106,37 @@ export default class AtletaController {
             mensagem: "Atleta não enocntrado"
         };
     }
+
+    listarCompeticoesAtleta(cpf) {
+        //Primeiro passo: buscar atleta
+        const atleta = this.#vetAtletas.find((atleta) => atleta.cpf === cpf);
+        if (atleta !== undefined) {
+            //Segundo passo: pegar as competições do atleta
+            const competicoes = atleta.listarCompeticoes();
+            //Terceiro Passo: listar as competições do atleta
+            let listaCompeticao = [];
+            competicoes.forEach(competicao => {
+                return listaCompeticao.push({
+                    nome: competicao.nome,
+                    local: competicao.local,
+                    dataHorario: competicao.dataHorario,
+                    distancia: competicao.distanciaKm,
+                    valorInscricao: competicao.valorInscricao,
+                    limiteVagas: competicao.limiteVagas
+                })
+            });
+            return {
+                tipo: "SUCESSO",
+                mensagem: "Atleta encontrado com sucesso",
+                listaCompeticaoAtleta: listaCompeticao
+            }
+
+        } else {
+            return {
+                tipo: "ERRO",
+                mensagem: "Esse atleta não existe"
+            }
+        }
     listarAtletasPorModalidade(modalidade) {
         const modalidades = ["Urbano", "Trail Running"];
         if (!modalidades.includes(modalidade)) {
