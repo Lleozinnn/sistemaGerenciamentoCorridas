@@ -475,7 +475,6 @@ tbody tr {
   clip-path: inset(50%);
 }
 
-.metric-grid,
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -834,10 +833,6 @@ tbody tr {
 
   .table-wrap {
     margin-bottom: 2px;
-  }
-
-  .metric-grid {
-    grid-template-columns: 1fr;
   }
 
   .metric-card {
