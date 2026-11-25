@@ -12,7 +12,7 @@ export default class AtletaController {
             }
         }
         const modalidades = ["Urbano", "Trail Running"];
-        if(!modalidades.includes(modalidade)){
+        if (!modalidades.includes(modalidade)) {
             return {
                 tipo: "ERRO",
                 mensagem: "Modalidade inválida. Selecione 'Urbano' ou 'Trail Running'."
@@ -139,7 +139,7 @@ export default class AtletaController {
         }
     listarAtletasPorModalidade(modalidade) {
         const modalidades = ["Urbano", "Trail Running"];
-        if(!modalidades.includes(modalidade)){
+        if (!modalidades.includes(modalidade)) {
             return {
                 tipo: "ERRO",
                 mensagem: "Modalidade inválida. Selecione 'Urbano' ou 'Trail Running'."

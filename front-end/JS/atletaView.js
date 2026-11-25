@@ -46,61 +46,61 @@ const exibirMensagem = (tipo, titulo, texto) => {
 };
 
 if (formCadastroAtleta) {
-formCadastroAtleta.addEventListener("submit", (event) => {
-    event.preventDefault();
-    // trim() remove os espaços em branco do início e do fim da string
-    const nome = inNome.value.trim();
-    const cpf = inCpf.value.trim();
-    const nacionalidade = inNacionalidade.value.trim();
-    const modalidade = Array.from(radioModalidade).find(radio => radio.checked)?.value;
-    const nascimento = dtNascimento.value;
+    formCadastroAtleta.addEventListener("submit", (event) => {
+        event.preventDefault();
+        // trim() remove os espaços em branco do início e do fim da string
+        const nome = inNome.value.trim();
+        const cpf = inCpf.value.trim();
+        const nacionalidade = inNacionalidade.value.trim();
+        const modalidade = Array.from(radioModalidade).find(radio => radio.checked)?.value;
+        const nascimento = dtNascimento.value;
 
-    if (!nome) {
-        exibirMensagem("error", "Nome obrigatório", "Informe o nome completo do atleta.");
-        inNome.focus();
-        return;
-    }
+        if (!nome) {
+            exibirMensagem("error", "Nome obrigatório", "Informe o nome completo do atleta.");
+            inNome.focus();
+            return;
+        }
 
-    if (!cpf) {
-        exibirMensagem("error", "CPF obrigatório", "Informe o CPF do atleta.");
-        inCpf.focus();
-        return;
-    }
+        if (!cpf) {
+            exibirMensagem("error", "CPF obrigatório", "Informe o CPF do atleta.");
+            inCpf.focus();
+            return;
+        }
 
-    if (!nascimento) {
-        exibirMensagem("error", "Data de nascimento obrigatória", "Informe a data de nascimento do atleta.");
-        dtNascimento.focus();
-        return;
-    }
+        if (!nascimento) {
+            exibirMensagem("error", "Data de nascimento obrigatória", "Informe a data de nascimento do atleta.");
+            dtNascimento.focus();
+            return;
+        }
 
-    if (!nacionalidade) {
-        exibirMensagem("error", "Nacionalidade obrigatória", "Informe a nacionalidade do atleta.");
-        inNacionalidade.focus();
-        return;
-    }
+        if (!nacionalidade) {
+            exibirMensagem("error", "Nacionalidade obrigatória", "Informe a nacionalidade do atleta.");
+            inNacionalidade.focus();
+            return;
+        }
 
-    if (!modalidade) {
-        exibirMensagem("error", "Modalidade obrigatória", "Selecione Urbano ou Trail Running.");
-        return;
-    }
+        if (!modalidade) {
+            exibirMensagem("error", "Modalidade obrigatória", "Selecione Urbano ou Trail Running.");
+            return;
+        }
 
-    const resultado = atletaController.cadastrarAtleta(
-        nome.trim(),
-        cpf,
-        nascimento,
-        nacionalidade,
-        modalidade
-    );
+        const resultado = atletaController.cadastrarAtleta(
+            nome.trim(),
+            cpf,
+            nascimento,
+            nacionalidade,
+            modalidade
+        );
 
-    if (resultado.tipo === "SUCESSO") {
-        exibirMensagem("success", "Cadastro realizado", resultado.mensagem);
-        formCadastroAtleta.reset();
-        salvarAtletas();
-    } else {
-        exibirMensagem("error", "Cadastro não realizado", resultado.mensagem);
-        inCpf.focus();
-    }
-});
+        if (resultado.tipo === "SUCESSO") {
+            exibirMensagem("success", "Cadastro realizado", resultado.mensagem);
+            formCadastroAtleta.reset();
+            salvarAtletas();
+        } else {
+            exibirMensagem("error", "Cadastro não realizado", resultado.mensagem);
+            inCpf.focus();
+        }
+    });
 }
 
 const athleteFilterForm = document.querySelector("#athlete-filter-form");
