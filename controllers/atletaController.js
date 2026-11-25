@@ -137,6 +137,7 @@ export default class AtletaController {
                 mensagem: "Esse atleta não existe"
             }
         }
+    }
     listarAtletasPorModalidade(modalidade) {
         const modalidades = ["Urbano", "Trail Running"];
         if (!modalidades.includes(modalidade)) {
