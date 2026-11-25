@@ -2,7 +2,7 @@ import { Atleta } from "../model/Atleta";
 
 export class competicaoController {
     #vetCompeticoes = [];
-
+    
     // Métodos
 
     inscreverAtleta(IdCompeticao, atleta) {
@@ -39,21 +39,6 @@ export class competicaoController {
         }
     }
 
-    buscarCompeticaoPorId(IdCompeticao) {
-        let comp = this.#vetCompeticoes.find((competicao) => competicao.id == IdCompeticao);
-        if (comp != undefined) {
-            return {
-                tipo: "SUCESSO",
-                mensagem: "Competição encontrada.",
-                competicao: comp
-            }
-        } else {
-            return {
-                tipo: "ERRO",
-                mensagem: "Competição não encontrada."
-            }
-        }
-    }
 
     vagasDisponiveis(IdCompeticao) {
         let comp = this.buscarCompeticaoPorId(IdCompeticao);
@@ -62,6 +47,10 @@ export class competicaoController {
                 tipo: "SUCESSO",
                 mensagem: "Vagas disponíveis.",
                 vagas: comp.competicao.vagasDisponiveis()
+            }
+        } else {
+            return {
+                tipo: "ERRO",
                 mensagem: "Vagas esgotadas."
             }
         }

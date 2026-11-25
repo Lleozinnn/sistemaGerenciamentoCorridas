@@ -65,13 +65,13 @@ export class Competicao {
         this.#status = status;
     }
 
-    inscreverAtleta(atleta) {
-        if () {
+    // inscreverAtleta(atleta) {
+    //     if () {
 
-        }
-        this.#atletasInscritos.push(atleta);
-        return true;
-    }
+    //     }
+    //     this.#atletasInscritos.push(atleta);
+    //     return true;
+    // }
 
     vagasDisponiveis() {
         return this.#limiteVagas - this.#atletasInscritos.length;
