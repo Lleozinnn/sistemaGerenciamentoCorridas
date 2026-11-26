@@ -20,9 +20,9 @@
         <details class="site-nav__group">
           <summary>Competições</summary>
           <div class="site-nav__menu">
-            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar
-              competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a
-              href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
+            <a href="consultarCompeticoes.html">Consultar competições</a>
+            <a href="cadastroCompeticao.html">Cadastrar competição</a>
+            <a href="inscricoesVagas.html">Inscrições e vagas</a>
           </div>
         </details>
         <details class="site-nav__group">
@@ -186,6 +186,22 @@
     </section>
     <p class="page-note" id="report-feedback" aria-live="polite">Este relatório apresenta os dados da competição
       selecionada no momento da geração.</p>
+      
+      <section class="controles-relatorio">
+    <button id="btnRelatorioGeral" type="button">Atualizar Relatório Geral</button>
+
+    <label for="selectCompeticao">Relatório por Competição:</label>
+    <select id="selectCompeticao">
+        <option value="">Selecione uma competição...</option>
+    </select>
+</section>
+
+<section id="relatorioGeralContainer"></section>
+<hr>
+<section id="relatorioCompeticaoContainer"></section>
+
+<script type="module" src="../JS/relatoriosView.js"></script>
+
   </main>
 </body>
 

@@ -1,3 +1,5 @@
+import { CompeticaoController } from "../../controllers/competicaoController.js";
+
 const STORAGE_KEY = "atletasCadastrados";
 
 const athleteSelect = document.querySelector("#enrollment-athlete");
@@ -60,9 +62,12 @@ const updateCompetitionSummary = () => {
 athleteSelect.addEventListener("change", updateAthleteSummary);
 competitionSelect.addEventListener("change", updateCompetitionSummary);
 
-changeSelection.addEventListener("click", () => {
-    athleteSelect.focus();
-});
-
+// changeSelection.addEventListener("click", () => {
+//     athleteSelect.focus();
+// });
+const competicaoController = new CompeticaoController();
+competicaoController.cadastrarCompeticao("Maratona Urbana de São Paulo", "São Paulo", "2024-09-15T08:00", 42, 1000, 100, "Urbano", "Médio");
+competicaoController.cadastrarCompeticao("Trail Run da Serra do Mar", "Serra do Mar", "2024-10-20T07:00", 30, 800, 50, "Trail Running", "Difícil");
+console.log(competicaoController.listarCompeticoes());
 updateAthleteSummary();
 updateCompetitionSummary();

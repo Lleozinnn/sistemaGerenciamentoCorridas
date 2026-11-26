@@ -26,7 +26,7 @@ export class CompeticaoController {
         nome,
         local,
         dataHorario,
-        distancia,
+        distanciaKm,
         limiteVagas,
         valorInscricao,
         modalidade,
@@ -42,11 +42,11 @@ export class CompeticaoController {
                         nome,
                         local,
                         dataHorario,
-                        distancia,
+                        distanciaKm,
                         valorInscricao,
                         limiteVagas, // Até aqui é Superclasse
                         opMod.tipoTerreno,
-                        opMod.nivel,
+                        opMod.nivelDificuldade,
                         opMod.quantidadeCheckpoints,
                         opMod.localizacaoCheckpoints,
                         opMod.tipoProva, // Aqui já é subclasse
@@ -57,7 +57,7 @@ export class CompeticaoController {
                         nome,
                         local,
                         dataHorario,
-                        distancia,
+                        distanciaKm,
                         valorInscricao,
                         limiteVagas, // Até aqui é Superclasse
                         opMod.altimetria,
@@ -138,6 +138,19 @@ export class CompeticaoController {
             };
         }
     }
+    listarCompeticoes() {
+        return this.#vetCompeticoes.map((competicao) => ({
+            id: competicao.id,
+            nome: competicao.nome,
+            local: competicao.local,
+            dataHorario: competicao.dataHorario,
+            distanciaKm: competicao.distanciaKm,
+            limiteVagas: competicao.limiteVagas,
+            valorInscricao: competicao.valorInscricao,
+            modalidade: competicao.modalidade,
+            opMod: competicao.opMod,
+        }));
+    }
 
     #carregarDados() {
         const competicoes = JSON.parse(localStorage.getItem("competicoes"));
@@ -162,7 +175,7 @@ export class CompeticaoController {
                 nome: competicao.nome,
                 local: competicao.local,
                 dataHorario: competicao.dataHorario,
-                distancia: competicao.distancia,
+                distanciaKm: competicao.distanciaKm,
                 valorInscricao: competicao.valorInscricao,
                 limiteVagas: competicao.limiteVagas,
             };
