@@ -1,118 +1,192 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Relatórios da competição</title>
-    <link rel="icon" href="../assets/competition.png" />
-    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
-    <link rel="stylesheet" href="../CSS/telasSistema.css" />
-    <script src="../JS/telasSistema.js" defer></script>
-  </head>
-  <body>
-    <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
-    <header class="site-header">
-      <div class="site-header__inner">
-        <h2 class="site-header__brand">Área do organizador</h2>
-        <nav class="site-nav" aria-label="Navegação principal">
-          <details class="site-nav__group"><summary>Competições</summary><div class="site-nav__menu">
-            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
-          </div></details>
-          <details class="site-nav__group"><summary>Atletas</summary><div class="site-nav__menu">
-            <a href="consultarAtletas.html">Consultar atletas</a><a href="inscricoesAtivas.html">Inscrições ativas</a>
-          </div></details>
-          <details class="site-nav__group"><summary>Inscrições</summary><div class="site-nav__menu"><a href="inscreverAtleta.html">Inscrever atleta</a></div></details>
-          <details class="site-nav__group"><summary>Relatórios</summary><div class="site-nav__menu"><a href="relatoriosCompeticao.html">Relatórios da competição</a></div></details>
-        </nav>
-      </div>
-    </header>
 
-    <main class="screen screen--wide report-screen" id="report-screen">
-      <div class="screen-heading">
-        <h1>Relatórios da competição</h1>
-        <p>Visualize os dados de cada prova ou acompanhe o balanço consolidado dos eventos.</p>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatórios da competição</title>
+  <link rel="icon" href="../assets/competition.png" />
+  <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+  <link rel="stylesheet" href="../CSS/telasSistema.css" />
+  <script src="../JS/telasSistema.js" defer></script>
+</head>
 
-      <!-- JS: alternar os modos de relatório nesta página, sem criar telas duplicadas. -->
-      <div class="tabs" role="tablist" aria-label="Tipo de relatório">
-        <button class="button button--secondary is-active" type="button" role="tab" aria-selected="true" data-report-tab="individual">Por competição</button>
-        <button class="button button--secondary" type="button" role="tab" aria-selected="false" data-report-tab="consolidated">Geral consolidado</button>
-      </div>
-
-      <section class="report-filter" id="individual-filter">
-        <div class="filter-field">
-          <label for="report-competition">Competição</label>
-          <select id="report-competition">
-            <option>Corrida da Cidade 2027</option>
-            <option>Maratona da Primavera 2027</option>
-            <option>Circuito Urbano 2027</option>
-          </select>
-        </div>
-        <button class="button button--primary" type="button" id="generate-report">Gerar relatório</button>
-      </section>
-
-      <!-- JS: preencher o painel individual com os dados da competição selecionada. -->
-      <section id="individual-report" role="tabpanel">
-        <div class="report-title">
-          <div><h2>Relatório individual</h2><p>Gerado em 01/08/2027 às 14:40 <span aria-hidden="true">•</span> Visualização em tela</p></div>
-          <a class="button button--secondary" href="inscritosCompeticao.html">Ver inscritos</a>
-        </div>
-        <article class="panel individual-report">
-          <p class="eyebrow">Nome</p>
-          <h2 id="individual-name">Corrida da Cidade 2027</h2>
-          <div class="detail-grid">
-            <div><span>Tipo / Modalidade</span><strong>Maratona Urbana</strong></div>
-            <div><span>Data / Horário</span><strong>12/09/2027 às 06:00</strong></div>
-            <div><span>Local</span><strong>Av. Paulista, 1578 • São Paulo — SP</strong></div>
-            <div><span>Distância</span><strong>42,195 km</strong></div>
-            <div><span>Número atual de inscritos</span><strong>300 inscritos</strong></div>
-            <div><span>Limite máximo de vagas</span><strong>300 vagas</strong></div>
+<body>
+  <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <h2 class="site-header__brand">Área do organizador</h2>
+      <nav class="site-nav" aria-label="Navegação principal">
+        <details class="site-nav__group">
+          <summary>Competições</summary>
+          <div class="site-nav__menu">
+            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar
+              competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a
+              href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
           </div>
-          <div class="notice notice--error report-status">
-            <h3>Vagas Esgotadas</h3>
-            <strong>300 / 300 inscritos <span aria-hidden="true">•</span> 100% de ocupação <span aria-hidden="true">•</span> 0 vagas disponíveis</strong>
-            <p>A prova atingiu o limite máximo de participantes.</p>
+        </details>
+        <details class="site-nav__group">
+          <summary>Atletas</summary>
+          <div class="site-nav__menu">
+            <a href="consultarAtletas.html">Consultar atletas</a>
+            <a href="cadastrarAtleta.html">Cadastrar atleta</a>
+            <a href="inscricoesAtivas.html">Inscrições ativas</a>
           </div>
-        </article>
-      </section>
+        </details>
+        <details class="site-nav__group">
+          <summary>Inscrições</summary>
+          <div class="site-nav__menu"><a href="inscreverAtleta.html">Inscrever atleta</a></div>
+        </details>
+        <details class="site-nav__group">
+          <summary>Relatórios</summary>
+          <div class="site-nav__menu"><a href="relatoriosCompeticao.html">Relatórios da competição</a></div>
+        </details>
+      </nav>
+    </div>
+  </header>
 
-      <!-- JS: calcular e renderizar os totais agregados de todas as competições. -->
-      <section id="consolidated-report" role="tabpanel" hidden>
-        <div class="report-title">
-          <div><h2>Relatório geral consolidado</h2><p>Gerado em 01/08/2027 às 14:40 <span aria-hidden="true">•</span> Visualização em tela</p></div>
-          <button class="button button--primary" type="button" id="generate-consolidated">Gerar relatório</button>
+  <main class="screen screen--wide report-screen" id="report-screen">
+    <div class="screen-heading">
+      <h1>Relatórios da competição</h1>
+      <p>Visualize os dados de cada prova ou acompanhe o balanço consolidado dos eventos.</p>
+    </div>
+
+    <!-- JS: alternar os modos de relatório nesta página, sem criar telas duplicadas. -->
+    <div class="tabs" role="tablist" aria-label="Tipo de relatório">
+      <button class="button button--secondary is-active" type="button" role="tab" aria-selected="true"
+        data-report-tab="individual">Por competição</button>
+      <button class="button button--secondary" type="button" role="tab" aria-selected="false"
+        data-report-tab="consolidated">Geral consolidado</button>
+    </div>
+
+    <section class="report-filter" id="individual-filter">
+      <div class="filter-field">
+        <label for="report-competition">Competição</label>
+        <select id="report-competition">
+          <option>Corrida da Cidade 2027</option>
+          <option>Maratona da Primavera 2027</option>
+          <option>Circuito Urbano 2027</option>
+        </select>
+      </div>
+      <button class="button button--primary" type="button" id="generate-report">Gerar relatório</button>
+    </section>
+
+    <!-- JS: preencher o painel individual com os dados da competição selecionada. -->
+    <section id="individual-report" role="tabpanel">
+      <div class="report-title">
+        <div>
+          <h2>Relatório individual</h2>
+          <p>Gerado em 01/08/2027 às 14:40 <span aria-hidden="true">•</span> Visualização em tela</p>
         </div>
-        <div class="overview-banner">
-          <div><strong>Todas as competições cadastradas</strong><span>3 provas <span aria-hidden="true">•</span> Todas as modalidades <span aria-hidden="true">•</span> Sem filtros</span></div>
+        <a class="button button--secondary" href="inscritosCompeticao.html">Ver inscritos</a>
+      </div>
+      <article class="panel individual-report">
+        <p class="eyebrow">Nome</p>
+        <h2 id="individual-name">Corrida da Cidade 2027</h2>
+        <div class="detail-grid">
+          <div><span>Tipo / Modalidade</span><strong>Maratona Urbana</strong></div>
+          <div><span>Data / Horário</span><strong>12/09/2027 às 06:00</strong></div>
+          <div><span>Local</span><strong>Av. Paulista, 1578 • São Paulo — SP</strong></div>
+          <div><span>Distância</span><strong>42,195 km</strong></div>
+          <div><span>Número atual de inscritos</span><strong>300 inscritos</strong></div>
+          <div><span>Limite máximo de vagas</span><strong>300 vagas</strong></div>
         </div>
-        <div class="stats-grid">
-          <article><span>Competições cadastradas</span><strong>3</strong></article>
-          <article><span>Inscrições acumuladas</span><strong>576</strong></article>
-          <article><span>Limite total de vagas</span><strong>750</strong></article>
-          <article><span>Vagas disponíveis</span><strong>174</strong></article>
+        <div class="notice notice--error report-status">
+          <h3>Vagas Esgotadas</h3>
+          <strong>300 / 300 inscritos <span aria-hidden="true">•</span> 100% de ocupação <span
+              aria-hidden="true">•</span> 0 vagas disponíveis</strong>
+          <p>A prova atingiu o limite máximo de participantes.</p>
         </div>
-        <section class="table-card consolidated-table">
-          <div class="card-heading"><div><h2>Todas as competições cadastradas</h2><p>3 de 3 provas <span aria-hidden="true">•</span> Totais calculados sobre todas as inscrições confirmadas</p></div></div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Competição</th><th>Tipo / Modalidade</th><th>Inscritos</th><th>Limite de vagas</th><th>Vagas disponíveis</th><th>Status da prova</th></tr></thead>
-              <!-- JS: substituir as linhas pelo resultado consolidado da consulta. -->
-              <tbody>
-                <tr><td>Corrida da Cidade 2027</td><td>Maratona Urbana</td><td>300</td><td>300</td><td>0</td><td><span class="status status--danger">Vagas esgotadas</span></td></tr>
-                <tr><td>Maratona da Primavera 2027</td><td>Maratona Urbana</td><td>180</td><td>250</td><td>70</td><td><span class="status status--ok">Vagas disponíveis</span></td></tr>
-                <tr><td>Circuito Urbano 2027</td><td>Maratona Urbana</td><td>96</td><td>200</td><td>104</td><td><span class="status status--ok">Vagas disponíveis</span></td></tr>
-                <tr class="total-row"><td>Total consolidado</td><td>3 competições</td><td>576</td><td>750</td><td>174</td><td>76,8% de ocupação</td></tr>
-              </tbody>
-            </table>
+      </article>
+    </section>
+
+    <!-- JS: calcular e renderizar os totais agregados de todas as competições. -->
+    <section id="consolidated-report" role="tabpanel" hidden>
+      <div class="report-title">
+        <div>
+          <h2>Relatório geral consolidado</h2>
+          <p>Gerado em 01/08/2027 às 14:40 <span aria-hidden="true">•</span> Visualização em tela</p>
+        </div>
+        <button class="button button--primary" type="button" id="generate-consolidated">Gerar relatório</button>
+      </div>
+      <div class="overview-banner">
+        <div><strong>Todas as competições cadastradas</strong><span>3 provas <span aria-hidden="true">•</span> Todas as
+            modalidades <span aria-hidden="true">•</span> Sem filtros</span></div>
+      </div>
+      <div class="stats-grid">
+        <article><span>Competições cadastradas</span><strong>3</strong></article>
+        <article><span>Inscrições acumuladas</span><strong>576</strong></article>
+        <article><span>Limite total de vagas</span><strong>750</strong></article>
+        <article><span>Vagas disponíveis</span><strong>174</strong></article>
+      </div>
+      <section class="table-card consolidated-table">
+        <div class="card-heading">
+          <div>
+            <h2>Todas as competições cadastradas</h2>
+            <p>3 de 3 provas <span aria-hidden="true">•</span> Totais calculados sobre todas as inscrições confirmadas
+            </p>
           </div>
-        </section>
-        <section class="side-note balance-note">
-          <h2>Balanço geral: 174 vagas disponíveis</h2>
-          <strong>576 inscrições confirmadas de 750 vagas <span aria-hidden="true">•</span> 76,8% da capacidade ocupada</strong>
-          <p>Inscrições são participações em provas, não o total de atletas únicos.</p>
-        </section>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Competição</th>
+                <th>Tipo / Modalidade</th>
+                <th>Inscritos</th>
+                <th>Limite de vagas</th>
+                <th>Vagas disponíveis</th>
+                <th>Status da prova</th>
+              </tr>
+            </thead>
+            <!-- JS: substituir as linhas pelo resultado consolidado da consulta. -->
+            <tbody>
+              <tr>
+                <td>Corrida da Cidade 2027</td>
+                <td>Maratona Urbana</td>
+                <td>300</td>
+                <td>300</td>
+                <td>0</td>
+                <td><span class="status status--danger">Vagas esgotadas</span></td>
+              </tr>
+              <tr>
+                <td>Maratona da Primavera 2027</td>
+                <td>Maratona Urbana</td>
+                <td>180</td>
+                <td>250</td>
+                <td>70</td>
+                <td><span class="status status--ok">Vagas disponíveis</span></td>
+              </tr>
+              <tr>
+                <td>Circuito Urbano 2027</td>
+                <td>Maratona Urbana</td>
+                <td>96</td>
+                <td>200</td>
+                <td>104</td>
+                <td><span class="status status--ok">Vagas disponíveis</span></td>
+              </tr>
+              <tr class="total-row">
+                <td>Total consolidado</td>
+                <td>3 competições</td>
+                <td>576</td>
+                <td>750</td>
+                <td>174</td>
+                <td>76,8% de ocupação</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
-      <p class="page-note" id="report-feedback" aria-live="polite">Este relatório apresenta os dados da competição selecionada no momento da geração.</p>
-    </main>
-  </body>
+      <section class="side-note balance-note">
+        <h2>Balanço geral: 174 vagas disponíveis</h2>
+        <strong>576 inscrições confirmadas de 750 vagas <span aria-hidden="true">•</span> 76,8% da capacidade
+          ocupada</strong>
+        <p>Inscrições são participações em provas, não o total de atletas únicos.</p>
+      </section>
+    </section>
+    <p class="page-note" id="report-feedback" aria-live="polite">Este relatório apresenta os dados da competição
+      selecionada no momento da geração.</p>
+  </main>
+</body>
+
 </html>
