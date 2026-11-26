@@ -35,4 +35,15 @@ export class Urbano extends Competicao {
     get pontosLargadaChegada() {
         return this.#pontosLargadaChegada;
     }
+    get modalidade() {
+    return "Urbano";
+    }
+    get opMod() {
+        return {
+            altimetria: this.#altimetriaAcumulada,
+            percursoUrbano: this.#percursoUrbano,
+            descricaoTrajeto: this.#descricaoTrajeto,
+            pontosLargadaChegada: this.#pontosLargadaChegada,
+        };
+    }
 }

@@ -47,4 +47,17 @@ export class TrailRunning extends Competicao {
     get tipoProva() {
         return this.#tipoProva;
     }
+    get modalidade() {
+        return "Trail Running";
+    }
+    get opMod() {
+        return {
+            tipoTerreno: this.#tipoTerreno,
+            nivel: this.#nivelDificuldade,
+            quantidadeCheckpoints: this.#quantidadeCheckpoints,
+            localizacaoCheckpoints: this.#localizacaoCheckpoints,
+            tipoProva: this.#tipoProva,
+        };
+}
+    
 }
