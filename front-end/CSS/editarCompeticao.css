@@ -32,7 +32,7 @@
   font-size: 11px;
 }
 
-.competition-edit-form select {
+.competition-edit-form input[readonly] {
   width: 100%;
   min-height: 40px;
   padding: 9px 11px;
@@ -44,9 +44,9 @@
   font-size: 13px;
 }
 
-.competition-edit-form select:focus {
-  border-color: #18aea2;
-  outline: 2px solid rgb(24 174 162 / 15%);
+.competition-edit-form input[readonly] {
+  background: #f5f8f7;
+  color: #788181;
 }
 
 .competition-edit-form__actions {
@@ -68,6 +68,39 @@
   line-height: 1.5;
 }
 
+.competition-edit-form__actions .button--danger {
+  border-color: #b94a3f;
+  color: #b94a3f;
+}
+
+.competition-edit-form__actions .button--danger:hover,
+.competition-edit-form__actions .button--danger:focus-visible {
+  background: #fff0ee;
+}
+
+.competition-edit-message {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #28645e;
+  font-size: 12px;
+}
+
+.competition-edit-message--error {
+  color: #b94a3f;
+}
+
+.competition-edit-error h1 {
+  margin-bottom: 10px;
+  color: #303838;
+  font-size: 25px;
+}
+
+.competition-edit-error p {
+  margin: 0 0 18px;
+  color: #788181;
+  font-size: 13px;
+}
+
 @media (max-width: 560px) {
   .competition-edit-form {
     grid-template-columns: minmax(0, 1fr);
@@ -75,6 +108,7 @@
   }
 
   .competition-edit-form__heading,
+  .competition-edit-message,
   .competition-edit-form__actions {
     grid-column: 1;
   }

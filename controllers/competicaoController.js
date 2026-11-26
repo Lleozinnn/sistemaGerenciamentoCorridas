@@ -35,11 +35,13 @@ export class CompeticaoController {
         valorInscricao,
         modalidade,
         opMod,
+        id,
     ) {
         // opMod é um objeto com opcoes que variam de acordo com a modalidade de
         // competição escolhida.
         if (this.#modalidadesAceitas.includes(modalidade)) {
             let competicao;
+            const idCompeticao = id ?? this.#proximoIdCompeticao();
             switch (modalidade) {
                 case "Trail Running":
                     competicao = new TrailRunning(
@@ -54,6 +56,7 @@ export class CompeticaoController {
                         opMod.quantidadeCheckpoints,
                         opMod.localizacaoCheckpoints,
                         opMod.tipoProva, // Aqui já é subclasse
+                        idCompeticao,
                     );
                     break;
                 case "Urbano":
@@ -68,10 +71,18 @@ export class CompeticaoController {
                         opMod.percursoUrbano,
                         opMod.descricaoTrajeto,
                         opMod.pontosLargadaChegada, // Aqui já é subclasse
+                        idCompeticao,
                     );
                     break;
             }
             this.#vetCompeticoes.push(competicao);
+            const ultimoIdSalvo = Number(
+                localStorage.getItem("ultimoIdCompeticao") || 0,
+            );
+            localStorage.setItem(
+                "ultimoIdCompeticao",
+                String(Math.max(ultimoIdSalvo, competicao.id)),
+            );
             this.#salvarDados();
             return {
                 tipo: "SUCESSO",
@@ -98,17 +109,6 @@ export class CompeticaoController {
                 mensagem: "Vagas esgotadas.",
             };
         }
-    }
-    listarCompeticoes () {
-        const competicoes = this.#vetCompeticoes.map( competicao => {
-            return {
-                nome: competicao.nome,
-                modalidade: competicao instanceof TrailRunning ? "Trail Running" : "Maratona Urbana",
-                qtdInscritos: competicao.limiteVagas,
-                statusProva: competicao.status
-            }
-        });
-        return competicoes;
     }
     vagasDisponiveis(IdCompeticao) {
         let comp = this.buscarCompeticaoPorId(IdCompeticao);
@@ -143,6 +143,53 @@ export class CompeticaoController {
             };
         }
     }
+    editarCompeticao(
+        IdCompeticao,
+        nome,
+        local,
+        dataHorario,
+        distanciaKm,
+        limiteVagas,
+        valorInscricao,
+    ) {
+        const resultadoBusca = this.buscarCompeticaoPorId(IdCompeticao);
+        if (resultadoBusca.tipo === "ERRO") {
+            return resultadoBusca;
+        }
+
+        const competicao = resultadoBusca.competicao;
+        competicao.nome = nome;
+        competicao.local = local;
+        competicao.dataHorario = dataHorario;
+        competicao.distanciaKm = distanciaKm;
+        competicao.limiteVagas = limiteVagas;
+        competicao.valorInscricao = valorInscricao;
+        this.#salvarDados();
+
+        return {
+            tipo: "SUCESSO",
+            mensagem: "Competição editada com sucesso.",
+            competicao,
+        };
+    }
+    excluirCompeticao(IdCompeticao) {
+        const indiceCompeticao = this.#vetCompeticoes.findIndex(
+            (competicao) => competicao.id == IdCompeticao,
+        );
+        if (indiceCompeticao === -1) {
+            return {
+                tipo: "ERRO",
+                mensagem: "Competição não encontrada.",
+            };
+        }
+
+        this.#vetCompeticoes.splice(indiceCompeticao, 1);
+        this.#salvarDados();
+        return {
+            tipo: "SUCESSO",
+            mensagem: "Competição excluída com sucesso.",
+        };
+    }
     listarCompeticoes() {
         return this.#vetCompeticoes.map((competicao) => ({
             id: competicao.id,
@@ -154,6 +201,8 @@ export class CompeticaoController {
             valorInscricao: competicao.valorInscricao,
             modalidade: competicao.modalidade,
             opMod: competicao.opMod,
+            qtdInscritos: competicao.quantidadeAtletasInscritos(),
+            statusProva: competicao.status,
         }));
     }
 
@@ -180,12 +229,24 @@ export class CompeticaoController {
                 competicao.valorInscricao,
                 competicao.modalidade,
                 opcoesModalidade,
+                competicao.id,
             );
         });
+    }
+    #proximoIdCompeticao() {
+        const ultimoIdSalvo = Number(
+            localStorage.getItem("ultimoIdCompeticao") || 0,
+        );
+        const maiorIdEmMemoria = this.#vetCompeticoes.reduce(
+            (maiorId, competicao) => Math.max(maiorId, competicao.id),
+            0,
+        );
+        return Math.max(ultimoIdSalvo, maiorIdEmMemoria) + 1;
     }
     #salvarDados() {
         let competicoes = this.#vetCompeticoes.map((competicao) => {
             let objComp = {
+                id: competicao.id,
                 // Objeto com atributos da SuperClasse
                 nome: competicao.nome,
                 local: competicao.local,

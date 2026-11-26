@@ -33,46 +33,33 @@ if (formCadastroAtleta) {
         if (!nome) {
             exibirMensagem("error", "Nome obrigatório", "Informe o nome completo do atleta.");
             inNome.focus();
-            return;
-        }
-
-        if (!cpf) {
+        } else if (!cpf) {
             exibirMensagem("error", "CPF obrigatório", "Informe o CPF do atleta.");
             inCpf.focus();
-            return;
-        }
-
-        if (!nascimento) {
+        } else if (!nascimento) {
             exibirMensagem("error", "Data de nascimento obrigatória", "Informe a data de nascimento do atleta.");
             dtNascimento.focus();
-            return;
-        }
-
-        if (!nacionalidade) {
+        } else if (!nacionalidade) {
             exibirMensagem("error", "Nacionalidade obrigatória", "Informe a nacionalidade do atleta.");
             inNacionalidade.focus();
-            return;
-        }
-
-        if (!modalidade) {
+        } else if (!modalidade) {
             exibirMensagem("error", "Modalidade obrigatória", "Selecione Urbano ou Trail Running.");
-            return;
-        }
-
-        const resultado = atletaController.cadastrarAtleta(
-            nome.trim(),
-            cpf,
-            nascimento,
-            nacionalidade,
-            modalidade
-        );
-
-        if (resultado.tipo === "SUCESSO") {
-            exibirMensagem("success", "Cadastro realizado", resultado.mensagem);
-            formCadastroAtleta.reset();
         } else {
-            exibirMensagem("error", "Cadastro não realizado", resultado.mensagem);
-            inCpf.focus();
+            const resultado = atletaController.cadastrarAtleta(
+                nome,
+                cpf,
+                nascimento,
+                nacionalidade,
+                modalidade
+            );
+
+            if (resultado.tipo === "SUCESSO") {
+                exibirMensagem("success", "Cadastro realizado", resultado.mensagem);
+                formCadastroAtleta.reset();
+            } else {
+                exibirMensagem("error", "Cadastro não realizado", resultado.mensagem);
+                inCpf.focus();
+            }
         }
     });
 }
@@ -109,23 +96,19 @@ if (athleteEditForm) {
         if (!nome) {
             exibirMensagem("error", "Nome obrigatório", "Informe o nome completo do atleta.");
             athleteEditName.focus();
-            return;
-        }
-
-        if (!nacionalidade) {
+        } else if (!nacionalidade) {
             exibirMensagem("error", "Nacionalidade obrigatória", "Informe a nacionalidade do atleta.");
             athleteEditNationality.focus();
-            return;
-        }
-
-        const resultado = atletaController.editarAtleta(cpf, nome, nacionalidade);
-
-        if (resultado.tipo === "SUCESSO") {
-            exibirMensagem("success", "Edição realizada", resultado.mensagem);
-            athleteEditName.value = resultado.atleta.nome;
-            athleteEditNationality.value = resultado.atleta.nacionalidade;
         } else {
-            exibirMensagem("error", "Edição não realizada", resultado.mensagem);
+            const resultado = atletaController.editarAtleta(cpf, nome, nacionalidade);
+
+            if (resultado.tipo === "SUCESSO") {
+                exibirMensagem("success", "Edição realizada", resultado.mensagem);
+                athleteEditName.value = resultado.atleta.nome;
+                athleteEditNationality.value = resultado.atleta.nacionalidade;
+            } else {
+                exibirMensagem("error", "Edição não realizada", resultado.mensagem);
+            }
         }
     });
 }
@@ -189,22 +172,16 @@ if (athleteFilterForm) {
     athleteTableBody.addEventListener("click", (event) => {
         const button = event.target.closest("[data-delete-athlete]");
 
-        if (!button) {
-            return;
-        }
+        if (button && window.confirm("Tem certeza de que deseja excluir este atleta?")) {
+            const cpf = button.dataset.cpf;
+            const resultado = atletaController.excluirAtleta(cpf);
 
-        const cpf = button.dataset.cpf;
-        if (!window.confirm("Tem certeza de que deseja excluir este atleta?")) {
-            return;
-        }
-
-        const resultado = atletaController.excluirAtleta(cpf);
-
-        if (resultado.tipo === "SUCESSO") {
-            window.alert(resultado.mensagem);
-            athleteFilterForm.dispatchEvent(new Event("submit", { cancelable: true }));
-        } else {
-            window.alert(resultado.mensagem);
+            if (resultado.tipo === "SUCESSO") {
+                window.alert(resultado.mensagem);
+                athleteFilterForm.dispatchEvent(new Event("submit", { cancelable: true }));
+            } else {
+                window.alert(resultado.mensagem);
+            }
         }
     });
 
@@ -221,24 +198,20 @@ if (athleteFilterForm) {
             if (!atleta) {
                 athleteFilterCaption.textContent = "CPF não encontrado";
                 renderizarAtletas([]);
-                return;
+            } else {
+                const resultado = atletaController.consultarAtleta(atleta.cpf);
+
+                if (resultado.tipo === "SUCESSO") {
+                    const dados = resultado.atleta;
+                    athleteFilterCaption.textContent = `Atleta encontrado pelo CPF ${cpf}`;
+                    renderizarAtletas([atleta]);
+                    athleteDetails.hidden = false;
+                    athleteDetailsName.textContent = dados.nome;
+                    athleteDetailsInfo.textContent =
+                        `CPF: ${dados.cpf} | Data de nascimento: ${dados.dtNascimento} | Idade: ${dados.idade} | Nacionalidade: ${dados.nacionalidade} | Modalidade: ${dados.modalidade}`;
+                }
             }
-
-            const resultado = atletaController.consultarAtleta(atleta.cpf);
-
-            if (resultado.tipo === "SUCESSO") {
-                const dados = resultado.atleta;
-                athleteFilterCaption.textContent = `Atleta encontrado pelo CPF ${cpf}`;
-                renderizarAtletas([atleta]);
-                athleteDetails.hidden = false;
-                athleteDetailsName.textContent = dados.nome;
-                athleteDetailsInfo.textContent =
-                    `CPF: ${dados.cpf} | Data de nascimento: ${dados.dtNascimento} | Idade: ${dados.idade} | Nacionalidade: ${dados.nacionalidade} | Modalidade: ${dados.modalidade}`;
-            }
-            return;
-        }
-
-        if (modalidade) {
+        } else if (modalidade) {
             const resultado = atletaController.listarAtletasPorModalidade(modalidade);
 
             if (resultado.tipo === "SUCESSO") {
@@ -248,11 +221,10 @@ if (athleteFilterForm) {
                 athleteFilterCaption.textContent = resultado.mensagem;
                 renderizarAtletas([]);
             }
-            return;
+        } else {
+            athleteFilterCaption.textContent = "Nenhum filtro aplicado";
+            renderizarAtletas(atletaController.listarAtletas());
         }
-
-        athleteFilterCaption.textContent = "Nenhum filtro aplicado";
-        renderizarAtletas(atletaController.listarAtletas());
     });
 
     renderizarAtletas(atletaController.listarAtletas());

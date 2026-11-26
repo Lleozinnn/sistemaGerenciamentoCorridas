@@ -19,7 +19,7 @@
             <div class="site-nav__menu">
               <a href="consultarCompeticoes.html">Consultar competições</a>
               <a href="cadastroCompeticao.html">Cadastrar competição</a>
-              <a href="editarCompeticao.html">Editar Competição</a>
+              <a href="consultarCompeticoes.html">Editar Competição</a>
               <a href="inscricoesVagas.html">Inscrições e vagas</a>
             </div>
           </details>
@@ -47,7 +47,7 @@
       </div>
     </header>
 
-    <main class="screen">
+    <main class="screen" id="competition-edit-page" hidden>
       <div class="screen-heading">
         <h1>Editar competição</h1>
         <p>Atualize as informações gerais da competição selecionada.</p>
@@ -113,15 +113,14 @@
 
           <div class="field">
             <label for="competition-modality">Modalidade *</label>
-            <select id="competition-modality" name="modalidade" required>
-              <option value="" selected disabled>Selecionar modalidade</option>
-              <option value="Urbano">Maratona Urbana</option>
-              <option value="Trail Running">Trail Running</option>
-            </select>
+            <input id="competition-modality" type="text" readonly />
           </div>
+
+          <p class="competition-edit-message" id="competition-edit-message" role="status" aria-live="polite" hidden></p>
 
           <div class="competition-edit-form__actions">
             <a class="button button--secondary" href="consultarCompeticoes.html">Cancelar</a>
+            <button class="button button--danger" id="delete-competition" type="button">Excluir competição</button>
             <button class="button button--primary" type="submit">Salvar alterações</button>
           </div>
         </form>
@@ -129,7 +128,7 @@
         <aside class="side-stack">
           <section class="panel competition-edit-info">
             <h2>Competição selecionada</h2>
-            <p>Os dados da competição serão apresentados aqui para edição.</p>
+            <p>Confira os dados da competição antes de salvar as alterações.</p>
           </section>
           <section class="side-note">
             <h2>Antes de salvar</h2>
@@ -137,6 +136,11 @@
           </section>
         </aside>
       </div>
+    </main>
+    <main class="screen competition-edit-error" id="competition-edit-error" role="alert" hidden>
+      <h1>Não foi possível abrir a edição</h1>
+      <p id="competition-edit-error-message"></p>
+      <a class="button button--secondary" href="consultarCompeticoes.html">Voltar às competições</a>
     </main>
     <script type="module" src="../JS/editarCompeticaoView.js"></script>
   </body>

@@ -21,7 +21,7 @@
           <div class="site-nav__menu">
             <a href="consultarCompeticoes.html">Consultar competições</a>
             <a href="cadastroCompeticao.html">Cadastrar competição</a>   
-            <a href="editarCompeticao.html">Editar Competição</a>
+            <a href="consultarCompeticoes.html">Editar Competição</a>
             <a href="inscricoesVagas.html">Inscrições e vagas</a>
           </div>
         </details>
@@ -88,18 +88,7 @@
               <th>Ações</th>
             </tr>
           </thead>
-          <!-- JS: renderizar aqui os resultados e respectivos estados de vagas. -->
-          <tbody>
-            <tr>
-              <td>Corrida da Cidade 2027</td>
-              <td>Maratona Urbana</td>
-              <td>300 / 300</td>
-              <td><span class="status status--danger">Vagas esgotadas</span></td>
-              <td><a class="button button--small button--secondary" href="inscritosCompeticao.html">Ver inscritos</a>
-              </td>
-            </tr>
-
-          </tbody>
+          <tbody id="tabela-competicoes"></tbody>
         </table>
       </div>
       <div class="table-footer"><span>Exibindo todas as 3 competições</span></div>
