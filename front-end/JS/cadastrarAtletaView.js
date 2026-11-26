@@ -1,4 +1,4 @@
-import AtletaController from "../../controllers/atletaController.js";
+import  { AtletaController } from "../../controllers/atletaController.js";
 
 const atletaController = new AtletaController();
 const formCadastroAtleta = document.querySelector("#athlete-registration-form");
@@ -11,31 +11,6 @@ const btCadastrar = document.querySelector("#btCadastrar");
 const mensagemAtleta = document.querySelector("#mensagemAtleta");
 const mensagemTitulo = document.querySelector("#mensagemAtletaTitulo");
 const mensagemTexto = document.querySelector("#mensagemAtletaTexto");
-const STORAGE_KEY = "atletasCadastrados";
-
-const salvarAtletas = () => {
-    const atletas = atletaController.listarAtletas().map((atleta) => {
-        const resultado = atletaController.consultarAtleta(atleta.cpf);
-        return resultado.tipo === "SUCESSO" ? resultado.atleta : atleta;
-    });
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(atletas));
-};
-
-const carregarAtletas = () => {
-    const atletasSalvos = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "[]");
-
-    atletasSalvos.forEach((atleta) => {
-        if (!atletaController.buscarCpf(atleta.cpf)) {
-            atletaController.cadastrarAtleta(
-                atleta.nome,
-                atleta.cpf,
-                atleta.dtNascimento || "",
-                atleta.nacionalidade || "",
-                atleta.modalidade
-            );
-        }
-    });
-};
 
 const exibirMensagem = (tipo, titulo, texto) => {
     mensagemAtleta.hidden = false;
@@ -95,7 +70,6 @@ if (formCadastroAtleta) {
         if (resultado.tipo === "SUCESSO") {
             exibirMensagem("success", "Cadastro realizado", resultado.mensagem);
             formCadastroAtleta.reset();
-            salvarAtletas();
         } else {
             exibirMensagem("error", "Cadastro não realizado", resultado.mensagem);
             inCpf.focus();
@@ -107,7 +81,6 @@ const athleteFilterForm = document.querySelector("#athlete-filter-form");
 const athleteEditForm = document.querySelector("#athlete-edit-form");
 
 if (athleteEditForm) {
-    carregarAtletas();
 
     const athleteEditCpf = document.querySelector("#athlete-edit-cpf");
     const athleteEditName = document.querySelector("#athlete-edit-name");
@@ -151,7 +124,6 @@ if (athleteEditForm) {
             exibirMensagem("success", "Edição realizada", resultado.mensagem);
             athleteEditName.value = resultado.atleta.nome;
             athleteEditNationality.value = resultado.atleta.nacionalidade;
-            salvarAtletas();
         } else {
             exibirMensagem("error", "Edição não realizada", resultado.mensagem);
         }
@@ -159,7 +131,6 @@ if (athleteEditForm) {
 }
 
 if (athleteFilterForm) {
-    carregarAtletas();
 
     const athleteSearch = document.querySelector("#athlete-search");
     const athleteModality = document.querySelector("#athlete-modality");
@@ -230,7 +201,6 @@ if (athleteFilterForm) {
         const resultado = atletaController.excluirAtleta(cpf);
 
         if (resultado.tipo === "SUCESSO") {
-            salvarAtletas();
             window.alert(resultado.mensagem);
             athleteFilterForm.dispatchEvent(new Event("submit", { cancelable: true }));
         } else {
@@ -287,4 +257,5 @@ if (athleteFilterForm) {
 
     renderizarAtletas(atletaController.listarAtletas());
 }
+
 
