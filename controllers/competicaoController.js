@@ -1,10 +1,11 @@
 import { Atleta } from "../model/Atleta";
-
+import { TrailRunning } from "../model/TrailRunning";
+import { Urbano } from "../model/Urbano";
 export class competicaoController {
-    #vetCompeticoes = [];
-    
-    // Métodos
+    #vetCompeticoes = []; 
+    #modalidadesAceitas = ["Urbano", "Trail Running"]
 
+    // Métodos
     inscreverAtleta(IdCompeticao, atleta) {
         if (atleta instanceof Atleta) {
             let comp = this.#vetCompeticoes.find((competicao) => competicao.id == IdCompeticao);
@@ -19,8 +20,34 @@ export class competicaoController {
             mensagem: "A inscrição não pode ser realizada."
         }
     }
-    registrarCompeticao(nome, local, dataHorario, distancia, valor, limiteVagas) {
-
+    cadastrarCompeticao(nome, local, dataHorario, distancia, limiteVagas, valorInscricao, modalidade, opMod) {
+        // opMod é um objeto com opcoes que variam de acordo com a modalidade de
+        // competição escolhida.
+        if (this.#modalidadesAceitas.includes(modalidade)) {
+            let competicao;
+            switch (modalidade) {
+                case "Trail Running":
+                    competicao = new TrailRunning(nome, local, dataHorario, distancia, valorInscricao, limiteVagas, // Até aqui é Superclasse
+                        opMod.tipoTerreno, opMod.nivel, opMod.quantidadeCheckpoints, opMod.localizacaoCheckpoints, opMod.tipoProva // Aqui já é subclasse
+                    )
+                    break;
+                case "Urbano":
+                    competicao = new Urbano(nome, local, dataHorario, distancia, valorInscricao, limiteVagas, // Até aqui é Superclasse
+                        opMod.altimetria, opMod.percursoUrbano, opMod.descricaoTrajeto, opMod.pontosLargadaChegada // Aqui já é subclasse
+                    )
+                    break;
+            }
+            this.#vetCompeticoes.push(competicao);
+            return {
+                tipo: "SUCESSO",
+                mensagem: `${nome} foi criado com sucesso e está ativo.`
+            }
+        } else {
+            return {
+                tipo: "ERRO",
+                mensagem: "Houve um erro interno ao criar a competição"
+            }
+        }
     }
 
     atualizarStatusCompeticao(competicao, status) {
