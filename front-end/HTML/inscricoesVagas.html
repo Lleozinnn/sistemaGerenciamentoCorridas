@@ -1,86 +1,133 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inscrições e vagas</title>
-    <link rel="icon" href="../assets/competition.png" />
-    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
-    <link rel="stylesheet" href="../CSS/telasSistema.css" />
-    <!-- <script src="../JS/telasSistema.js" defer></script> -->
-    <script src="/controllers/competicaoController.js" defer></script>
-  </head>
-  <body>
-    <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
-    <header class="site-header">
-      <div class="site-header__inner">
-        <h2 class="site-header__brand">Área do organizador</h2>
-        <nav class="site-nav" aria-label="Navegação principal">
-          <details class="site-nav__group"><summary>Competições</summary><div class="site-nav__menu">
-            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
-          </div></details>
-          <details class="site-nav__group"><summary>Atletas</summary><div class="site-nav__menu">
-            <a href="consultarAtletas.html">Consultar atletas</a><a href="inscricoesAtivas.html">Inscrições ativas</a>
-          </div></details>
-          <details class="site-nav__group"><summary>Inscrições</summary><div class="site-nav__menu"><a href="inscreverAtleta.html">Inscrever atleta</a></div></details>
-          <details class="site-nav__group"><summary>Relatórios</summary><div class="site-nav__menu"><a href="relatoriosCompeticao.html">Relatórios da competição</a></div></details>
-        </nav>
-      </div>
-    </header>
 
-    <main class="screen screen--wide" id="capacity-dashboard">
-      <div class="screen-heading">
-        <h1>Inscrições e vagas</h1>
-        <p>Acompanhe a adesão dos atletas e a capacidade disponível da competição em tempo real.</p>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscrições e vagas</title>
+  <link rel="icon" href="../assets/competition.png" />
+  <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+  <link rel="stylesheet" href="../CSS/telasSistema.css" />
+  <!-- <script src="../JS/telasSistema.js" defer></script> -->
+  <script src="/controllers/competicaoController.js" defer></script>
+</head>
 
-      <div class="columns-layout capacity-layout">
-        <section class="panel capacity-main">
-          <label class="sr-only" for="capacity-competition">Competição</label>
-          <!-- JS: carregar as competições e recalcular ocupação/status ao trocar a seleção. -->
-          <select id="capacity-competition">
-            <option value="cidade" data-name="Corrida da Cidade 2027" data-modality="Maratona Urbana • São Paulo" data-participants="299" data-limit="300">Corrida da Cidade 2027</option>
-            <option value="esgotada" data-name="Corrida da Cidade 2027" data-modality="Maratona Urbana • São Paulo" data-participants="300" data-limit="300">Corrida da Cidade 2027 — lotação máxima</option>
-            <option value="primavera" data-name="Maratona da Primavera 2027" data-modality="Maratona Urbana • Vitória" data-participants="180" data-limit="250">Maratona da Primavera 2027</option>
-          </select>
-          <h2 id="capacity-name">Corrida da Cidade 2027</h2>
-          <p id="capacity-modality">Maratona Urbana <span aria-hidden="true">•</span> São Paulo</p>
-          <strong class="capacity-count" id="capacity-count">299 / 300 inscritos</strong>
-          <p id="capacity-summary">99,7% da capacidade <span aria-hidden="true">•</span> 1 vaga disponível</p>
-          <div class="progress-track" role="progressbar" aria-label="Ocupação de vagas" aria-valuemin="0" aria-valuemax="100" aria-valuenow="99.7">
-            <span id="capacity-progress"></span>
+<body>
+  <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <h2 class="site-header__brand">Área do organizador</h2>
+      <nav class="site-nav" aria-label="Navegação principal">
+        <details class="site-nav__group">
+          <summary>Competições</summary>
+          <div class="site-nav__menu">
+            <a href="consultarCompeticoes.html">Consultar competições</a><a href="cadastroCompeticao.html">Cadastrar
+              competição</a><a href="configurarModalidade.html">Configurar modalidade</a><a
+              href="inscritosCompeticao.html">Atletas inscritos</a><a href="inscricoesVagas.html">Inscrições e vagas</a>
           </div>
-          <p class="capacity-message" id="capacity-message">As inscrições permanecem abertas enquanto houver capacidade disponível.</p>
-        </section>
+        </details>
+        <details class="site-nav__group">
+          <summary>Atletas</summary>
+          <div class="site-nav__menu">
+            <a href="consultarAtletas.html">Consultar atletas</a>
+            <a href="cadastrarAtleta.html">Cadastrar atleta</a>
+            <a href="inscricoesAtivas.html">Inscrições ativas</a>
+          </div>
+        </details>
+        <details class="site-nav__group">
+          <summary>Inscrições</summary>
+          <div class="site-nav__menu"><a href="inscreverAtleta.html">Inscrever atleta</a></div>
+        </details>
+        <details class="site-nav__group">
+          <summary>Relatórios</summary>
+          <div class="site-nav__menu"><a href="relatoriosCompeticao.html">Relatórios da competição</a></div>
+        </details>
+      </nav>
+    </div>
+  </header>
 
-        <aside class="side-stack">
-          <section class="status-card status-card--ok" id="capacity-status-card">
-            <h2>Status da prova</h2>
-            <span class="status-pill" id="capacity-status">Vagas disponíveis</span>
-            <p id="capacity-status-description">A prova aceita novas inscrições. Resta 1 vaga para atingir o limite.</p>
-          </section>
-          <section class="panel update-panel">
-            <h2>Atualização automática</h2>
-            <p>Última atualização: 14:32:08</p>
-            <small>Contagem e status acompanham as inscrições confirmadas, sem atualização manual.</small>
-          </section>
-        </aside>
-      </div>
+  <main class="screen screen--wide" id="capacity-dashboard">
+    <div class="screen-heading">
+      <h1>Inscrições e vagas</h1>
+      <p>Acompanhe a adesão dos atletas e a capacidade disponível da competição em tempo real.</p>
+    </div>
 
-      <section class="table-card recent-table">
-        <div class="card-heading"><div><h2>Inscrições recentes</h2><p>Últimas confirmações da Maratona Urbana</p></div></div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Atleta</th><th>Status</th><th>Horário</th></tr></thead>
-            <!-- JS: listar as inscrições confirmadas mais recentes da competição selecionada. -->
-            <tbody>
-              <tr><td>Mariana Costa</td><td><span class="status status--ok">Confirmada</span></td><td>14:32:08</td></tr>
-              <tr><td>Ana Ribeiro</td><td><span class="status status--ok">Confirmada</span></td><td>14:30:42</td></tr>
-              <tr><td>Pedro Santos</td><td><span class="status status--ok">Confirmada</span></td><td>14:28:15</td></tr>
-            </tbody>
-          </table>
+    <div class="columns-layout capacity-layout">
+      <section class="panel capacity-main">
+        <label class="sr-only" for="capacity-competition">Competição</label>
+        <!-- JS: carregar as competições e recalcular ocupação/status ao trocar a seleção. -->
+        <select id="capacity-competition">
+          <option value="cidade" data-name="Corrida da Cidade 2027" data-modality="Maratona Urbana • São Paulo"
+            data-participants="299" data-limit="300">Corrida da Cidade 2027</option>
+          <option value="esgotada" data-name="Corrida da Cidade 2027" data-modality="Maratona Urbana • São Paulo"
+            data-participants="300" data-limit="300">Corrida da Cidade 2027 — lotação máxima</option>
+          <option value="primavera" data-name="Maratona da Primavera 2027" data-modality="Maratona Urbana • Vitória"
+            data-participants="180" data-limit="250">Maratona da Primavera 2027</option>
+        </select>
+        <h2 id="capacity-name">Corrida da Cidade 2027</h2>
+        <p id="capacity-modality">Maratona Urbana <span aria-hidden="true">•</span> São Paulo</p>
+        <strong class="capacity-count" id="capacity-count">299 / 300 inscritos</strong>
+        <p id="capacity-summary">99,7% da capacidade <span aria-hidden="true">•</span> 1 vaga disponível</p>
+        <div class="progress-track" role="progressbar" aria-label="Ocupação de vagas" aria-valuemin="0"
+          aria-valuemax="100" aria-valuenow="99.7">
+          <span id="capacity-progress"></span>
         </div>
+        <p class="capacity-message" id="capacity-message">As inscrições permanecem abertas enquanto houver capacidade
+          disponível.</p>
       </section>
-    </main>
-  </body>
+
+      <aside class="side-stack">
+        <section class="status-card status-card--ok" id="capacity-status-card">
+          <h2>Status da prova</h2>
+          <span class="status-pill" id="capacity-status">Vagas disponíveis</span>
+          <p id="capacity-status-description">A prova aceita novas inscrições. Resta 1 vaga para atingir o limite.</p>
+        </section>
+        <section class="panel update-panel">
+          <h2>Atualização automática</h2>
+          <p>Última atualização: 14:32:08</p>
+          <small>Contagem e status acompanham as inscrições confirmadas, sem atualização manual.</small>
+        </section>
+      </aside>
+    </div>
+
+    <section class="table-card recent-table">
+      <div class="card-heading">
+        <div>
+          <h2>Inscrições recentes</h2>
+          <p>Últimas confirmações da Maratona Urbana</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Atleta</th>
+              <th>Status</th>
+              <th>Horário</th>
+            </tr>
+          </thead>
+          <!-- JS: listar as inscrições confirmadas mais recentes da competição selecionada. -->
+          <tbody>
+            <tr>
+              <td>Mariana Costa</td>
+              <td><span class="status status--ok">Confirmada</span></td>
+              <td>14:32:08</td>
+            </tr>
+            <tr>
+              <td>Ana Ribeiro</td>
+              <td><span class="status status--ok">Confirmada</span></td>
+              <td>14:30:42</td>
+            </tr>
+            <tr>
+              <td>Pedro Santos</td>
+              <td><span class="status status--ok">Confirmada</span></td>
+              <td>14:28:15</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+
 </html>

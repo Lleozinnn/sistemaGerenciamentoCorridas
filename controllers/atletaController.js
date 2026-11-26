@@ -1,4 +1,4 @@
-import Atleta from "../model/Atleta.js";
+import  { Atleta } from "../model/Atleta.js";
 export default class AtletaController {
     #vetAtletas;
     constructor() {
