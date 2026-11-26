@@ -13,12 +13,12 @@ export class Competicao {
     #atletasInscritos;
 
     constructor(nome, local, dataHorario, distanciaKm = 0.0, valorInscricao = 0.0, limiteVagas = 1) {
-        this.nome = nome;
-        this.local = local;
-        this.dataHorario = dataHorario;
-        this.distanciaKm = distanciaKm;
-        this.valorInscricao = valorInscricao;
-        this.limiteVagas = limiteVagas;
+        this.#nome = nome;
+        this.#local = local;
+        this.#dataHorario = dataHorario;
+        this.#distanciaKm = distanciaKm;
+        this.#valorInscricao = valorInscricao;
+        this.#limiteVagas = limiteVagas;
         this.#status = "Aberta";
         this.#atletasInscritos = [];
     }

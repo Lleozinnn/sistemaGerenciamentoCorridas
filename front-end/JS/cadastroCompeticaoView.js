@@ -11,3 +11,9 @@ import { CompeticaoController } from "../../controllers/competicaoController.js"
 // O controller deverá ser chamado apenas para realizar as operações dispostas em cada método.
 
 const competicaoController = new CompeticaoController();
+console.log(competicaoController.cadastrarCompeticao("teste", "teste4", "teste", "teste", "teste", "teste", "Urbano", {
+    altimetria: "123",
+    percursoUrbano: "teste",
+    descricaoTrajeto: "teste",
+    pontosLargadaChegada: "teste"
+}))

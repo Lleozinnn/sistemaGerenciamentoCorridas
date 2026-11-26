@@ -18,10 +18,10 @@ export class Urbano extends Competicao {
         pontosLargadaChegada = ""
     ) {
         super(nome, local, dataHorario, distanciaKm, valorInscricao, limiteVagas);
-        this.altimetriaAcumulada = altimetriaAcumulada;
-        this.percursoUrbano = percursoUrbano;
-        this.descricaoTrajeto = descricaoTrajeto;
-        this.pontosLargadaChegada = pontosLargadaChegada;
+        this.#altimetriaAcumulada = altimetriaAcumulada;
+        this.#percursoUrbano = percursoUrbano;
+        this.#descricaoTrajeto = descricaoTrajeto;
+        this.#pontosLargadaChegada = pontosLargadaChegada;
     }
     get altimetriaAcumulada() {
         return this.#altimetriaAcumulada;
