@@ -62,35 +62,48 @@
         </article>
 
         <div class="nomeComp">
-          <label for="">Nome da competição</label>
-          <input type="text" placeholder="Ex.: Corrida da Cidade 2027" />
+          <label for="competition-name">Nome da competição</label>
+          <input
+            id="competition-name"
+            type="text"
+            placeholder="Ex.: Corrida da Cidade 2027"
+          />
         </div>
         <div class="localComp">
-          <label for="">Local / Endereço</label>
+          <label for="competition-location">Local / Endereço</label>
           <input
+            id="competition-location"
             type="text"
             placeholder="Informe o local, a rua, o número e a cidade"
           />
         </div>
         <div>
-          <label for="">Data e Horário</label>
-          <input type="datetime-local" />
+          <label for="competition-date">Data e Horário</label>
+          <input id="competition-date" type="datetime-local" />
           <small>Deve ser posterior ao momento do cadastro.</small>
         </div>
         <div>
-          <label for=""> Distância</label>
-          <input type="number" placeholder="Ex.: 5" />
+          <label for="competition-distance">Distância</label>
+          <input
+            id="competition-distance"
+            type="number"
+            placeholder="Ex.: 5"
+          />
           <span>KM</span>
         </div>
         <div>
-          <label for="">Número máximo de vagas</label>
-          <input type="number" placeholder="Ex.: 300" />
+          <label for="competition-capacity">Número máximo de vagas</label>
+          <input
+            id="competition-capacity"
+            type="number"
+            placeholder="Ex.: 300"
+          />
           <small>Somente número inteiro maior que zero.</small>
           <span>Vagas</span>
         </div>
         <div>
-          <label for="">Valor da inscrição</label>
-          <input type="number" placeholder="0,00" />
+          <label for="registration-fee">Valor da inscrição</label>
+          <input id="registration-fee" type="number" placeholder="0,00" />
           <small>Informe o valor em reais.</small>
           <span>R$</span>
         </div>
