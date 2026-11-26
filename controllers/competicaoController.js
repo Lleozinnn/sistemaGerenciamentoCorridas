@@ -79,7 +79,6 @@ export class CompeticaoController {
             };
         }
     }
-
     atualizarStatusCompeticao(competicao, status) {
         let comp = this.buscarCompeticaoPorId(competicao.id);
         if (comp != undefined) {
