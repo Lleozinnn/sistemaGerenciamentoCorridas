@@ -1,6 +1,5 @@
 import { CompeticaoController } from "../../controllers/competicaoController.js";
 
-const STORAGE_KEY = "atletasCadastrados";
 
 const athleteSelect = document.querySelector("#enrollment-athlete");
 const competitionSelect = document.querySelector("#enrollment-competition");
@@ -8,7 +7,7 @@ const athleteSummary = document.querySelector("#athlete-summary");
 const competitionSummary = document.querySelector("#competition-summary");
 const changeSelection = document.querySelector("#change-selection");
 
-const athletes = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "[]");
+const athletes = JSON.parse(localStorage.getItem("atletas") || "[]");
 
 athletes.forEach((athlete) => {
     const option = document.createElement("option");

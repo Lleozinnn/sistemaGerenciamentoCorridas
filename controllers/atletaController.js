@@ -1,8 +1,9 @@
 import  { Atleta } from "../model/Atleta.js";
-export default class AtletaController {
+export class AtletaController {
     #vetAtletas;
     constructor() {
         this.#vetAtletas = [];
+        this.carregarAtletas();
     }
     cadastrarAtleta(nome, cpf, dtNascimento, nacionalidade, modalidade) {
         if (this.buscarCpf(cpf) !== undefined) {
@@ -25,6 +26,7 @@ export default class AtletaController {
             modalidade
         );
         this.#vetAtletas.push(novoAtleta);
+        this.salvarAtletas();
         return {
             tipo: "SUCESSO",
             mensagem: "Novo atleta cadastrado com sucesso"
@@ -74,6 +76,7 @@ export default class AtletaController {
         }
         atleta.nome = nome;
         atleta.nacionalidade = nacionalidade;
+        this.salvarAtletas();
 
         return {
             tipo: "SUCESSO",
@@ -96,6 +99,7 @@ export default class AtletaController {
         );
         if (indAtletaExcluido != -1) {
             this.#vetAtletas.splice(indAtletaExcluido, 1)
+            this.salvarAtletas();
             return {
                 tipo: "SUCESSO",
                 mensagem: "Atleta excluido com sucesso!"
@@ -151,5 +155,21 @@ export default class AtletaController {
             mensagem: "Atletas encontrados com sucesso!",
             atletas: this.#vetAtletas.filter((atleta) => atleta.modalidade === modalidade)
         };
+    }
+    salvarAtletas() {
+        const atletas = this.#vetAtletas.map((atleta) => ({
+            nome: atleta.nome,
+            cpf: atleta.cpf,
+            dtNascimento: atleta.dtNascimento,
+            nacionalidade: atleta.nacionalidade,
+            modalidade: atleta.modalidade
+        }));
+        localStorage.setItem("atletas", JSON.stringify(atletas));
+    }
+        carregarAtletas() {
+        const atletas = JSON.parse(localStorage.getItem("atletas")) || [];
+        this.#vetAtletas = atletas.map((a) =>
+            new Atleta(a.nome, a.cpf, a.dtNascimento, a.nacionalidade, a.modalidade)
+        );
     }
 }
