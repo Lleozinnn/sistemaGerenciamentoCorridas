@@ -98,4 +98,45 @@ export class competicaoController {
             }
         }
     }
+
+    #carregarDados () {
+        const competicoes = JSON.parse(localStorage.getItem("competicoes"))
+        this.#vetCompeticoes = [];
+        competicoes.forEach( competicao => {
+            this.cadastrarCompeticao(competicao.nome, competicao.local, competicao.dataHorario, competicao.distancia,
+                competicao.limiteVagas, competicao.valorInscricao, competicao.modalidade, competicao.opMod
+            )
+        })
+    }
+    #salvarDados () {
+        let competicoes = this.#vetCompeticoes.map(competicao => {
+            let objComp = { // Objeto com atributos da SuperClasse
+                    nome: competicao.nome,
+                    local: competicao.local,
+                    dataHorario: competicao.dataHorario,
+                    distancia: competicao.distancia,
+                    valorInscricao: competicao.valorInscricao,
+                    limiteVagas: competicao.limiteVagas
+                }
+                // Complementação com atributos da subclasse conforme a modalidade da competicao
+                objComp.opMod = {};
+            if (competicao instanceof Urbano) {
+                objComp.modalidade = "Urbano";
+                objComp.opMod.altimetria = competicao.altimetriaAcumulada;
+                objComp.opMod.percursoUrbano = competicao.percursoUrbano;
+                objComp.opMod.descricaoTrajeto = competicao.descricaoTrajeto;
+                objComp.opMod.pontosLargadaChegada = competicao.pontosLargadaChegada;
+            }
+            else {
+                objComp.modalidade = "Trail Running";
+                objComp.opMod.tipoTerreno = competicao.tipoTerreno;
+                objComp.opMod.nivel = competicao.nivel;
+                objComp.opMod.quantidadeCheckpoints = competicao.quantidadeCheckpoints;
+                objComp.opMod.localizacaoCheckpoints = competicao.localizacaoCheckpoints;
+                objComp.opMod.tipoProva = competicao.tipoProva;
+            }
+            return objComp;
+        });
+        localStorage.setItem("competicoes", JSON.stringify(competicoes))
+    }
 }
