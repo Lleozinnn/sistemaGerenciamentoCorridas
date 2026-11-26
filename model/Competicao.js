@@ -21,6 +21,7 @@ export class Competicao {
         this.#limiteVagas = limiteVagas;
         this.#status = "Aberta";
         this.#atletasInscritos = [];
+        this.#id = ++Competicao.#qtCompeticoes;
     }
     get id() {
         return this.#id;
