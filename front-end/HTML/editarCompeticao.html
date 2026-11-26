@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar competição</title>
+    <link rel="icon" href="../assets/competition.png" />
+    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+    <link rel="stylesheet" href="../CSS/telasSistema.css" />
+    <link rel="stylesheet" href="../CSS/editarCompeticao.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h2 class="site-header__brand">Área do organizador</h2>
+        <nav class="site-nav" aria-label="Navegação principal">
+          <details class="site-nav__group">
+            <summary>Competições</summary>
+            <div class="site-nav__menu">
+              <a href="consultarCompeticoes.html">Consultar competições</a>
+              <a href="cadastroCompeticao.html">Cadastrar competição</a>
+              <a href="editarCompeticao.html">Editar Competição</a>
+              <a href="inscricoesVagas.html">Inscrições e vagas</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Atletas</summary>
+            <div class="site-nav__menu">
+              <a href="consultarAtletas.html">Consultar atletas</a>
+              <a href="cadastrarAtleta.html">Cadastrar atleta</a>
+              <a href="inscricoesAtivas.html">Inscrições ativas</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Inscrições</summary>
+            <div class="site-nav__menu">
+              <a href="inscreverAtleta.html">Inscrever atleta</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Relatórios</summary>
+            <div class="site-nav__menu">
+              <a href="relatoriosCompeticao.html">Relatórios da competição</a>
+            </div>
+          </details>
+        </nav>
+      </div>
+    </header>
+
+    <main class="screen">
+      <div class="screen-heading">
+        <h1>Editar competição</h1>
+        <p>Atualize as informações gerais da competição selecionada.</p>
+      </div>
+
+      <div class="columns-layout competition-edit-layout">
+        <form class="panel competition-edit-form" id="competition-edit-form">
+          <div class="competition-edit-form__heading">
+            <h2>Dados da competição</h2>
+            <small>Os campos marcados com * são obrigatórios.</small>
+          </div>
+
+          <div class="field">
+            <label for="competition-name">Nome da competição *</label>
+            <input id="competition-name" name="nome" type="text" required />
+          </div>
+
+          <div class="field">
+            <label for="competition-location">Local / Endereço *</label>
+            <input id="competition-location" name="local" type="text" required />
+          </div>
+
+          <div class="field">
+            <label for="competition-date">Data e horário *</label>
+            <input id="competition-date" name="data" type="datetime-local" required />
+          </div>
+
+          <div class="field">
+            <label for="competition-distance">Distância (km) *</label>
+            <input
+              id="competition-distance"
+              name="distancia"
+              type="number"
+              min="0.01"
+              step="any"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="competition-capacity">Número máximo de vagas *</label>
+            <input
+              id="competition-capacity"
+              name="limite"
+              type="number"
+              min="1"
+              step="1"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="registration-fee">Valor da inscrição (R$) *</label>
+            <input
+              id="registration-fee"
+              name="valorInscricao"
+              type="number"
+              min="0"
+              step="any"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="competition-modality">Modalidade *</label>
+            <select id="competition-modality" name="modalidade" required>
+              <option value="" selected disabled>Selecionar modalidade</option>
+              <option value="Urbano">Maratona Urbana</option>
+              <option value="Trail Running">Trail Running</option>
+            </select>
+          </div>
+
+          <div class="competition-edit-form__actions">
+            <a class="button button--secondary" href="consultarCompeticoes.html">Cancelar</a>
+            <button class="button button--primary" type="submit">Salvar alterações</button>
+          </div>
+        </form>
+
+        <aside class="side-stack">
+          <section class="panel competition-edit-info">
+            <h2>Competição selecionada</h2>
+            <p>Os dados da competição serão apresentados aqui para edição.</p>
+          </section>
+          <section class="side-note">
+            <h2>Antes de salvar</h2>
+            <p>Confira os dados atualizados antes de confirmar as alterações.</p>
+          </section>
+        </aside>
+      </div>
+    </main>
+    <script type="module" src="../JS/editarCompeticaoView.js"></script>
+  </body>
+</html>
