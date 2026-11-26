@@ -65,6 +65,7 @@ export class Competicao {
         this.#status = status;
     }
 
+<<<<<<< HEAD
     // inscreverAtleta(atleta) {
     //     if () {
 
@@ -107,5 +108,13 @@ export class Competicao {
         relatorio += `Total de Atletas Inscritos: ${this.#atletasInscritos.length}\n`;
 
         return relatorio;
+=======
+    inscreverAtleta (atleta) {
+        if (atleta instanceof Atleta) {
+            this.#atletasInscritos.push(atleta);
+            return true;
+        }
+        return false;
+>>>>>>> 627778ac01462a91edc334e302181db58db3e50d
     }
 }  
