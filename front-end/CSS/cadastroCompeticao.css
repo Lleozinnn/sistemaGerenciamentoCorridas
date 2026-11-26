@@ -114,6 +114,116 @@ main form > div span {
   grid-column: span 2;
 }
 
+.modality-select {
+  grid-column: span 2;
+}
+
+.modality-select select,
+.specific-fields input,
+.specific-fields textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid #cbd6d5;
+  border-radius: 6px;
+  background: #fff;
+  color: #374342;
+  font: inherit;
+  font-size: 13px;
+}
+
+.modality-select select:focus,
+.specific-fields input:focus,
+.specific-fields textarea:focus {
+  border-color: #18aea2;
+  outline: 2px solid rgb(24 174 162 / 16%);
+}
+
+.specific-fields {
+  display: flex;
+  min-width: 0;
+  grid-column: span 2;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid #e8eeee;
+}
+
+.specific-fields[hidden],
+.modality-fields[hidden] {
+  display: none;
+}
+
+.modality-fields {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-heading {
+  margin-bottom: 2px;
+}
+
+.section-heading h3 {
+  margin-bottom: 5px;
+  color: #245b56;
+  font-size: 17px;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #788181;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.specific-fields .field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.specific-fields .field label {
+  color: #374240;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.specific-fields .field small {
+  color: #788181;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.specific-fields textarea {
+  min-height: 82px;
+  resize: vertical;
+}
+
+.field-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-message {
+  grid-column: span 2;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.form-message--error {
+  color: #b94a3f;
+}
+
+.form-message--success {
+  color: #28645e;
+}
+
 .actions {
   display: flex;
   grid-column: span 2;
@@ -228,6 +338,9 @@ main > section article span {
   main form > article,
   .nomeComp,
   .localComp,
+  .modality-select,
+  .specific-fields,
+  .form-message,
   .actions {
     grid-column: 1;
   }
@@ -238,6 +351,10 @@ main > section article span {
   }
 
   main > section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .field-pair {
     grid-template-columns: minmax(0, 1fr);
   }
 

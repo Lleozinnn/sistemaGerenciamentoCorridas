@@ -5,6 +5,10 @@ export class CompeticaoController {
     #vetCompeticoes = [];
     #modalidadesAceitas = ["Urbano", "Trail Running"];
 
+    constructor() {
+        this.#carregarDados();
+    }
+
     // Métodos
     inscreverAtleta(IdCompeticao, atleta) {
         if (atleta instanceof Atleta) {
@@ -68,6 +72,7 @@ export class CompeticaoController {
                     break;
             }
             this.#vetCompeticoes.push(competicao);
+            this.#salvarDados();
             return {
                 tipo: "SUCESSO",
                 mensagem: `${nome} foi criado com sucesso e está ativo.`,
@@ -153,18 +158,28 @@ export class CompeticaoController {
     }
 
     #carregarDados() {
-        const competicoes = JSON.parse(localStorage.getItem("competicoes"));
+        const competicoes = JSON.parse(
+            localStorage.getItem("competicoes") || "[]",
+        );
         this.#vetCompeticoes = [];
         competicoes.forEach((competicao) => {
+            const opcoesModalidade = { ...competicao.opMod };
+            if (
+                competicao.modalidade === "Trail Running" &&
+                opcoesModalidade.nivelDificuldade === undefined
+            ) {
+                opcoesModalidade.nivelDificuldade = opcoesModalidade.nivel;
+            }
+
             this.cadastrarCompeticao(
                 competicao.nome,
                 competicao.local,
                 competicao.dataHorario,
-                competicao.distancia,
+                competicao.distanciaKm,
                 competicao.limiteVagas,
                 competicao.valorInscricao,
                 competicao.modalidade,
-                competicao.opMod,
+                opcoesModalidade,
             );
         });
     }
@@ -190,7 +205,7 @@ export class CompeticaoController {
             } else {
                 objComp.modalidade = "Trail Running";
                 objComp.opMod.tipoTerreno = competicao.tipoTerreno;
-                objComp.opMod.nivel = competicao.nivel;
+                objComp.opMod.nivelDificuldade = competicao.nivelDificuldade;
                 objComp.opMod.quantidadeCheckpoints = competicao.quantidadeCheckpoints;
                 objComp.opMod.localizacaoCheckpoints =
                     competicao.localizacaoCheckpoints;
