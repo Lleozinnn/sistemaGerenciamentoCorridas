@@ -2,7 +2,7 @@ import { CompeticaoController } from "../../controllers/competicaoController.js"
 
 const competicaoController = new CompeticaoController();
 
-console.log(competicaoController.listarCompeticoes() + "Lisstou");
+console.log(competicaoController.listarCompeticoes());
 
 const competicoes = competicaoController.listarCompeticoes();
 
@@ -16,8 +16,8 @@ competicoes.forEach((competicao) => {
               <td>${competicao.inscritos} / ${competicao.limite}</td>
               <td>${competicao.statusProva}</td>
               <td>
-                <button class="btn btn-primary">Editar</button>
-                <button class="btn btn-danger">Excluir</button>
+                <button id="editar" class="btn btn-primary">Editar</button>
+                <button id="excluir" class="btn btn-danger">Excluir</button>
               </td>
     </tr>`;
     tabelaCompeticoes.innerHTML += linha;
