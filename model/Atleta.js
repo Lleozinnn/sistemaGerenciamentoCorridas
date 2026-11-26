@@ -1,4 +1,4 @@
-export default class Atleta {
+export class Atleta {
     static qtAtletas = 0;
     #id;
     #nome;

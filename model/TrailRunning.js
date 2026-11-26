@@ -1,4 +1,4 @@
-import Competicao from "./Competicao.js";
+import { Competicao } from "./Competicao.js";
 
 export class TrailRunning extends Competicao {
     #tipoTerreno;
@@ -21,11 +21,11 @@ export class TrailRunning extends Competicao {
         tipoProva = "Velocidade"
     ) {
         super(nome, local, dataHorario, distanciaKm, valorInscricao, limiteVagas);
-        this.tipoTerreno = tipoTerreno;
-        this.nivelDificuldade = nivelDificuldade;
-        this.quantidadeCheckpoints = quantidadeCheckpoints;
-        this.localizacaoCheckpoints = localizacaoCheckpoints;
-        this.tipoProva = tipoProva;
+        this.#tipoTerreno = tipoTerreno;
+        this.#nivelDificuldade = nivelDificuldade;
+        this.#quantidadeCheckpoints = quantidadeCheckpoints;
+        this.#localizacaoCheckpoints = localizacaoCheckpoints;
+        this.#tipoProva = tipoProva;
     }
 
     get tipoTerreno() {
