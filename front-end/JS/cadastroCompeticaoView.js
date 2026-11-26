@@ -16,7 +16,17 @@ const inPercursoUrbano = document.querySelector("#route");
 const areaDescricaoTrajeto = document.querySelector("#route-description");
 const inPontoLargada = document.querySelector("#start-point");
 const inLinhaChegada = document.querySelector("#finish-point");
-const areaZonasVelocidade = document.querySelector("#speed-zones");
+const inTipoTerreno = document.querySelector("#tipoTerreno");
+const inNivelDificuldade = document.querySelector("#nivelDificuldade");
+const inQuantidadeCheckpoints = document.querySelector("#quantidadeCheckpoints");
+const areaLocalizacaoCheckpoints = document.querySelector("#localizacaoCheckpoints");
+const inTipoProva = document.querySelector("#tipoProva");
+const secaoCamposEspecificos = document.querySelector(".specific-fields");
+const tituloModalidade = document.querySelector("#modality-title");
+const camposUrbanos = document.querySelector("#urban-fields");
+const camposTrail = document.querySelector("#trail-fields");
+const btCadastrar = document.querySelector("#btCadastrar");
+const btLimpar = document.querySelector("#btLimpar");
 
 // Inicialize o controller aqui e carregue os dados do localStorage
 
@@ -32,6 +42,25 @@ console.log(competicaoController.cadastrarCompeticao("teste", "teste4", "teste",
     pontosLargadaChegada: "teste"
 }))
 
-selectModalidade.addEventListener("change", event => {
-    
+function atualizarCamposModalidade() {
+    // Lógica de solicitar campos diferentes de acordo com a modalidade selecionada.
+
+    const modalidade = selectModalidade.value;
+    const mostrarCamposUrbanos = modalidade === "Urbano";
+    const mostrarCamposTrail = modalidade === "Trail Running";
+
+    secaoCamposEspecificos.hidden = !mostrarCamposUrbanos && !mostrarCamposTrail;
+    camposUrbanos.hidden = !mostrarCamposUrbanos;
+    camposTrail.hidden = !mostrarCamposTrail;
+    tituloModalidade.textContent = mostrarCamposUrbanos ? "Maratona Urbana" : "Trail Running";
+}
+
+selectModalidade.addEventListener("change", atualizarCamposModalidade);
+
+btCadastrar.addEventListener("click", event => { // Quando clicado o botão de cadastrar competição
+    // Lógica de validação de informações e efetivação do cadastro
+})
+
+btLimpar.addEventListener("click", event => { // Quando clicado o botão de Limpar dados do formulário
+    // Limnpeza dos campos de input do formulário
 })

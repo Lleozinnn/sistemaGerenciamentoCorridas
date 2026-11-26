@@ -111,96 +111,143 @@
             <label for="modality">Modalidade *</label>
             <!-- JS: carregar as modalidades disponíveis e atualizar os campos específicos ao selecionar. -->
             <select id="modality" name="modality" required>
-              <option value="maratona-urbana" selected>Maratona Urbana</option>
-              <option value="trail-running" selected>Trail Running</option>
+              <option value="" selected disabled>Selecionar modalidade</option>
+              <option value="Urbano">Maratona Urbana</option>
+              <option value="Trail Running">Trail Running</option>
             </select>
         </div>
-        <section class="specific-fields" aria-labelledby="urban-title">
-            <!-- JS: renderizar aqui os campos correspondentes à modalidade escolhida. -->
+        <section class="specific-fields" aria-labelledby="modality-title" hidden>
             <div class="section-heading">
-              <h3 id="urban-title">Maratona Urbana</h3>
+              <h3 id="modality-title"></h3>
               <p>Campos exibidos para esta modalidade. Todos são obrigatórios.</p>
             </div>
 
-            <div class="field">
-              <label for="elevation">Altimetria acumulada (m) *</label>
-              <input
-                id="elevation"
-                name="elevation"
-                type="number"
-                min="0"
-                step="any"
-                placeholder="Ex.: 320"
-                required
-              />
-              <small>Informe o desnível positivo acumulado do percurso, em metros.</small>
-            </div>
-
-            <div class="field">
-              <label for="route">Percurso Urbano (vias/ruas principais) *</label>
-              <input
-                id="route"
-                name="route"
-                type="text"
-                placeholder="Informe as avenidas, ruas e vias principais"
-                required
-              />
-              <small>Liste as vias na ordem em que serão percorridas.</small>
-            </div>
-
-            <div class="field">
-              <label for="route-description">Descrição detalhada do trajeto *</label>
-              <textarea
-                id="route-description"
-                name="route-description"
-                rows="3"
-                placeholder="Descreva o trajeto da largada à chegada, incluindo cruzamentos, curvas, retornos e características do piso."
-                required
-              ></textarea>
-            </div>
-
-            <div class="field-pair">
+            <div class="modality-fields" id="urban-fields" hidden>
               <div class="field">
-                <label for="start-point">Ponto de largada *</label>
+                <label for="elevation">Altimetria acumulada (m) *</label>
                 <input
-                  id="start-point"
-                  name="start-point"
-                  type="text"
-                  placeholder="Informe o ponto e o endereço"
+                  id="elevation"
+                  name="elevation"
+                  type="number"
+                  min="0"
+                  step="any"
+                  placeholder="Ex.: 320"
                   required
                 />
-                <small>Indique o posicionamento inicial para saída fluida.</small>
+                <small>Informe o desnível positivo acumulado do percurso, em metros.</small>
               </div>
+
               <div class="field">
-                <label for="finish-point">Linha de chegada *</label>
+                <label for="route">Percurso Urbano (vias/ruas principais) *</label>
                 <input
-                  id="finish-point"
-                  name="finish-point"
+                  id="route"
+                  name="route"
                   type="text"
-                  placeholder="Informe o ponto e o endereço"
+                  placeholder="Informe as avenidas, ruas e vias principais"
                   required
                 />
-                <small>Descreva a reta final e a área de desaceleração.</small>
+                <small>Liste as vias na ordem em que serão percorridas.</small>
+              </div>
+
+              <div class="field">
+                <label for="route-description">Descrição detalhada do trajeto *</label>
+                <textarea
+                  id="route-description"
+                  name="route-description"
+                  rows="3"
+                  placeholder="Descreva o trajeto da largada à chegada, incluindo cruzamentos, curvas, retornos e características do piso."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="field-pair">
+                <div class="field">
+                  <label for="start-point">Ponto de largada *</label>
+                  <input
+                    id="start-point"
+                    name="start-point"
+                    type="text"
+                    placeholder="Informe o ponto e o endereço"
+                    required
+                  />
+                  <small>Indique o posicionamento inicial para saída fluida.</small>
+                </div>
+                <div class="field">
+                  <label for="finish-point">Linha de chegada *</label>
+                  <input
+                    id="finish-point"
+                    name="finish-point"
+                    type="text"
+                    placeholder="Informe o ponto e o endereço"
+                    required
+                  />
+                  <small>Descreva a reta final e a área de desaceleração.</small>
+                </div>
               </div>
             </div>
 
-            <div class="field">
-              <label for="speed-zones">Zonas de velocidade *</label>
-              <textarea
-                id="speed-zones"
-                name="speed-zones"
-                rows="2"
-                placeholder="Indique os trechos por quilômetro ou referência urbana, com foco em aceleração, ritmo e sprint final."
-                required
-              ></textarea>
-              <small>
-                Relacione as zonas de velocidade aos pontos de largada e chegada.
-              </small>
+            <div class="modality-fields" id="trail-fields" hidden>
+              <div class="field">
+                <label for="tipoTerreno">Tipo de terreno *</label>
+                <input
+                  id="tipoTerreno"
+                  name="tipoTerreno"
+                  type="text"
+                  placeholder="Ex.: trilha, terra e rochas"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="nivelDificuldade">Nível de dificuldade *</label>
+                <input
+                  id="nivelDificuldade"
+                  name="nivelDificuldade"
+                  type="text"
+                  placeholder="Ex.: Fácil, Médio ou Difícil"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="quantidadeCheckpoints">Quantidade de checkpoints *</label>
+                <input
+                  id="quantidadeCheckpoints"
+                  name="quantidadeCheckpoints"
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="Ex.: 5"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="localizacaoCheckpoints">Localização dos checkpoints *</label>
+                <textarea
+                  id="localizacaoCheckpoints"
+                  name="localizacaoCheckpoints"
+                  rows="3"
+                  placeholder="Descreva a localização de cada checkpoint"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="field">
+                <label for="tipoProva">Tipo de prova *</label>
+                <input
+                  id="tipoProva"
+                  name="tipoProva"
+                  type="text"
+                  placeholder="Ex.: Velocidade"
+                  required
+                />
+              </div>
             </div>
           </section>
         <div class="actions">
-          <button>Cancelar</button>
-          <button>Cadastrar evento</button>
+          <button id="btLimpar">Limpar</button>
+          <button id="btCadastrar">Cadastrar Competição</button>
         </div>
       </form>
       <!-- JS: substituir as mensagens fixas pelo retorno da criação ou por erros de validação. -->

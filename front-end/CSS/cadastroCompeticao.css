@@ -150,6 +150,18 @@ main form > div span {
   border-top: 1px solid #e8eeee;
 }
 
+.specific-fields[hidden],
+.modality-fields[hidden] {
+  display: none;
+}
+
+.modality-fields {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .section-heading {
   margin-bottom: 2px;
 }
