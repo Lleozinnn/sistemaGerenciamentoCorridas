@@ -67,6 +67,7 @@
             id="competition-name"
             type="text"
             placeholder="Ex.: Corrida da Cidade 2027"
+            required
           />
         </div>
         <div class="localComp">
@@ -75,11 +76,12 @@
             id="competition-location"
             type="text"
             placeholder="Informe o local, a rua, o número e a cidade"
+            required
           />
         </div>
         <div>
           <label for="competition-date">Data e Horário</label>
-          <input id="competition-date" type="datetime-local" />
+          <input id="competition-date" type="datetime-local" required />
           <small>Deve ser posterior ao momento do cadastro.</small>
         </div>
         <div>
@@ -87,7 +89,10 @@
           <input
             id="competition-distance"
             type="number"
+            min="0.01"
+            step="any"
             placeholder="Ex.: 5"
+            required
           />
           <span>KM</span>
         </div>
@@ -96,14 +101,24 @@
           <input
             id="competition-capacity"
             type="number"
+            min="1"
+            step="1"
             placeholder="Ex.: 300"
+            required
           />
           <small>Somente número inteiro maior que zero.</small>
           <span>Vagas</span>
         </div>
         <div>
           <label for="registration-fee">Valor da inscrição</label>
-          <input id="registration-fee" type="number" placeholder="0,00" />
+          <input
+            id="registration-fee"
+            type="number"
+            min="0"
+            step="any"
+            placeholder="0,00"
+            required
+          />
           <small>Informe o valor em reais.</small>
           <span>R$</span>
         </div>
@@ -245,9 +260,16 @@
               </div>
             </div>
           </section>
+        <p
+          id="competition-form-message"
+          class="form-message"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></p>
         <div class="actions">
-          <button id="btLimpar">Limpar</button>
-          <button id="btCadastrar">Cadastrar Competição</button>
+          <button id="btLimpar" type="button">Limpar</button>
+          <button id="btCadastrar" type="button">Cadastrar Competição</button>
         </div>
       </form>
       <!-- JS: substituir as mensagens fixas pelo retorno da criação ou por erros de validação. -->

@@ -209,6 +209,21 @@ main form > div span {
   gap: 16px;
 }
 
+.form-message {
+  grid-column: span 2;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.form-message--error {
+  color: #b94a3f;
+}
+
+.form-message--success {
+  color: #28645e;
+}
+
 .actions {
   display: flex;
   grid-column: span 2;
@@ -325,6 +340,7 @@ main > section article span {
   .localComp,
   .modality-select,
   .specific-fields,
+  .form-message,
   .actions {
     grid-column: 1;
   }
