@@ -95,7 +95,17 @@ export class CompeticaoController {
             };
         }
     }
-
+    listarCompeticoes () {
+        const competicoes = this.#vetCompeticoes.map( competicao => {
+            return {
+                nome: competicao.nome,
+                modalidade: competicao instanceof TrailRunning ? "Trail Running" : "Maratona Urbana",
+                qtdInscritos: competicao.limiteVagas,
+                statusProva: competicao.status
+            }
+        });
+        return competicoes;
+    }
     vagasDisponiveis(IdCompeticao) {
         let comp = this.buscarCompeticaoPorId(IdCompeticao);
         if (comp.tipo == "SUCESSO") {
