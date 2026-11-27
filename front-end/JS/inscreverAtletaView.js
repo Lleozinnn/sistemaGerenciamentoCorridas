@@ -34,7 +34,7 @@ function atualizarResumoAtleta() {
         btInscricao.disabled = false;
         btInscricao.style.backgroundColor = "rgb(24, 174, 162)";
     }
-
+}
 // Atualiza o resumo da modalidade da competição selecionada.
 function atualizarResumoCompeticao() {
     btInscricao.disabled = true;

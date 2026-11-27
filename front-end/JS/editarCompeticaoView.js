@@ -10,6 +10,7 @@ const inDistancia = document.querySelector("#competition-distance");
 const inNumeroMaximoVagas = document.querySelector("#competition-capacity");
 const inValorInscricao = document.querySelector("#registration-fee");
 const inModalidade = document.querySelector("#competition-modality");
+const inStatusCompeticao = document.querySelector("#competition-status");
 const btExcluirCompeticao = document.querySelector("#delete-competition");
 const mensagemEdicao = document.querySelector("#competition-edit-message");
 const paginaEdicao = document.querySelector("#competition-edit-page");
@@ -59,6 +60,7 @@ if (
         inDistancia.value = competicao.distanciaKm;
         inNumeroMaximoVagas.value = competicao.limiteVagas;
         inValorInscricao.value = competicao.valorInscricao;
+        inStatusCompeticao.value = competicao.status;
         inModalidade.value =
             competicao.modalidade === "Urbano"
                 ? "Maratona Urbana"
@@ -73,6 +75,7 @@ if (
             const distancia = Number(inDistancia.value);
             const numeroMaximoVagas = Number(inNumeroMaximoVagas.value);
             const valorInscricao = Number(inValorInscricao.value);
+            const status = inStatusCompeticao.value.trim();
 
             let formularioValido = true;
 
@@ -106,6 +109,10 @@ if (
                 );
                 inValorInscricao.focus();
                 formularioValido = false;
+            } else if (!status) {
+                exibirMensagemEdicao("ERRO", "Informe o status da competição.");
+                inStatusCompeticao.focus();
+                formularioValido = false;
             }
 
             if (formularioValido) {
@@ -117,6 +124,7 @@ if (
                     distancia,
                     numeroMaximoVagas,
                     valorInscricao,
+                    status,
                 );
                 exibirMensagemEdicao(
                     resultadoEdicao.tipo,

@@ -1,0 +1,99 @@
+[
+  {
+    "id": 1,
+    "nome": "Corrida da Cidade 2027",
+    "local": "Vitória",
+    "dataHorario": "2027-05-10T07:00",
+    "distanciaKm": 10,
+    "valorInscricao": 50,
+    "limiteVagas": 200,
+    "modalidade": "Urbano",
+    "opMod": {
+      "altimetria": 45,
+      "percursoUrbano": "Orla de Vitória",
+      "descricaoTrajeto": "Percurso plano pela orla",
+      "pontosLargadaChegada": "Praça do Papa"
+    },
+    "inscritos": [
+      {
+        "nome": "Ana Ribeiro",
+        "cpf": "00000000001",
+        "dtNascimento": "1998-04-12",
+        "nacionalidade": "Brasileira",
+        "modalidade": "Urbano"
+      },
+      {
+        "nome": "Camila Souza",
+        "cpf": "00000000003",
+        "dtNascimento": "2001-02-25",
+        "nacionalidade": "Brasileira",
+        "modalidade": "Urbano"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nome": "Desafio das Montanhas 2027",
+    "local": "Domingos Martins",
+    "dataHorario": "2027-06-20T06:30",
+    "distanciaKm": 18,
+    "valorInscricao": 85,
+    "limiteVagas": 120,
+    "modalidade": "Trail Running",
+    "opMod": {
+      "tipoTerreno": "Montanha",
+      "nivelDificuldade": "Intermediário",
+      "quantidadeCheckpoints": 4,
+      "localizacaoCheckpoints": "Km 4, Km 8, Km 13 e chegada",
+      "tipoProva": "Resistência"
+    },
+    "inscritos": [
+      {
+        "nome": "Bruno Martins",
+        "cpf": "00000000002",
+        "dtNascimento": "1995-11-03",
+        "nacionalidade": "Brasileiro",
+        "modalidade": "Trail Running"
+      },
+      {
+        "nome": "Diego Alves",
+        "cpf": "00000000004",
+        "dtNascimento": "1992-08-17",
+        "nacionalidade": "Brasileiro",
+        "modalidade": "Trail Running"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nome": "Circuito Urbano 2027",
+    "local": "Serra",
+    "dataHorario": "2027-08-15T07:00",
+    "distanciaKm": 5,
+    "valorInscricao": 35,
+    "limiteVagas": 150,
+    "modalidade": "Urbano",
+    "opMod": {
+      "altimetria": 30,
+      "percursoUrbano": "Parque da Cidade",
+      "descricaoTrajeto": "Circuito em vias urbanas e parque",
+      "pontosLargadaChegada": "Parque da Cidade"
+    },
+    "inscritos": [
+      {
+        "nome": "Ana Ribeiro",
+        "cpf": "00000000001",
+        "dtNascimento": "1998-04-12",
+        "nacionalidade": "Brasileira",
+        "modalidade": "Urbano"
+      },
+      {
+        "nome": "Elisa Costa",
+        "cpf": "00000000005",
+        "dtNascimento": "1999-06-30",
+        "nacionalidade": "Brasileira",
+        "modalidade": "Urbano"
+      }
+    ]
+  }
+]

@@ -53,17 +53,19 @@
     <a class="text-link" href="consultarAtletas.html">Voltar para atletas</a>
 
     <!-- JS: preencher o resumo com os dados do atleta consultado. -->
-    <section class="athlete-banner">
-      <h2>Mariana Costa</h2>
-      <p>Atleta #1042 <span aria-hidden="true">•</span> Maratona Urbana</p>
-      <strong>3 inscrições ativas <span aria-hidden="true">•</span> Todas as competições estão listadas abaixo</strong>
+    <p id="inscricoes-mensagem" class="notice notice--neutral" role="status" aria-live="polite" hidden></p>
+
+    <section class="athlete-banner" id="resumo-atleta" hidden>
+      <h2 id="nome-atleta"></h2>
+      <p>CPF: <span id="cpf-atleta"></span> <span aria-hidden="true">•</span> <span id="modalidade-atleta"></span></p>
+      <strong><span id="quantidade-inscricoes">0</span> inscrições ativas <span aria-hidden="true">•</span> Todas as competições estão listadas abaixo</strong>
     </section>
 
     <section class="table-card">
       <div class="card-heading">
         <div>
           <h2>Competições com inscrição ativa</h2>
-          <p>3 de 3 competições <span aria-hidden="true">•</span> Apenas inscrições ativas de Mariana Costa</p>
+          <p id="legenda-competicoes"></p>
         </div>
       </div>
       <div class="table-wrap">
@@ -76,35 +78,13 @@
               <th>Ações</th>
             </tr>
           </thead>
-          <!-- JS: renderizar todas as inscrições ativas vinculadas ao atleta. -->
-          <tbody>
-            <tr>
-              <td>Corrida da Cidade 2027</td>
-              <td>Maratona Urbana</td>
-              <td><span class="status status--ok">Ativa</span></td>
-              <td><a class="button button--small button--secondary" href="consultarCompeticoes.html">Ver competição</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Maratona da Primavera 2027</td>
-              <td>Maratona Urbana</td>
-              <td><span class="status status--ok">Ativa</span></td>
-              <td><a class="button button--small button--secondary" href="consultarCompeticoes.html">Ver competição</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Circuito Urbano 2027</td>
-              <td>Maratona Urbana</td>
-              <td><span class="status status--ok">Ativa</span></td>
-              <td><a class="button button--small button--secondary" href="consultarCompeticoes.html">Ver competição</a>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="lista-competicoes"></tbody>
         </table>
       </div>
-      <div class="table-footer"><span>Todas as 3 inscrições ativas estão sendo exibidas.</span></div>
+      <div class="table-footer"><span id="rodape-competicoes"></span></div>
     </section>
   </main>
+  <script type="module" src="../JS/inscricoesAtivasView.js"></script>
 </body>
 
 </html>
