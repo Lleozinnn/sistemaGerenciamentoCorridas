@@ -1,6 +1,9 @@
 import { Atleta } from "../model/Atleta.js";
 import { TrailRunning } from "../model/TrailRunning.js";
 import { Urbano } from "../model/Urbano.js";
+import { AtletaController } from "./atletaController.js";
+
+const atletaController = new AtletaController();
 export class CompeticaoController {
     #vetCompeticoes = [];
     #modalidadesAceitas = ["Urbano", "Trail Running"];
@@ -10,20 +13,36 @@ export class CompeticaoController {
     }
 
     // Métodos
-    inscreverAtleta(IdCompeticao, atleta) {
-        if (atleta instanceof Atleta) {
-            let comp = this.#vetCompeticoes.find(
-                (competicao) => competicao.id == IdCompeticao,
-            );
-            comp.inscreverAtleta(atleta);
-            return {
-                tipo: "SUCESSO",
-                mensagem: "Inscrição realizada com sucesso.",
-            };
+    inscreverAtleta(IdCompeticao, CPFatleta) {
+        const atleta = atletaController.buscarCpf(CPFatleta);
+        console.log(atleta)
+        const comp = this.#vetCompeticoes.find(
+            (competicao) => competicao.id == IdCompeticao,
+        );
+        if (atleta !== undefined && comp !== undefined) {
+            if (comp.vagasDisponiveis() == 0) {
+                return {
+                    tipo: "ERRO",
+                    mensagem: "Essa competição não tem mais vagas",
+                };
+            }
+            else if (comp.inscreverAtleta(atleta)) {
+                this.#salvarDados();
+                return {
+                    tipo: "SUCESSO",
+                    mensagem: "Inscrição realizada com sucesso.",
+                };
+            }
+            else {
+                return {
+                    tipo: "ERRO",
+                    mensagem: "Houve erro ao realizar a inscrição",
+                };
+            }
         }
         return {
             tipo: "ERRO",
-            mensagem: "A inscrição não pode ser realizada.",
+            mensagem: "Competição ou atleta não encontrado",
         };
     }
     cadastrarCompeticao(
@@ -109,6 +128,17 @@ export class CompeticaoController {
                 mensagem: "Vagas esgotadas.",
             };
         }
+    }
+    listarInscricoesCompeticao (idCompeticao) {
+        const competicao = this.buscarCompeticaoPorId(idCompeticao);
+        const inscritos = competicao.competicao.listarAtletasInscritos();
+        const inscricoes = inscritos.map(atleta => {
+            return {
+                nome: atleta.nome,
+                cpf: atleta.cpf
+            }
+        });
+        return inscricoes;
     }
     vagasDisponiveis(IdCompeticao) {
         let comp = this.buscarCompeticaoPorId(IdCompeticao);
@@ -198,6 +228,7 @@ export class CompeticaoController {
             dataHorario: competicao.dataHorario,
             distanciaKm: competicao.distanciaKm,
             limiteVagas: competicao.limiteVagas,
+            vagasDisponiveis: competicao.vagasDisponiveis(),
             valorInscricao: competicao.valorInscricao,
             modalidade: competicao.modalidade,
             opMod: competicao.opMod,
@@ -231,7 +262,38 @@ export class CompeticaoController {
                 opcoesModalidade,
                 competicao.id,
             );
+
+            const competicaoCarregada = this.#vetCompeticoes.find(
+                (item) => item.id == competicao.id,
+            );
+            const inscritosSalvos = Array.isArray(competicao.inscritos)
+                ? competicao.inscritos
+                : [];
+
+            inscritosSalvos.forEach((inscrito) => {
+                const dadosAtleta =
+                    typeof inscrito === "object" && inscrito !== null
+                        ? inscrito
+                        : null;
+                const cpfAtleta = dadosAtleta ? dadosAtleta.cpf : inscrito;
+                let atletaInscrito = atletaController.buscarCpf(cpfAtleta);
+
+                if (!atletaInscrito && dadosAtleta && dadosAtleta.cpf) {
+                    atletaInscrito = new Atleta(
+                        dadosAtleta.nome,
+                        dadosAtleta.cpf,
+                        dadosAtleta.dtNascimento,
+                        dadosAtleta.nacionalidade,
+                        dadosAtleta.modalidade,
+                    );
+                }
+
+                if (competicaoCarregada && atletaInscrito) {
+                    competicaoCarregada.inscreverAtleta(atletaInscrito);
+                }
+            });
         });
+        this.#salvarDados();
     }
     #proximoIdCompeticao() {
         const ultimoIdSalvo = Number(
@@ -254,6 +316,13 @@ export class CompeticaoController {
                 distanciaKm: competicao.distanciaKm,
                 valorInscricao: competicao.valorInscricao,
                 limiteVagas: competicao.limiteVagas,
+                inscritos: competicao.listarAtletasInscritos().map((atleta) => ({
+                    nome: atleta.nome,
+                    cpf: atleta.cpf,
+                    dtNascimento: atleta.dtNascimento,
+                    nacionalidade: atleta.nacionalidade,
+                    modalidade: atleta.modalidade,
+                })),
             };
             // Complementação com atributos da subclasse conforme a modalidade da competicao
             objComp.opMod = {};

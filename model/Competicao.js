@@ -120,8 +120,11 @@ export class Competicao {
     }
     inscreverAtleta (atleta) {
         if (atleta instanceof Atleta) {
-            this.#atletasInscritos.push(atleta);
-            return true;
+            const jaInscrito = this.#atletasInscritos.find(atletaInscr => atletaInscr.cpf == atleta.cpf);
+            if (jaInscrito == undefined) {
+                this.#atletasInscritos.push(atleta);
+                return true;
+            }
         }
         return false;
     }

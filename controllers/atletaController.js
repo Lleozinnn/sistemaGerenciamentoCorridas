@@ -1,4 +1,5 @@
-import  { Atleta } from "../model/Atleta.js";
+import { Atleta } from "../model/Atleta.js";
+
 export class AtletaController {
     #vetAtletas;
     constructor() {
@@ -147,13 +148,21 @@ export class AtletaController {
         if (!modalidades.includes(modalidade)) {
             return {
                 tipo: "ERRO",
-                mensagem: "Modalidade inválida. Selecione 'Urbano' ou 'Trail Running'."
+                mensagem: "Modalidade inválida. Selecione 'Urbano' ou 'Trail Running'.",
+                atletas: []
             }
         }
+        const atletasFiltrados = this.#vetAtletas.filter((atleta) => atleta.modalidade === modalidade);
         return {
             tipo: "SUCESSO",
             mensagem: "Atletas encontrados com sucesso!",
-            atletas: this.#vetAtletas.filter((atleta) => atleta.modalidade === modalidade)
+            atletas: atletasFiltrados.map((atleta) => ({
+                nome: atleta.nome,
+                cpf: atleta.cpf,
+                dtNascimento: atleta.dtNascimento,
+                nacionalidade: atleta.nacionalidade,
+                modalidade: atleta.modalidade
+            }))
         };
     }
     salvarAtletas() {
@@ -166,10 +175,10 @@ export class AtletaController {
         }));
         localStorage.setItem("atletas", JSON.stringify(atletas));
     }
-        carregarAtletas() {
+    carregarAtletas() {
         const atletas = JSON.parse(localStorage.getItem("atletas")) || [];
-        this.#vetAtletas = atletas.map((a) =>
-            new Atleta(a.nome, a.cpf, a.dtNascimento, a.nacionalidade, a.modalidade)
+        this.#vetAtletas = atletas.map((atleta) =>
+            new Atleta(atleta.nome, atleta.cpf, atleta.dtNascimento, atleta.nacionalidade, atleta.modalidade)
         );
     }
 }
