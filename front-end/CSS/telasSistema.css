@@ -878,3 +878,190 @@ tbody tr {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Estilos específicos da página de relatórios da competição */
+.controlesRelatorio {
+  display: grid;
+  grid-template-columns: auto minmax(180px, auto) minmax(220px, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  padding: 16px;
+  border: 1px solid #e0e8e7;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.controlesRelatorio label {
+  color: #374240;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.controlesRelatorio select {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 11px;
+  border: 1px solid #d4dfde;
+  border-radius: 6px;
+  background: #fff;
+  color: #45514f;
+  font: inherit;
+  font-size: 13px;
+}
+
+.controlesRelatorio select:focus-visible {
+  border-color: #18aea2;
+  outline: 2px solid rgb(24 174 162 / 15%);
+}
+
+#relatorioGeralContainer,
+#relatorioCompeticaoContainer {
+  min-width: 0;
+  margin-top: 20px;
+}
+
+.relatorioCard {
+  min-width: 0;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #e0e8e7;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.relatorioCard > h2 {
+  margin-bottom: 16px;
+  color: #245b56;
+  font-size: 19px;
+}
+
+.relatorioCard > h3 {
+  margin: 20px 0 12px;
+  color: #37403f;
+  font-size: 15px;
+}
+
+.resumoMetricas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.metrica {
+  display: flex;
+  min-width: 0;
+  min-height: 76px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  padding: 13px;
+  border: 1px solid #e0e8e7;
+  border-radius: 7px;
+  background: #f8fbfa;
+}
+
+.metrica strong {
+  color: #65726f;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.metrica span {
+  color: #245b56;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.tabelaRelatorio {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e0e8e7;
+  border-radius: 7px;
+  border-spacing: 0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.tabelaRelatorio thead {
+  background: #f5f8f7;
+  color: #65726f;
+}
+
+.tabelaRelatorio th,
+.tabelaRelatorio td {
+  padding: 11px 14px;
+  text-align: left;
+}
+
+.tabelaRelatorio tbody tr + tr {
+  border-top: 1px solid #edf1f0;
+}
+
+.tabelaRelatorio tbody tr:hover {
+  background: #f8fbfa;
+}
+
+.dadosObrigatoriosCompeticao {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.dadosObrigatoriosCompeticao li {
+  min-width: 0;
+  padding: 11px 12px;
+  border-radius: 6px;
+  background: #f5f8f7;
+  color: #45514f;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.dadosObrigatoriosCompeticao li strong {
+  color: #28645e;
+}
+
+@media (max-width: 820px) {
+  .controlesRelatorio {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .controlesRelatorio select {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .controlesRelatorio {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .controlesRelatorio select {
+    grid-column: auto;
+  }
+
+  .relatorioCard {
+    padding: 15px;
+  }
+
+  .resumoMetricas,
+  .dadosObrigatoriosCompeticao {
+    grid-template-columns: 1fr;
+  }
+}
+
+.relatorioCard.relatorioGeral {
+  border-top: 3px solid #18aea2;
+}
+
+.relatorioCard.relatorioIndividual {
+  border-top: 3px solid #28645e;
+}
