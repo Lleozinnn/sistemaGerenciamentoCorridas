@@ -8,7 +8,6 @@
   <link rel="icon" href="../assets/competition.png" />
   <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
   <link rel="stylesheet" href="../CSS/telasSistema.css" />
-  <script type="module" src="../JS/inscreverAtletaView.js"></script>
 </head>
 
 <body>
@@ -79,8 +78,12 @@
         </section>
 
         <div class="form-actions">
-          <a class="button button--primary" id="enrollment-action" href="inscricoesAtivas.html">Ver inscrição
-            existente</a>
+          <button class="button button--primary" id="enrollment-action" type="submit">
+            Confirmar inscrição
+          </button>
+          <a class="button button--secondary" href="inscricoesAtivas.html">
+            Ver inscrições
+          </a>
         </div>
       </form>
 
@@ -92,23 +95,23 @@
           <dl class="validation-list">
             <div>
               <dt>Cadastro prévio</dt>
-              <dd class="validation-result" id="check-athlete">Validado</dd>
-              <dd id="check-athlete-detail">Atleta encontrado no sistema.</dd>
+              <dd class="validation-result" id="check-athlete">Não verificado</dd>
+              <dd id="check-athlete-detail">Aguardando validação.</dd>
             </div>
             <div>
               <dt>Mesma modalidade</dt>
-              <dd class="validation-result" id="check-modality">Validado</dd>
-              <dd id="check-modality-detail">Maratona Urbana em ambos os cadastros.</dd>
+              <dd class="validation-result" id="check-modality">Não verificado</dd>
+              <dd id="check-modality-detail">Aguardando validação.</dd>
             </div>
             <div>
               <dt>Disponibilidade de vagas</dt>
-              <dd class="validation-result" id="check-capacity">Validado</dd>
-              <dd id="check-capacity-detail">1 vaga disponível na competição.</dd>
+              <dd class="validation-result" id="check-capacity">Não verificado</dd>
+              <dd id="check-capacity-detail">Aguardando validação.</dd>
             </div>
             <div>
               <dt>Sem duplicidade</dt>
-              <dd class="validation-result" id="check-duplicate">Bloqueado</dd>
-              <dd id="check-duplicate-detail">Já existe inscrição nesta competição.</dd>
+              <dd class="validation-result" id="check-duplicate">Não verificado</dd>
+              <dd id="check-duplicate-detail">Aguardando validação.</dd>
             </div>
           </dl>
         </section>

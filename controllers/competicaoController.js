@@ -1,30 +1,52 @@
 import { Atleta } from "../model/Atleta.js";
+import { AtletaController } from "./atletaController.js";
+import { ErroValidacaoInscricao } from "../model/Competicao.js";
 import { TrailRunning } from "../model/TrailRunning.js";
 import { Urbano } from "../model/Urbano.js";
 export class CompeticaoController {
     #vetCompeticoes = [];
     #modalidadesAceitas = ["Urbano", "Trail Running"];
+    #atletaController = new AtletaController();
 
     constructor() {
         this.#carregarDados();
     }
 
     // Métodos
-    inscreverAtleta(IdCompeticao, atleta) {
-        if (atleta instanceof Atleta) {
-            let comp = this.#vetCompeticoes.find(
-                (competicao) => competicao.id == IdCompeticao,
-            );
+    inscreverAtleta(idCompeticao, cpfAtleta) {
+        try {
+            const atleta = this.#validarCadastroAtleta(cpfAtleta);
+            const comp = this.#buscarCompeticaoParaInscricao(idCompeticao);
             comp.inscreverAtleta(atleta);
+
+            const inscricao = {
+                idCompeticao: comp.id,
+                nomeCompeticao: comp.nome,
+                idAtleta: atleta.id,
+                cpfAtleta: atleta.cpf,
+                nomeAtleta: atleta.nome,
+                modalidade: comp.modalidade,
+                status: "Confirmada",
+                dataInscricao: new Date().toISOString(),
+            };
+
+            this.#salvarDados();
             return {
                 tipo: "SUCESSO",
-                mensagem: "Inscrição realizada com sucesso.",
+                mensagem: "Inscrição confirmada com sucesso.",
+                inscricao,
+            };
+        } catch (erro) {
+            if (!(erro instanceof ErroValidacaoInscricao)) {
+                throw erro;
+            }
+
+            return {
+                tipo: "ERRO",
+                mensagem: erro.message,
+                etapa: erro.etapa,
             };
         }
-        return {
-            tipo: "ERRO",
-            mensagem: "A inscrição não pode ser realizada.",
-        };
     }
     cadastrarCompeticao(
         nome,
@@ -95,13 +117,14 @@ export class CompeticaoController {
             };
         }
     }
-    atualizarStatusCompeticao(competicao, status) {
+    atualizarStatusCompeticao(competicao) {
         let comp = this.buscarCompeticaoPorId(competicao.id);
         if (comp != undefined) {
-            comp.status = status;
+            comp.atualizarStatusCompeticao();
+            this.#salvarDados();
             return {
                 tipo: "SUCESSO",
-                mensagem: "Ativo.",
+                mensagem: comp.status,
             };
         } else {
             return {
@@ -110,8 +133,8 @@ export class CompeticaoController {
             };
         }
     }
-    vagasDisponiveis(IdCompeticao) {
-        let comp = this.buscarCompeticaoPorId(IdCompeticao);
+    vagasDisponiveis(idCompeticao) {
+        let comp = this.buscarCompeticaoPorId(idCompeticao);
         if (comp.tipo == "SUCESSO") {
             return {
                 tipo: "SUCESSO",
@@ -126,9 +149,9 @@ export class CompeticaoController {
         }
     }
 
-    buscarCompeticaoPorId(IdCompeticao) {
+    buscarCompeticaoPorId(idCompeticao) {
         let comp = this.#vetCompeticoes.find(
-            (competicao) => competicao.id == IdCompeticao,
+            (competicao) => competicao.id == idCompeticao,
         );
         if (comp != undefined) {
             return {
@@ -144,7 +167,7 @@ export class CompeticaoController {
         }
     }
     editarCompeticao(
-        IdCompeticao,
+        idCompeticao,
         nome,
         local,
         dataHorario,
@@ -152,7 +175,7 @@ export class CompeticaoController {
         limiteVagas,
         valorInscricao,
     ) {
-        const resultadoBusca = this.buscarCompeticaoPorId(IdCompeticao);
+        const resultadoBusca = this.buscarCompeticaoPorId(idCompeticao);
         if (resultadoBusca.tipo === "ERRO") {
             return resultadoBusca;
         }
@@ -172,9 +195,9 @@ export class CompeticaoController {
             competicao,
         };
     }
-    excluirCompeticao(IdCompeticao) {
+    excluirCompeticao(idCompeticao) {
         const indiceCompeticao = this.#vetCompeticoes.findIndex(
-            (competicao) => competicao.id == IdCompeticao,
+            (competicao) => competicao.id == idCompeticao,
         );
         if (indiceCompeticao === -1) {
             return {
@@ -220,17 +243,69 @@ export class CompeticaoController {
                 opcoesModalidade.nivelDificuldade = opcoesModalidade.nivel;
             }
 
-            this.cadastrarCompeticao(
-                competicao.nome,
-                competicao.local,
-                competicao.dataHorario,
-                competicao.distanciaKm,
-                competicao.limiteVagas,
-                competicao.valorInscricao,
-                competicao.modalidade,
-                opcoesModalidade,
-                competicao.id,
-            );
+            let competicaoCarregada;
+            if (competicao.modalidade === "Trail Running") {
+                competicaoCarregada = new TrailRunning(
+                    competicao.nome,
+                    competicao.local,
+                    competicao.dataHorario,
+                    competicao.distanciaKm,
+                    competicao.valorInscricao,
+                    competicao.limiteVagas,
+                    opcoesModalidade.tipoTerreno,
+                    opcoesModalidade.nivelDificuldade,
+                    opcoesModalidade.quantidadeCheckpoints,
+                    opcoesModalidade.localizacaoCheckpoints,
+                    opcoesModalidade.tipoProva,
+                    competicao.id,
+                );
+            } else if (competicao.modalidade === "Urbano") {
+                competicaoCarregada = new Urbano(
+                    competicao.nome,
+                    competicao.local,
+                    competicao.dataHorario,
+                    competicao.distanciaKm,
+                    competicao.valorInscricao,
+                    competicao.limiteVagas,
+                    opcoesModalidade.altimetria,
+                    opcoesModalidade.percursoUrbano,
+                    opcoesModalidade.descricaoTrajeto,
+                    opcoesModalidade.pontosLargadaChegada,
+                    competicao.id,
+                );
+            } else {
+                return;
+            }
+            this.#vetCompeticoes.push(competicaoCarregada);
+
+            const atletasInscritos = Array.isArray(competicao.atletasInscritos)
+                ? competicao.atletasInscritos
+                : [];
+            atletasInscritos.forEach((dadosAtleta) => {
+                if (
+                    dadosAtleta !== null &&
+                    typeof dadosAtleta.nome === "string" &&
+                    typeof dadosAtleta.cpf === "string"
+                ) {
+                    const atletaInscrito = new Atleta(
+                        dadosAtleta.nome,
+                        dadosAtleta.cpf,
+                        dadosAtleta.dtNascimento,
+                        dadosAtleta.nacionalidade,
+                        dadosAtleta.modalidade,
+                    );
+                    try {
+                        competicaoCarregada.inscreverAtleta(atletaInscrito);
+                    } catch (erro) {
+                        if (!(erro instanceof ErroValidacaoInscricao)) {
+                            throw erro;
+                        }
+                        console.warn(
+                            `Inscrição armazenada ignorada: ${erro.message}`,
+                        );
+                    }
+                }
+            });
         });
     }
     #proximoIdCompeticao() {
@@ -243,6 +318,31 @@ export class CompeticaoController {
         );
         return Math.max(ultimoIdSalvo, maiorIdEmMemoria) + 1;
     }
+
+    #validarCadastroAtleta(cpfAtleta) {
+        const atleta = this.#atletaController.buscarCpf(cpfAtleta);
+        if (atleta === undefined) {
+            throw new ErroValidacaoInscricao(
+                "O atleta não possui cadastro no sistema.",
+                "cadastro",
+            );
+        }
+        return atleta;
+    }
+
+    #buscarCompeticaoParaInscricao(idCompeticao) {
+        const comp = this.#vetCompeticoes.find(
+            (competicao) => competicao.id == idCompeticao,
+        );
+        if (comp === undefined) {
+            throw new ErroValidacaoInscricao(
+                "A competição selecionada não foi encontrada.",
+                "competicao",
+            );
+        }
+        return comp;
+    }
+
     #salvarDados() {
         let competicoes = this.#vetCompeticoes.map((competicao) => {
             let objComp = {
@@ -254,6 +354,13 @@ export class CompeticaoController {
                 distanciaKm: competicao.distanciaKm,
                 valorInscricao: competicao.valorInscricao,
                 limiteVagas: competicao.limiteVagas,
+                atletasInscritos: competicao.atletasInscritos.map((atleta) => ({
+                    nome: atleta.nome,
+                    cpf: atleta.cpf,
+                    dtNascimento: atleta.dtNascimento,
+                    nacionalidade: atleta.nacionalidade,
+                    modalidade: atleta.modalidade,
+                })),
             };
             // Complementação com atributos da subclasse conforme a modalidade da competicao
             objComp.opMod = {};

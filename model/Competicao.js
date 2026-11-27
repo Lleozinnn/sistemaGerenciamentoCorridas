@@ -1,5 +1,13 @@
 import { Atleta } from "./Atleta.js";
 
+export class ErroValidacaoInscricao extends Error {
+    constructor(mensagem, etapa) {
+        super(mensagem);
+        this.name = "ErroValidacaoInscricao";
+        this.etapa = etapa;
+    }
+}
+
 export class Competicao {
     static #qtCompeticoes = 0;
     #id;
@@ -25,6 +33,7 @@ export class Competicao {
             ? Number(id)
             : ++Competicao.#qtCompeticoes;
         Competicao.#qtCompeticoes = Math.max(Competicao.#qtCompeticoes, this.#id);
+        this.atualizarStatusCompeticao();
     }
     get id() {
         return this.#id;
@@ -51,7 +60,7 @@ export class Competicao {
         return this.#status;
     }
     get atletasInscritos() {
-        return this.#atletasInscritos;
+        return this.#atletasInscritos.slice();
     }
     set nome(nome) {
         this.#nome = nome;
@@ -70,18 +79,11 @@ export class Competicao {
     }
     set limiteVagas(limiteVagas) {
         this.#limiteVagas = limiteVagas;
+        this.atualizarStatusCompeticao();
     }
     set status(status) {
         this.#status = status;
     }
-
-    // inscreverAtleta(atleta) {
-    //     if () {
-
-    //     }
-    //     this.#atletasInscritos.push(atleta);
-    //     return true;
-    // }
 
     vagasDisponiveis() {
         return this.#limiteVagas - this.#atletasInscritos.length;
@@ -89,7 +91,7 @@ export class Competicao {
 
     atualizarStatusCompeticao() {
         if (this.vagasDisponiveis() <= 0) {
-            this.#status = "Encerrada";
+            this.#status = "Vagas Esgotadas";
         } else {
             this.#status = "Aberta";
         }
@@ -100,7 +102,7 @@ export class Competicao {
     }
 
     listarAtletasInscritos() {
-        return this.#atletasInscritos;
+        return this.#atletasInscritos.slice();
     }
 
     gerarRelatorioAtletasInscritos() {
@@ -119,10 +121,43 @@ export class Competicao {
         return relatorio;
     }
     inscreverAtleta (atleta) {
-        if (atleta instanceof Atleta) {
-            this.#atletasInscritos.push(atleta);
-            return true;
+        this.#validarModalidade(atleta);
+        this.#validarVagas();
+        this.#validarDuplicidade(atleta);
+        this.#atletasInscritos.push(atleta);
+        this.atualizarStatusCompeticao();
+        return true;
+    }
+
+    #validarModalidade(atleta) {
+        if (!(atleta instanceof Atleta) || atleta.modalidade !== this.modalidade) {
+            throw new ErroValidacaoInscricao(
+                "O atleta não atende à modalidade desta competição.",
+                "modalidade",
+            );
         }
-        return false;
+    }
+
+    #validarVagas() {
+        if (this.vagasDisponiveis() <= 0) {
+            throw new ErroValidacaoInscricao(
+                "Não há vagas disponíveis nesta competição.",
+                "capacidade",
+            );
+        }
+    }
+
+    #validarDuplicidade(atleta) {
+        const jaInscrito = this.#atletasInscritos.some(
+            (atletaInscrito) =>
+                atletaInscrito.cpf === atleta.cpf ||
+                atletaInscrito.id === atleta.id,
+        );
+        if (jaInscrito) {
+            throw new ErroValidacaoInscricao(
+                "Este atleta já está inscrito nesta competição.",
+                "duplicidade",
+            );
+        }
     }
 }  
