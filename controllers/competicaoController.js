@@ -3,9 +3,6 @@ import { AtletaController } from "./atletaController.js";
 import { ErroValidacaoInscricao } from "../model/Competicao.js";
 import { TrailRunning } from "../model/TrailRunning.js";
 import { Urbano } from "../model/Urbano.js";
-import { AtletaController } from "./atletaController.js";
-
-const atletaController = new AtletaController();
 export class CompeticaoController {
     #vetCompeticoes = [];
     #modalidadesAceitas = ["Urbano", "Trail Running"];
@@ -16,11 +13,11 @@ export class CompeticaoController {
     }
 
     // Métodos
-    inscreverAtleta(IdCompeticao, CPFatleta) {
-        const atleta = atletaController.buscarCpf(CPFatleta);
+    inscreverAtleta(idCompeticao, cpfAtleta) {
+        const atleta = this.#atletaController.buscarCpf(cpfAtleta);
         console.log(atleta)
         const comp = this.#vetCompeticoes.find(
-            (competicao) => competicao.id == IdCompeticao,
+            (competicao) => competicao.id == idCompeticao,
         );
         if (atleta !== undefined && comp !== undefined) {
             if (comp.vagasDisponiveis() == 0) {
@@ -133,19 +130,21 @@ export class CompeticaoController {
             };
         }
     }
-    listarInscricoesCompeticao (idCompeticao) {
-        const competicao = this.buscarCompeticaoPorId(idCompeticao);
-        const inscritos = competicao.competicao.listarAtletasInscritos();
-        const inscricoes = inscritos.map(atleta => {
-            return {
-                nome: atleta.nome,
-                cpf: atleta.cpf
-            }
-        });
-        return inscricoes;
+    listarInscricoesCompeticao(idCompeticao) {
+        const resultadoBusca = this.buscarCompeticaoPorId(idCompeticao);
+
+        if (resultadoBusca.tipo !== "SUCESSO") {
+            return [];
+        }
+
+        return resultadoBusca.competicao.listarAtletasInscritos().map((atleta) => ({
+            nome: atleta.nome,
+            cpf: atleta.cpf,
+            dtNascimento: atleta.dtNascimento,
+        }));
     }
-    vagasDisponiveis(IdCompeticao) {
-        let comp = this.buscarCompeticaoPorId(IdCompeticao);
+    vagasDisponiveis(idCompeticao) {
+        let comp = this.buscarCompeticaoPorId(idCompeticao);
         if (comp.tipo == "SUCESSO") {
             return {
                 tipo: "SUCESSO",
@@ -280,7 +279,7 @@ export class CompeticaoController {
                         ? inscrito
                         : null;
                 const cpfAtleta = dadosAtleta ? dadosAtleta.cpf : inscrito;
-                let atletaInscrito = atletaController.buscarCpf(cpfAtleta);
+                let atletaInscrito = this.#atletaController.buscarCpf(cpfAtleta);
 
                 if (!atletaInscrito && dadosAtleta && dadosAtleta.cpf) {
                     atletaInscrito = new Atleta(
@@ -338,7 +337,6 @@ export class CompeticaoController {
         let competicoes = this.#vetCompeticoes.map((competicao) => {
             let objComp = {
                 id: competicao.id,
-                // Objeto com atributos da SuperClasse
                 nome: competicao.nome,
                 local: competicao.local,
                 dataHorario: competicao.dataHorario,
@@ -353,7 +351,6 @@ export class CompeticaoController {
                     modalidade: atleta.modalidade,
                 })),
             };
-            // Complementação com atributos da subclasse conforme a modalidade da competicao
             objComp.opMod = {};
             if (competicao instanceof Urbano) {
                 objComp.modalidade = "Urbano";
