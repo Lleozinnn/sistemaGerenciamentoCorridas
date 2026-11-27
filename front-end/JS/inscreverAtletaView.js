@@ -1,3 +1,4 @@
+import { AtletaController } from "../../controllers/atletaController.js";
 import { CompeticaoController } from "../../controllers/competicaoController.js";
 import { AtletaController } from "../../controllers/atletaController.js";
 
@@ -33,7 +34,6 @@ function atualizarResumoAtleta() {
         btInscricao.disabled = false;
         btInscricao.style.backgroundColor = "rgb(24, 174, 162)";
     }
-};
 
 // Atualiza o resumo da modalidade da competição selecionada.
 function atualizarResumoCompeticao() {
