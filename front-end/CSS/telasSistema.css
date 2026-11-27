@@ -194,6 +194,32 @@ th {
   white-space: nowrap;
 }
 
+.competition-detail-list {
+  display: grid;
+  gap: 4px;
+  margin: 7px 0 0;
+  color: #72807d;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.competition-detail-list > div {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px;
+}
+
+.competition-detail-list dt {
+  color: #65726f;
+  font-weight: 600;
+}
+
+.competition-detail-list dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 tbody tr {
   border-top: 1px solid #edf1f0;
 }

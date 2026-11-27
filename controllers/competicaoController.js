@@ -7,6 +7,7 @@ const atletaController = new AtletaController();
 export class CompeticaoController {
     #vetCompeticoes = [];
     #modalidadesAceitas = ["Urbano", "Trail Running"];
+    #statusAceitos = ["Aberta", "Encerrada"];
 
     constructor() {
         this.#carregarDados();
@@ -20,6 +21,12 @@ export class CompeticaoController {
             (competicao) => competicao.id == IdCompeticao,
         );
         if (atleta !== undefined && comp !== undefined) {
+            if (comp.status !== "Aberta") {
+                return {
+                    tipo: "ERRO",
+                    mensagem: "As inscrições desta competição estão encerradas.",
+                };
+            }
             if (comp.vagasDisponiveis() == 0) {
                 return {
                     tipo: "ERRO",
@@ -115,19 +122,23 @@ export class CompeticaoController {
         }
     }
     atualizarStatusCompeticao(competicao, status) {
-        let comp = this.buscarCompeticaoPorId(competicao.id);
-        if (comp != undefined) {
-            comp.status = status;
-            return {
-                tipo: "SUCESSO",
-                mensagem: "Ativo.",
-            };
-        } else {
+        const resultadoBusca = this.buscarCompeticaoPorId(competicao.id);
+        if (resultadoBusca.tipo === "ERRO") {
+            return resultadoBusca;
+        }
+        if (!this.#statusAceitos.includes(status)) {
             return {
                 tipo: "ERRO",
-                mensagem: "Vagas esgotadas.",
+                mensagem: "Status da competição inválido.",
             };
         }
+
+        resultadoBusca.competicao.status = status;
+        this.#salvarDados();
+        return {
+            tipo: "SUCESSO",
+            mensagem: "Status da competição atualizado com sucesso.",
+        };
     }
     listarInscricoesCompeticao (idCompeticao) {
         const competicao = this.buscarCompeticaoPorId(idCompeticao);
@@ -181,10 +192,17 @@ export class CompeticaoController {
         distanciaKm,
         limiteVagas,
         valorInscricao,
+        status,
     ) {
         const resultadoBusca = this.buscarCompeticaoPorId(IdCompeticao);
         if (resultadoBusca.tipo === "ERRO") {
             return resultadoBusca;
+        }
+        if (!this.#statusAceitos.includes(status)) {
+            return {
+                tipo: "ERRO",
+                mensagem: "Status da competição inválido.",
+            };
         }
 
         const competicao = resultadoBusca.competicao;
@@ -194,6 +212,7 @@ export class CompeticaoController {
         competicao.distanciaKm = distanciaKm;
         competicao.limiteVagas = limiteVagas;
         competicao.valorInscricao = valorInscricao;
+        competicao.status = status;
         this.#salvarDados();
 
         return {
@@ -292,6 +311,13 @@ export class CompeticaoController {
                     competicaoCarregada.inscreverAtleta(atletaInscrito);
                 }
             });
+
+            if (
+                competicaoCarregada &&
+                this.#statusAceitos.includes(competicao.status)
+            ) {
+                competicaoCarregada.status = competicao.status;
+            }
         });
         this.#salvarDados();
     }
@@ -316,6 +342,7 @@ export class CompeticaoController {
                 distanciaKm: competicao.distanciaKm,
                 valorInscricao: competicao.valorInscricao,
                 limiteVagas: competicao.limiteVagas,
+                status: competicao.status,
                 inscritos: competicao.listarAtletasInscritos().map((atleta) => ({
                     nome: atleta.nome,
                     cpf: atleta.cpf,

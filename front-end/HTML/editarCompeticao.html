@@ -116,6 +116,14 @@
             <input id="competition-modality" type="text" readonly />
           </div>
 
+          <div class="field">
+            <label for="competition-status">Status da competição *</label>
+            <select id="competition-status" name="status" required>
+              <option value="Aberta">Aberta</option>
+              <option value="Encerrada">Encerrada</option>
+            </select>
+          </div>
+
           <p class="competition-edit-message" id="competition-edit-message" role="status" aria-live="polite" hidden></p>
 
           <div class="competition-edit-form__actions">

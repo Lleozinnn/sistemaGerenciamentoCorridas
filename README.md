@@ -170,8 +170,8 @@ Por ser uma aplicação baseada em tecnologias web nativas (HTML, CSS e JavaScri
    cd NOME-DO-REPOSITORIO
    ```
 3. **Execute o projeto:**
-   - Abra o arquivo `index.html` diretamente em seu navegador preferido; **ou**
-   - Utilize a extensão **Live Server** no Visual Studio Code para rodar com recarregamento em tempo real.
+   - Utilize a extensão **Live Server** no Visual Studio Code para servir a pasta do projeto e abrir uma página em `front-end/HTML/`.
+   - O carregamento inicial usa os arquivos `front-end/data/atletasMockados.json` e `front-end/data/competicoesMockadas.json`, portanto a aplicação deve ser acessada por um servidor local, não diretamente via `file://`.
 
 ---
 

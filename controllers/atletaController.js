@@ -1,4 +1,7 @@
 import { Atleta } from "../model/Atleta.js";
+import { carregarDadosMockados } from "./carregarDadosMockados.js";
+
+await carregarDadosMockados();
 
 export class AtletaController {
     #vetAtletas;

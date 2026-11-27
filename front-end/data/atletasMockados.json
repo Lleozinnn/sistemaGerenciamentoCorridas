@@ -1,0 +1,37 @@
+[
+  {
+    "nome": "Ana Ribeiro",
+    "cpf": "00000000001",
+    "dtNascimento": "1998-04-12",
+    "nacionalidade": "Brasileira",
+    "modalidade": "Urbano"
+  },
+  {
+    "nome": "Bruno Martins",
+    "cpf": "00000000002",
+    "dtNascimento": "1995-11-03",
+    "nacionalidade": "Brasileiro",
+    "modalidade": "Trail Running"
+  },
+  {
+    "nome": "Camila Souza",
+    "cpf": "00000000003",
+    "dtNascimento": "2001-02-25",
+    "nacionalidade": "Brasileira",
+    "modalidade": "Urbano"
+  },
+  {
+    "nome": "Diego Alves",
+    "cpf": "00000000004",
+    "dtNascimento": "1992-08-17",
+    "nacionalidade": "Brasileiro",
+    "modalidade": "Trail Running"
+  },
+  {
+    "nome": "Elisa Costa",
+    "cpf": "00000000005",
+    "dtNascimento": "1999-06-30",
+    "nacionalidade": "Brasileira",
+    "modalidade": "Urbano"
+  }
+]

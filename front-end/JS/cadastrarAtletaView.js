@@ -1,4 +1,5 @@
 import  { AtletaController } from "../../controllers/atletaController.js";
+import { CompeticaoController } from "../../controllers/competicaoController.js";
 
 const atletaController = new AtletaController();
 const formCadastroAtleta = document.querySelector("#athlete-registration-form");
@@ -115,6 +116,18 @@ if (athleteEditForm) {
 
 if (athleteFilterForm) {
 
+    const competicaoController = new CompeticaoController();
+    const inscricoesAtivasPorCpf = new Map();
+
+    competicaoController.listarCompeticoes().forEach((competicao) => {
+        const inscricoes = competicaoController.listarInscricoesCompeticao(competicao.id);
+
+        inscricoes.forEach((inscricao) => {
+            const quantidadeAtual = inscricoesAtivasPorCpf.get(inscricao.cpf) || 0;
+            inscricoesAtivasPorCpf.set(inscricao.cpf, quantidadeAtual + 1);
+        });
+    });
+
     const athleteSearch = document.querySelector("#athlete-search");
     const athleteModality = document.querySelector("#athlete-modality");
     const athleteTableBody = document.querySelector("#athlete-table-body");
@@ -148,14 +161,14 @@ if (athleteFilterForm) {
                     <td>${atleta.nome}</td>
                     <td>#${atleta.id}</td>
                     <td>${atleta.modalidade}</td>
-                    <td>0</td>
+                    <td>${inscricoesAtivasPorCpf.get(atleta.cpf) || 0}</td>
                     <td>
                         <a class="button button--small button--secondary"
                            href="editarAtleta.html?cpf=${encodeURIComponent(atleta.cpf)}">Editar</a>
                         <button class="button button--small button--secondary"
                                 type="button" data-delete-athlete>Excluir</button>
                         <a class="button button--small button--secondary"
-                           href="inscricoesAtivas.html">Ver inscrições</a>
+                           href="inscricoesAtivas.html?cpf=${encodeURIComponent(atleta.cpf)}">Ver inscrições</a>
                     </td>
                 `;
                 linha.querySelector("[data-delete-athlete]").dataset.cpf = atleta.cpf;
