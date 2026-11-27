@@ -30,7 +30,6 @@
           <div class="site-nav__menu">
             <a href="consultarAtletas.html">Consultar atletas</a>
             <a href="cadastrarAtleta.html">Cadastrar atleta</a>
-            <a href="inscricoesAtivas.html">Inscrições ativas</a>
           </div>
         </details>
         <details class="site-nav__group">
@@ -52,7 +51,7 @@
     </div>
 
     <!-- JS: aplicar o texto e a modalidade selecionada à consulta. -->
-    <form class="filter-panel filter-panel--inline" action="">
+    <form class="filter-panel filter-panel--inline" id="competition-filter-form" action="">
       <div class="filter-field">
         <label for="competition-search">Pesquisar competição</label>
         <input id="competition-search" type="search" placeholder="Nome da competição" />
@@ -60,14 +59,14 @@
       <div class="filter-field">
         <label for="competition-modality">Modalidade</label>
         <select id="competition-modality">
-          <option>Todas as modalidades</option>
-          <option selected>Maratona Urbana</option>
-          <option>Trail Running</option>
+          <option value="">Todas as modalidades</option>
+          <option value="Urbano">Maratona Urbana</option>
+          <option value="Trail Running">Trail Running</option>
         </select>
       </div>
       <button class="button button--primary" type="submit">Pesquisar</button>
       <a class="button button--secondary" href="consultarCompeticoes.html">Limpar filtros</a>
-      <p class="filter-caption">Filtro aplicado: Maratona Urbana</p>
+      <p class="filter-caption" id="competition-filter-caption">Nenhum filtro aplicado</p>
     </form>
 
     <section class="table-card">
