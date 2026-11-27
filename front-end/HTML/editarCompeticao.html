@@ -118,10 +118,13 @@
 
           <div class="field">
             <label for="competition-status">Status da competição *</label>
-            <select id="competition-status" name="status" required>
-              <option value="Aberta">Aberta</option>
-              <option value="Encerrada">Encerrada</option>
-            </select>
+            <input
+              id="competition-status"
+              name="status"
+              type="text"
+              placeholder="Ex.: Aberta, Encerrada ou Cancelada"
+              required
+            />
           </div>
 
           <p class="competition-edit-message" id="competition-edit-message" role="status" aria-live="polite" hidden></p>

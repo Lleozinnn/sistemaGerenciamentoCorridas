@@ -216,13 +216,16 @@
 
               <div class="field">
                 <label for="nivelDificuldade">Nível de dificuldade *</label>
-                <input
+                <select
                   id="nivelDificuldade"
                   name="nivelDificuldade"
-                  type="text"
-                  placeholder="Ex.: Fácil, Médio ou Difícil"
                   required
-                />
+                >
+                  <option value="" selected disabled>Selecione o nível</option>
+                  <option value="Fácil">Fácil</option>
+                  <option value="Médio">Médio</option>
+                  <option value="Difícil">Difícil</option>
+                </select>
               </div>
 
               <div class="field">

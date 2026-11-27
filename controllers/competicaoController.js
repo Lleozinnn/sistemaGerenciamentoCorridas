@@ -7,7 +7,6 @@ const atletaController = new AtletaController();
 export class CompeticaoController {
     #vetCompeticoes = [];
     #modalidadesAceitas = ["Urbano", "Trail Running"];
-    #statusAceitos = ["Aberta", "Encerrada"];
 
     constructor() {
         this.#carregarDados();
@@ -21,7 +20,7 @@ export class CompeticaoController {
             (competicao) => competicao.id == IdCompeticao,
         );
         if (atleta !== undefined && comp !== undefined) {
-            if (comp.status !== "Aberta") {
+            if (String(comp.status).trim().toLowerCase() !== "aberta") {
                 return {
                     tipo: "ERRO",
                     mensagem: "As inscrições desta competição estão encerradas.",
@@ -126,14 +125,14 @@ export class CompeticaoController {
         if (resultadoBusca.tipo === "ERRO") {
             return resultadoBusca;
         }
-        if (!this.#statusAceitos.includes(status)) {
+        if (typeof status !== "string" || status.trim() === "") {
             return {
                 tipo: "ERRO",
-                mensagem: "Status da competição inválido.",
+                mensagem: "Informe um status válido para a competição.",
             };
         }
 
-        resultadoBusca.competicao.status = status;
+        resultadoBusca.competicao.status = status.trim();
         this.#salvarDados();
         return {
             tipo: "SUCESSO",
@@ -198,10 +197,10 @@ export class CompeticaoController {
         if (resultadoBusca.tipo === "ERRO") {
             return resultadoBusca;
         }
-        if (!this.#statusAceitos.includes(status)) {
+        if (typeof status !== "string" || status.trim() === "") {
             return {
                 tipo: "ERRO",
-                mensagem: "Status da competição inválido.",
+                mensagem: "Informe um status válido para a competição.",
             };
         }
 
@@ -212,7 +211,7 @@ export class CompeticaoController {
         competicao.distanciaKm = distanciaKm;
         competicao.limiteVagas = limiteVagas;
         competicao.valorInscricao = valorInscricao;
-        competicao.status = status;
+        competicao.status = status.trim();
         this.#salvarDados();
 
         return {
@@ -314,9 +313,10 @@ export class CompeticaoController {
 
             if (
                 competicaoCarregada &&
-                this.#statusAceitos.includes(competicao.status)
+                typeof competicao.status === "string" &&
+                competicao.status.trim() !== ""
             ) {
-                competicaoCarregada.status = competicao.status;
+                competicaoCarregada.status = competicao.status.trim();
             }
         });
         this.#salvarDados();

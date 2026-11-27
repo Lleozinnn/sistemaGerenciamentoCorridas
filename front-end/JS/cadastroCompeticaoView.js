@@ -44,10 +44,10 @@ function atualizarCamposModalidade() {
     camposTrail.hidden = !mostrarCamposTrail;
     tituloModalidade.textContent = mostrarCamposUrbanos ? "Maratona Urbana" : "Trail Running";
 
-    camposUrbanos.querySelectorAll("input, textarea").forEach(campo => {
+    camposUrbanos.querySelectorAll("input, textarea, select").forEach(campo => {
         campo.disabled = !mostrarCamposUrbanos;
     });
-    camposTrail.querySelectorAll("input, textarea").forEach(campo => {
+    camposTrail.querySelectorAll("input, textarea, select").forEach(campo => {
         campo.disabled = !mostrarCamposTrail;
     });
 }

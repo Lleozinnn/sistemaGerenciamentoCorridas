@@ -75,7 +75,7 @@ if (
             const distancia = Number(inDistancia.value);
             const numeroMaximoVagas = Number(inNumeroMaximoVagas.value);
             const valorInscricao = Number(inValorInscricao.value);
-            const status = inStatusCompeticao.value;
+            const status = inStatusCompeticao.value.trim();
 
             let formularioValido = true;
 
@@ -109,8 +109,8 @@ if (
                 );
                 inValorInscricao.focus();
                 formularioValido = false;
-            } else if (!["Aberta", "Encerrada"].includes(status)) {
-                exibirMensagemEdicao("ERRO", "Selecione um status válido.");
+            } else if (!status) {
+                exibirMensagemEdicao("ERRO", "Informe o status da competição.");
                 inStatusCompeticao.focus();
                 formularioValido = false;
             }
