@@ -4,6 +4,10 @@ const competicaoController = new CompeticaoController();
 const tabelaCompeticoes = document.querySelector("#tabela-competicoes");
 const legendaCompeticoes = document.querySelector("#competicoes-caption");
 const resumoCompeticoes = document.querySelector("#competicoes-footer");
+const formularioFiltro = document.querySelector("#competition-filter-form");
+const campoPesquisa = document.querySelector("#competition-search");
+const seletorModalidade = document.querySelector("#competition-modality");
+const legendaFiltro = document.querySelector("#competition-filter-caption");
 const competicoes = competicaoController.listarCompeticoes();
 
 function criarListaDetalhes(detalhes) {
@@ -71,82 +75,135 @@ function criarCelulaDetalhada(dadosPrincipais, detalhes) {
     return celula;
 }
 
-if (competicoes.length === 0) {
-    const linha = document.createElement("tr");
-    const celula = document.createElement("td");
-    celula.colSpan = 5;
-    celula.textContent = "Nenhuma competição cadastrada.";
-    linha.appendChild(celula);
-    tabelaCompeticoes.appendChild(linha);
-    legendaCompeticoes.textContent = "Nenhuma competição cadastrada.";
-    resumoCompeticoes.textContent = "Nenhuma competição para exibir.";
-} else {
-    competicoes.forEach((competicao) => {
+function renderizarCompeticoes(competicoesExibidas) {
+    tabelaCompeticoes.innerHTML = "";
+
+    if (competicoesExibidas.length === 0) {
         const linha = document.createElement("tr");
-        const inscricoes = competicaoController.listarInscricoesCompeticao(
-            competicao.id,
-        );
-        const valorInscricao = new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-        }).format(competicao.valorInscricao);
-        const modalidadeExibida =
-            competicao.modalidade === "Urbano"
-                ? "Maratona Urbana"
-                : competicao.modalidade;
-
-        linha.appendChild(
-            criarCelulaDetalhada(competicao.nome, [
-                ["Identificação", competicao.id],
-                ["Local / endereço", competicao.local],
-                ["Data e horário", formatarDataHorario(competicao.dataHorario)],
-                ["Distância", `${competicao.distanciaKm} km`],
-                ["Valor da inscrição", valorInscricao],
-            ]),
-        );
-        linha.appendChild(
-            criarCelulaDetalhada(
-                modalidadeExibida,
-                obterDetalhesModalidade(competicao),
-            ),
-        );
-
-        const celulaInscricoes = criarCelulaDetalhada(
-            `${competicao.qtdInscritos} / ${competicao.limiteVagas}`,
-            [
-                ["Vagas disponíveis", competicao.vagasDisponiveis],
-                [
-                    "Atletas inscritos",
-                    inscricoes.length,
-                ],
-            ],
-        );
-        linha.appendChild(celulaInscricoes);
-
-        const celulaStatus = document.createElement("td");
-        const status = document.createElement("span");
-        status.className =
-            competicao.statusProva === "Aberta"
-                ? "status status--ok"
-                : "status status--danger";
-        status.textContent = competicao.statusProva;
-        celulaStatus.appendChild(status);
-        linha.appendChild(celulaStatus);
-
-        const celulaAcoes = document.createElement("td");
-        const linkEditar = document.createElement("a");
-        linkEditar.className = "button button--small button--secondary";
-        linkEditar.href =
-            `editarCompeticao.html?id=${encodeURIComponent(competicao.id)}`;
-        linkEditar.textContent = "Editar";
-        celulaAcoes.appendChild(linkEditar);
-        linha.appendChild(celulaAcoes);
-
+        const celula = document.createElement("td");
+        celula.colSpan = 5;
+        celula.textContent =
+            competicoes.length === 0
+                ? "Nenhuma competição cadastrada."
+                : "Nenhuma competição corresponde aos filtros.";
+        linha.appendChild(celula);
         tabelaCompeticoes.appendChild(linha);
-    });
+    } else {
+        competicoesExibidas.forEach((competicao) => {
+            const linha = document.createElement("tr");
+            const inscricoes = competicaoController.listarInscricoesCompeticao(
+                competicao.id,
+            );
+            const valorInscricao = new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+            }).format(competicao.valorInscricao);
+            const modalidadeExibida =
+                competicao.modalidade === "Urbano"
+                    ? "Maratona Urbana"
+                    : competicao.modalidade;
+
+            linha.appendChild(
+                criarCelulaDetalhada(competicao.nome, [
+                    ["Identificação", competicao.id],
+                    ["Local / endereço", competicao.local],
+                    ["Data e horário", formatarDataHorario(competicao.dataHorario)],
+                    ["Distância", `${competicao.distanciaKm} km`],
+                    ["Valor da inscrição", valorInscricao],
+                ]),
+            );
+            linha.appendChild(
+                criarCelulaDetalhada(
+                    modalidadeExibida,
+                    obterDetalhesModalidade(competicao),
+                ),
+            );
+
+            const celulaInscricoes = criarCelulaDetalhada(
+                `${competicao.qtdInscritos} / ${competicao.limiteVagas}`,
+                [
+                    ["Vagas disponíveis", competicao.vagasDisponiveis],
+                    ["Atletas inscritos", inscricoes.length],
+                ],
+            );
+            linha.appendChild(celulaInscricoes);
+
+            const celulaStatus = document.createElement("td");
+            const status = document.createElement("span");
+            status.className =
+                competicao.statusProva === "Aberta"
+                    ? "status status--ok"
+                    : "status status--danger";
+            status.textContent = competicao.statusProva;
+            celulaStatus.appendChild(status);
+            linha.appendChild(celulaStatus);
+
+            const celulaAcoes = document.createElement("td");
+            const linkEditar = document.createElement("a");
+            linkEditar.className = "button button--small button--secondary";
+            linkEditar.href =
+                `editarCompeticao.html?id=${encodeURIComponent(competicao.id)}`;
+            linkEditar.textContent = "Editar";
+            celulaAcoes.appendChild(linkEditar);
+            linha.appendChild(celulaAcoes);
+
+            tabelaCompeticoes.appendChild(linha);
+        });
+    }
+
+    if (competicoes.length === 0) {
+        legendaCompeticoes.textContent = "Nenhuma competição cadastrada.";
+        resumoCompeticoes.textContent = "Nenhuma competição para exibir.";
+        return;
+    }
 
     legendaCompeticoes.textContent =
-        `${competicoes.length} ${competicoes.length === 1 ? "competição cadastrada" : "competições cadastradas"}`;
-    resumoCompeticoes.textContent =
-        `Exibindo todas as ${competicoes.length} competições`;
+        `${competicoesExibidas.length} ${competicoesExibidas.length === 1 ? "competição encontrada" : "competições encontradas"}`;
+    resumoCompeticoes.textContent = competicoesExibidas.length === competicoes.length
+        ? `Exibindo todas as ${competicoes.length} competições`
+        : `Exibindo ${competicoesExibidas.length} de ${competicoes.length} competições`;
 }
+
+function normalizarTexto(texto) {
+    return texto
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
+
+function filtrarCompeticoes() {
+    const nomePesquisado = normalizarTexto(campoPesquisa.value.trim());
+    const modalidadeSelecionada = seletorModalidade.value;
+    const competicoesFiltradas = competicoes.filter((competicao) => {
+        const nomeCorresponde = normalizarTexto(competicao.nome).includes(
+            nomePesquisado,
+        );
+        const modalidadeCorresponde =
+            !modalidadeSelecionada ||
+            competicao.modalidade === modalidadeSelecionada;
+
+        return nomeCorresponde && modalidadeCorresponde;
+    });
+    const filtrosAplicados = [];
+
+    if (campoPesquisa.value.trim()) {
+        filtrosAplicados.push(`nome "${campoPesquisa.value.trim()}"`);
+    }
+    if (modalidadeSelecionada) {
+        filtrosAplicados.push(
+            `modalidade ${modalidadeSelecionada === "Urbano" ? "Maratona Urbana" : modalidadeSelecionada}`,
+        );
+    }
+
+    legendaFiltro.textContent = filtrosAplicados.length > 0
+        ? `Filtro aplicado: ${filtrosAplicados.join(" • ")}`
+        : "Nenhum filtro aplicado";
+    renderizarCompeticoes(competicoesFiltradas);
+}
+
+formularioFiltro.addEventListener("submit", (event) => {
+    event.preventDefault();
+    filtrarCompeticoes();
+});
+
+renderizarCompeticoes(competicoes);
