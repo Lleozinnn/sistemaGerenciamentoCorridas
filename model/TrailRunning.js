@@ -18,9 +18,10 @@ export class TrailRunning extends Competicao {
         nivelDificuldade = "Médio",
         quantidadeCheckpoints = 1,
         localizacaoCheckpoints = "",
-        tipoProva = "Velocidade"
+        tipoProva = "Velocidade",
+        id
     ) {
-        super(nome, local, dataHorario, distanciaKm, valorInscricao, limiteVagas);
+        super(nome, local, dataHorario, distanciaKm, valorInscricao, limiteVagas, id);
         this.#tipoTerreno = tipoTerreno;
         this.#nivelDificuldade = nivelDificuldade;
         this.#quantidadeCheckpoints = quantidadeCheckpoints;

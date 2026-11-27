@@ -34,14 +34,13 @@ const updateAthleteSummary = () => {
         document.querySelector("#check-athlete").textContent = "Não verificado";
         document.querySelector("#check-athlete-detail").textContent =
             "Selecione um atleta cadastrado.";
-        return;
+    } else {
+        const modalidade = selectedOption.dataset.modalidade;
+        athleteSummary.textContent = `Modalidade do atleta: ${modalidade}`;
+        document.querySelector("#check-athlete").textContent = "Validado";
+        document.querySelector("#check-athlete-detail").textContent =
+            `${selectedOption.dataset.nome} encontrado no sistema.`;
     }
-
-    const modalidade = selectedOption.dataset.modalidade;
-    athleteSummary.textContent = `Modalidade do atleta: ${modalidade}`;
-    document.querySelector("#check-athlete").textContent = "Validado";
-    document.querySelector("#check-athlete-detail").textContent =
-        `${selectedOption.dataset.nome} encontrado no sistema.`;
 };
 
 const updateCompetitionSummary = () => {
@@ -49,13 +48,12 @@ const updateCompetitionSummary = () => {
     if (!selectedOption || !selectedOption.value) {
         competitionSummary.textContent =
             "Modalidade da competição: não selecionada";
-        return;
+    } else {
+        competitionSummary.textContent =
+            `Modalidade da competição: ${selectedOption.dataset.modalidade === "Urbano"
+                ? "Maratona Urbana"
+                : selectedOption.dataset.modalidade || "Não identificada"}`;
     }
-
-    competitionSummary.textContent =
-        `Modalidade da competição: ${selectedOption.dataset.modalidade === "Urbano"
-            ? "Maratona Urbana"
-            : selectedOption.dataset.modalidade || "Não identificada"}`;
 };
 
 const competicaoController = new CompeticaoController();

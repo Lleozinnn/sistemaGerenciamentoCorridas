@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configurar modalidade</title>
+    <link rel="icon" href="../assets/competition.png" />
+    <link rel="stylesheet" href="../CSS/estiloGlobal.css" />
+    <link rel="stylesheet" href="../CSS/configurarModalidade.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho compartilhado: mantenha os mesmos grupos e destinos nas demais telas. -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h2 class="site-header__brand">Área do organizador</h2>
+        <nav class="site-nav" aria-label="Navegação principal">
+          <details class="site-nav__group">
+            <summary>Competições</summary>
+            <div class="site-nav__menu">
+              <a href="consultarCompeticoes.html">Consultar competições</a>
+              <a href="cadastroCompeticao.html">Cadastrar competição</a>
+              <a href="consultarCompeticoes.html">Editar Competição</a>
+              <a href="inscricoesVagas.html">Inscrições e vagas</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Atletas</summary>
+            <div class="site-nav__menu">
+              <a href="consultarAtletas.html">Consultar atletas</a>
+              <a href="cadastrarAtleta.html">Cadastrar atleta</a>
+              <a href="inscricoesAtivas.html">Inscrições ativas</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Inscrições</summary>
+            <div class="site-nav__menu">
+              <a href="inscreverAtleta.html">Inscrever atleta</a>
+            </div>
+          </details>
+          <details class="site-nav__group">
+            <summary>Relatórios</summary>
+            <div class="site-nav__menu">
+              <a href="relatoriosCompeticao.html">Relatórios da competição</a>
+            </div>
+          </details>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <article class="page-heading">
+        <h1>Configurar modalidade</h1>
+        <p>
+          Defina os detalhes técnicos da Maratona Urbana para orientar os atletas
+          sobre a corrida de rua.
+        </p>
+      </article>
+
+      <div class="content-layout">
+        <form class="modality-form" action="">
+          <div class="form-heading">
+            <h2>Detalhes da modalidade</h2>
+            <small>Todos os campos são obrigatórios</small>
+          </div>
+
+          <div class="field modality-select">
+            <label for="modality">Modalidade *</label>
+            <!-- JS: carregar as modalidades disponíveis e atualizar os campos específicos ao selecionar. -->
+            <select id="modality" name="modality" required>
+              <option value="maratona-urbana" selected>Maratona Urbana</option>
+            </select>
+            <small>
+              Maratona Urbana selecionada. Preencha os campos específicos abaixo.
+            </small>
+          </div>
+
+          <section class="specific-fields" aria-labelledby="urban-title">
+            <!-- JS: renderizar aqui os campos correspondentes à modalidade escolhida. -->
+            <div class="section-heading">
+              <h3 id="urban-title">Maratona Urbana</h3>
+              <p>Campos exibidos para esta modalidade. Todos são obrigatórios.</p>
+            </div>
+
+            <div class="field">
+              <label for="elevation">Altimetria acumulada (m) *</label>
+              <input
+                id="elevation"
+                name="elevation"
+                type="number"
+                min="0"
+                step="any"
+                placeholder="Ex.: 320"
+                required
+              />
+              <small>Informe o desnível positivo acumulado do percurso, em metros.</small>
+            </div>
+
+            <div class="field">
+              <label for="route">Percurso Urbano (vias/ruas principais) *</label>
+              <input
+                id="route"
+                name="route"
+                type="text"
+                placeholder="Informe as avenidas, ruas e vias principais"
+                required
+              />
+              <small>Liste as vias na ordem em que serão percorridas.</small>
+            </div>
+
+            <div class="field">
+              <label for="route-description">Descrição detalhada do trajeto *</label>
+              <textarea
+                id="route-description"
+                name="route-description"
+                rows="3"
+                placeholder="Descreva o trajeto da largada à chegada, incluindo cruzamentos, curvas, retornos e características do piso."
+                required
+              ></textarea>
+            </div>
+
+            <div class="field-pair">
+              <div class="field">
+                <label for="start-point">Ponto de largada *</label>
+                <input
+                  id="start-point"
+                  name="start-point"
+                  type="text"
+                  placeholder="Informe o ponto e o endereço"
+                  required
+                />
+                <small>Indique o posicionamento inicial para saída fluida.</small>
+              </div>
+              <div class="field">
+                <label for="finish-point">Linha de chegada *</label>
+                <input
+                  id="finish-point"
+                  name="finish-point"
+                  type="text"
+                  placeholder="Informe o ponto e o endereço"
+                  required
+                />
+                <small>Descreva a reta final e a área de desaceleração.</small>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="speed-zones">Zonas de velocidade *</label>
+              <textarea
+                id="speed-zones"
+                name="speed-zones"
+                rows="2"
+                placeholder="Indique os trechos por quilômetro ou referência urbana, com foco em aceleração, ritmo e sprint final."
+                required
+              ></textarea>
+              <small>
+                Relacione as zonas de velocidade aos pontos de largada e chegada.
+              </small>
+            </div>
+          </section>
+
+          <div class="actions">
+            <button class="cancel-button" type="reset">Cancelar</button>
+            <!-- JS: validar os campos específicos e salvar a configuração da modalidade. -->
+            <button class="save-button" type="submit">Salvar modalidade</button>
+          </div>
+        </form>
+
+        <aside class="info-cards">
+          <article class="modality-info">
+            <h2>Maratona Urbana</h2>
+            <p>
+              Esta seção é exibida apenas quando Maratona Urbana é selecionada
+              no dropdown.
+            </p>
+            <h3>Corrida de rua e velocidade</h3>
+            <p>
+              Detalhe as vias urbanas, o desnível acumulado, a largada, a linha
+              de chegada e as zonas de velocidade.
+            </p>
+          </article>
+
+          <article class="save-info">
+            <h2>Antes de salvar</h2>
+            <h3>Campos específicos</h3>
+            <p>Informe altimetria, vias principais e a descrição detalhada do trajeto.</p>
+            <h3>Altimetria em metros</h3>
+            <p>Informe o desnível positivo acumulado do percurso urbano.</p>
+            <h3>Largada e chegada</h3>
+            <p>Identifique os pontos e as zonas de velocidade, incluindo o sprint final.</p>
+          </article>
+        </aside>
+      </div>
+
+      <p class="form-note">
+        * Preenchimento obrigatório. A modalidade só poderá ser salva com todos
+        os campos específicos preenchidos e válidos.
+      </p>
+    </main>
+  </body>
+</html>

@@ -12,7 +12,7 @@ export class Competicao {
     #status;
     #atletasInscritos;
 
-    constructor(nome, local, dataHorario, distanciaKm = 0.0, valorInscricao = 0.0, limiteVagas = 1) {
+    constructor(nome, local, dataHorario, distanciaKm = 0.0, valorInscricao = 0.0, limiteVagas = 1, id) {
         this.#nome = nome;
         this.#local = local;
         this.#dataHorario = dataHorario;
@@ -21,7 +21,10 @@ export class Competicao {
         this.#limiteVagas = limiteVagas;
         this.#status = "Aberta";
         this.#atletasInscritos = [];
-        this.#id = ++Competicao.#qtCompeticoes;
+        this.#id = Number.isSafeInteger(Number(id)) && Number(id) > 0
+            ? Number(id)
+            : ++Competicao.#qtCompeticoes;
+        Competicao.#qtCompeticoes = Math.max(Competicao.#qtCompeticoes, this.#id);
     }
     get id() {
         return this.#id;
@@ -53,8 +56,14 @@ export class Competicao {
     set nome(nome) {
         this.#nome = nome;
     }
+    set local(local) {
+        this.#local = local;
+    }
     set dataHorario(dataHorario) {
         this.#dataHorario = dataHorario;
+    }
+    set distanciaKm(distanciaKm) {
+        this.#distanciaKm = distanciaKm;
     }
     set valorInscricao(valorInscricao) {
         this.#valorInscricao = valorInscricao;

@@ -56,7 +56,7 @@ selectModalidade.addEventListener("change", atualizarCamposModalidade);
 
 atualizarCamposModalidade();
 
-function cadastrar() {
+function validarCadastro() {
     const nomeCompeticao = inNomeCompeticao.value.trim();
     const localCompeticao = inLocalCompeticao.value.trim();
     const distancia = Number(inDistancia.value);
@@ -74,10 +74,8 @@ function cadastrar() {
 
     if (nomeCompeticao === "") {
         exibirErro("Informe o nome da competição.", inNomeCompeticao);
-        return;
     } else if (localCompeticao === "") {
         exibirErro("Informe o local da competição.", inLocalCompeticao);
-        return;
     } else if (
         inDataHorario.value === "" ||
         Number.isNaN(dataHorario.getTime()) ||
@@ -87,14 +85,12 @@ function cadastrar() {
             "Informe uma data e horário posteriores ao momento atual.",
             inDataHorario,
         );
-        return;
     } else if (
         inDistancia.value === "" ||
         !Number.isFinite(distancia) ||
         distancia <= 0
     ) {
         exibirErro("Informe uma distância maior que zero.", inDistancia);
-        return;
     } else if (
         inNumeroMaximoVagas.value === "" ||
         !Number.isInteger(numeroMaximoVagas) ||
@@ -104,7 +100,6 @@ function cadastrar() {
             "Informe um número inteiro de vagas maior que zero.",
             inNumeroMaximoVagas,
         );
-        return;
     } else if (
         inValorInscricao.value === "" ||
         !Number.isFinite(valorInscricao) ||
@@ -114,114 +109,127 @@ function cadastrar() {
             "Informe um valor de inscrição igual ou maior que zero.",
             inValorInscricao,
         );
-        return;
     } else if (modalidade === "") {
         exibirErro("Selecione uma modalidade.", selectModalidade);
-        return;
-    }
-
-    if (modalidade === "Urbano") {
-        const altimetriaAcumulada = Number(inAltimetriaAcumulada.value);
-
-        if (
-            inAltimetriaAcumulada.value === "" ||
-            !Number.isFinite(altimetriaAcumulada) ||
-            altimetriaAcumulada < 0
-        ) {
-            exibirErro(
-                "Informe uma altimetria igual ou maior que zero.",
-                inAltimetriaAcumulada,
-            );
-            return;
-        } else if (inPercursoUrbano.value.trim() === "") {
-            exibirErro("Informe o percurso urbano.", inPercursoUrbano);
-            return;
-        } else if (areaDescricaoTrajeto.value.trim() === "") {
-            exibirErro(
-                "Informe a descrição detalhada do trajeto.",
-                areaDescricaoTrajeto,
-            );
-            return;
-        } else if (inPontoLargada.value.trim() === "") {
-            exibirErro("Informe o ponto de largada.", inPontoLargada);
-            return;
-        } else if (inLinhaChegada.value.trim() === "") {
-            exibirErro("Informe a linha de chegada.", inLinhaChegada);
-            return;
-        }
-
-        opcoesModalidade = {
-            altimetria: altimetriaAcumulada,
-            percursoUrbano: inPercursoUrbano.value.trim(),
-            descricaoTrajeto: areaDescricaoTrajeto.value.trim(),
-            pontosLargadaChegada:
-                `Largada: ${inPontoLargada.value.trim()}; ` +
-                `Chegada: ${inLinhaChegada.value.trim()}`,
-        };
-    } else if (modalidade === "Trail Running") {
-        if (inTipoTerreno.value.trim() === "") {
-            exibirErro("Informe o tipo de terreno.", inTipoTerreno);
-            return;
-        } else if (inNivelDificuldade.value.trim() === "") {
-            exibirErro("Informe o nível de dificuldade.", inNivelDificuldade);
-            return;
-        }
-
-        const quantidadeCheckpoints = Number(inQuantidadeCheckpoints.value);
-        if (
-            inQuantidadeCheckpoints.value === "" ||
-            !Number.isInteger(quantidadeCheckpoints) ||
-            quantidadeCheckpoints <= 0
-        ) {
-            exibirErro(
-                "Informe uma quantidade inteira de checkpoints maior que zero.",
-                inQuantidadeCheckpoints,
-            );
-            return;
-        } else if (areaLocalizacaoCheckpoints.value.trim() === "") {
-            exibirErro(
-                "Informe a localização dos checkpoints.",
-                areaLocalizacaoCheckpoints,
-            );
-            return;
-        } else if (inTipoProva.value.trim() === "") {
-            exibirErro("Informe o tipo de prova.", inTipoProva);
-            return;
-        }
-
-        opcoesModalidade = {
-            tipoTerreno: inTipoTerreno.value.trim(),
-            nivelDificuldade: inNivelDificuldade.value.trim(),
-            quantidadeCheckpoints,
-            localizacaoCheckpoints: areaLocalizacaoCheckpoints.value.trim(),
-            tipoProva: inTipoProva.value.trim(),
-        };
     } else {
-        exibirErro("Selecione uma modalidade válida.", selectModalidade);
-        return;
+        let opcoesModalidade;
+
+        if (modalidade === "Urbano") {
+            const altimetriaAcumulada = Number(inAltimetriaAcumulada.value);
+
+            if (
+                inAltimetriaAcumulada.value === "" ||
+                !Number.isFinite(altimetriaAcumulada) ||
+                altimetriaAcumulada < 0
+            ) {
+                exibirErro(
+                    "Informe uma altimetria igual ou maior que zero.",
+                    inAltimetriaAcumulada,
+                );
+            } else if (inPercursoUrbano.value.trim() === "") {
+                exibirErro("Informe o percurso urbano.", inPercursoUrbano);
+            } else if (areaDescricaoTrajeto.value.trim() === "") {
+                exibirErro(
+                    "Informe a descrição detalhada do trajeto.",
+                    areaDescricaoTrajeto,
+                );
+            } else if (inPontoLargada.value.trim() === "") {
+                exibirErro("Informe o ponto de largada.", inPontoLargada);
+            } else if (inLinhaChegada.value.trim() === "") {
+                exibirErro("Informe a linha de chegada.", inLinhaChegada);
+            } else {
+                opcoesModalidade = {
+                    altimetria: altimetriaAcumulada,
+                    percursoUrbano: inPercursoUrbano.value.trim(),
+                    descricaoTrajeto: areaDescricaoTrajeto.value.trim(),
+                    pontosLargadaChegada:
+                        `Largada: ${inPontoLargada.value.trim()}; ` +
+                        `Chegada: ${inLinhaChegada.value.trim()}`,
+                };
+            }
+        } else if (modalidade === "Trail Running") {
+            if (inTipoTerreno.value.trim() === "") {
+                exibirErro("Informe o tipo de terreno.", inTipoTerreno);
+            } else if (inNivelDificuldade.value.trim() === "") {
+                exibirErro("Informe o nível de dificuldade.", inNivelDificuldade);
+            } else {
+                const quantidadeCheckpoints =
+                    Number(inQuantidadeCheckpoints.value);
+
+                if (
+                    inQuantidadeCheckpoints.value === "" ||
+                    !Number.isInteger(quantidadeCheckpoints) ||
+                    quantidadeCheckpoints <= 0
+                ) {
+                    exibirErro(
+                        "Informe uma quantidade inteira de checkpoints maior que zero.",
+                        inQuantidadeCheckpoints,
+                    );
+                } else if (areaLocalizacaoCheckpoints.value.trim() === "") {
+                    exibirErro(
+                        "Informe a localização dos checkpoints.",
+                        areaLocalizacaoCheckpoints,
+                    );
+                } else if (inTipoProva.value.trim() === "") {
+                    exibirErro("Informe o tipo de prova.", inTipoProva);
+                } else {
+                    opcoesModalidade = {
+                        tipoTerreno: inTipoTerreno.value.trim(),
+                        nivelDificuldade: inNivelDificuldade.value.trim(),
+                        quantidadeCheckpoints,
+                        localizacaoCheckpoints:
+                            areaLocalizacaoCheckpoints.value.trim(),
+                        tipoProva: inTipoProva.value.trim(),
+                    };
+                }
+            }
+        } else {
+            exibirErro("Selecione uma modalidade válida.", selectModalidade);
+        }
+
+        if (opcoesModalidade) {
+            return {
+                nomeCompeticao,
+                localCompeticao,
+                dataHorario: inDataHorario.value,
+                distancia,
+                numeroMaximoVagas,
+                valorInscricao,
+                modalidade,
+                opcoesModalidade,
+            };
+        }
     }
 
-    const resultado = competicaoController.cadastrarCompeticao(
-        nomeCompeticao,
-        localCompeticao,
-        inDataHorario.value,
-        distancia,
-        numeroMaximoVagas,
-        valorInscricao,
-        modalidade,
-        opcoesModalidade,
-    );
+    return null;
+}
 
-    mensagemFormulario.textContent = resultado.mensagem;
-    mensagemFormulario.className =
-        resultado.tipo === "SUCESSO"
-            ? "form-message form-message--success"
-            : "form-message form-message--error";
-    mensagemFormulario.hidden = false;
+function cadastrar() {
+    const dadosCompeticao = validarCadastro();
 
-    if (resultado.tipo === "SUCESSO") {
-        formCadastro.reset();
-        atualizarCamposModalidade();
+    if (dadosCompeticao) {
+        const resultado = competicaoController.cadastrarCompeticao(
+            dadosCompeticao.nomeCompeticao,
+            dadosCompeticao.localCompeticao,
+            dadosCompeticao.dataHorario,
+            dadosCompeticao.distancia,
+            dadosCompeticao.numeroMaximoVagas,
+            dadosCompeticao.valorInscricao,
+            dadosCompeticao.modalidade,
+            dadosCompeticao.opcoesModalidade,
+        );
+
+        mensagemFormulario.textContent = resultado.mensagem;
+        mensagemFormulario.className =
+            resultado.tipo === "SUCESSO"
+                ? "form-message form-message--success"
+                : "form-message form-message--error";
+        mensagemFormulario.hidden = false;
+
+        if (resultado.tipo === "SUCESSO") {
+            formCadastro.reset();
+            atualizarCamposModalidade();
+        }
     }
 }
 

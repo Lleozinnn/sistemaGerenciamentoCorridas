@@ -124,21 +124,21 @@ class RelatoriosView {
     }
 
     #carregarSelectCompeticoes() {
-        if (!this.#selectCompeticao) return;
+        if (this.#selectCompeticao) {
+            const { competicoes } = this.#obterDados();
+            this.#selectCompeticao.innerHTML = '<option value="">Selecione uma competição...</option>';
 
-        const { competicoes } = this.#obterDados();
-        this.#selectCompeticao.innerHTML = '<option value="">Selecione uma competição...</option>';
+            competicoes.forEach((competicao, indice) => {
+                const identificador = competicao.id ?? indice;
+                const nome = competicao.nome || competicao.titulo || `Competição #${indice + 1}`;
+                const modalidade = competicao.tipo || competicao.modalidade || 'Geral';
 
-        competicoes.forEach((competicao, indice) => {
-            const identificador = competicao.id ?? indice;
-            const nome = competicao.nome || competicao.titulo || `Competição #${indice + 1}`;
-            const modalidade = competicao.tipo || competicao.modalidade || 'Geral';
-
-            const option = document.createElement('option');
-            option.value = String(identificador);
-            option.textContent = `${nome} (${modalidade})`;
-            this.#selectCompeticao.appendChild(option);
-        });
+                const option = document.createElement('option');
+                option.value = String(identificador);
+                option.textContent = `${nome} (${modalidade})`;
+                this.#selectCompeticao.appendChild(option);
+            });
+        }
     }
 
     /**
@@ -146,41 +146,40 @@ class RelatoriosView {
      * com totais acumulados de inscrições e balanço de vagas.
      */
     #gerarRelatorioGeral() {
-        if (!this.#containerGeral) return;
+        if (this.#containerGeral) {
+            const { competicoes, atletas } = this.#obterDados();
 
-        const { competicoes, atletas } = this.#obterDados();
+            const totalCompeticoes = competicoes.length;
+            const totalAtletas = atletas.length;
 
-        const totalCompeticoes = competicoes.length;
-        const totalAtletas = atletas.length;
+            let totalInscricoes = 0;
+            let totalLimiteVagas = 0;
+            let totalVagasDisponiveis = 0;
+            let competicoesUrbano = 0;
+            let competicoesTrail = 0;
 
-        let totalInscricoes = 0;
-        let totalLimiteVagas = 0;
-        let totalVagasDisponiveis = 0;
-        let competicoesUrbano = 0;
-        let competicoesTrail = 0;
+            competicoes.forEach((competicao) => {
+                const inscritos = this.#calcularInscritos(competicao);
+                const limiteVagas = this.#obterLimiteVagas(competicao);
+                const vagasDisponiveis = Math.max(0, limiteVagas - inscritos);
 
-        competicoes.forEach((competicao) => {
-            const inscritos = this.#calcularInscritos(competicao);
-            const limiteVagas = this.#obterLimiteVagas(competicao);
-            const vagasDisponiveis = Math.max(0, limiteVagas - inscritos);
+                totalInscricoes += inscritos;
+                totalLimiteVagas += limiteVagas;
+                totalVagasDisponiveis += vagasDisponiveis;
 
-            totalInscricoes += inscritos;
-            totalLimiteVagas += limiteVagas;
-            totalVagasDisponiveis += vagasDisponiveis;
+                const tipoModalidade = String(competicao.tipo || competicao.modalidade || '').toLowerCase();
+                if (tipoModalidade.includes('trail')) {
+                    competicoesTrail++;
+                } else {
+                    competicoesUrbano++;
+                }
+            });
 
-            const tipoModalidade = String(competicao.tipo || competicao.modalidade || '').toLowerCase();
-            if (tipoModalidade.includes('trail')) {
-                competicoesTrail++;
-            } else {
-                competicoesUrbano++;
-            }
-        });
+            const taxaOcupacao = totalLimiteVagas > 0
+                ? ((totalInscricoes / totalLimiteVagas) * 100).toFixed(1)
+                : '0.0';
 
-        const taxaOcupacao = totalLimiteVagas > 0
-            ? ((totalInscricoes / totalLimiteVagas) * 100).toFixed(1)
-            : '0.0';
-
-        this.#containerGeral.innerHTML = `
+            this.#containerGeral.innerHTML = `
             <div class="relatorio-card relatorio-geral">
                 <h2>Relatório Geral das Competições</h2>
                 <div class="resumo-metricas">
@@ -218,6 +217,7 @@ class RelatoriosView {
                 ${this.#renderizarTabelaResumoCompeticoes(competicoes)}
             </div>
         `;
+        }
     }
 
     #renderizarTabelaResumoCompeticoes(competicoes) {
@@ -275,17 +275,18 @@ class RelatoriosView {
      * Gera o relatório individual detalhado de uma competição selecionada.
      */
     #gerarRelatorioPorCompeticao(competicaoId) {
-        if (!this.#containerCompeticao) return;
+        if (!this.#containerCompeticao) {
+            return false;
+        }
 
         const { competicoes, atletas } = this.#obterDados();
-
         const competicaoEncontrada = competicoes.find(
             (competicao, indice) => String(competicao.id ?? indice) === String(competicaoId)
         );
 
         if (!competicaoEncontrada) {
             this.#containerCompeticao.innerHTML = '<p>Competição não encontrada.</p>';
-            return;
+            return false;
         }
 
         const nome = this.#escaparHtml(competicaoEncontrada.nome || competicaoEncontrada.titulo || 'Sem nome');
@@ -364,6 +365,7 @@ class RelatoriosView {
                 </table>
             </div>
         `;
+        return true;
     }
 }
 

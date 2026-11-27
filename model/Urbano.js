@@ -15,9 +15,10 @@ export class Urbano extends Competicao {
         altimetriaAcumulada = 0.0,
         percursoUrbano = "",
         descricaoTrajeto = "",
-        pontosLargadaChegada = ""
+        pontosLargadaChegada = "",
+        id
     ) {
-        super(nome, local, dataHorario, distanciaKm, valorInscricao, limiteVagas);
+        super(nome, local, dataHorario, distanciaKm, valorInscricao, limiteVagas, id);
         this.#altimetriaAcumulada = altimetriaAcumulada;
         this.#percursoUrbano = percursoUrbano;
         this.#descricaoTrajeto = descricaoTrajeto;
