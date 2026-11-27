@@ -51,21 +51,21 @@
       <p>Selecione o atleta e a competição. As regras são validadas automaticamente ao inscrever.</p>
     </div>
 
-    <div class="columns-layout enrollment-layout">
+    <div class="enrollment-layout">
       <form class="panel enrollment-form" id="enrollment-form">
         <h2>Dados da inscrição</h2>
-        <!-- JS: carregar atletas cadastrados e suas modalidades na lista. -->
-        <div class="field">
-          <label for="enrollment-athlete">Atleta cadastrado *</label>
-          <select id="enrollment-athlete" name="athlete" required>
-            <option value="">Selecione um atleta</option>
-          </select>
-        </div>
         <!-- JS: carregar competições disponíveis e atualizar o resumo ao selecionar. -->
         <div class="field">
           <label for="enrollment-competition">Competição *</label>
           <select id="enrollment-competition" name="competition" required>
             <option value="" selected>Selecione uma competição</option>
+          </select>
+        </div>
+        <!-- JS: carregar atletas cadastrados e suas modalidades na lista. -->
+        <div class="field">
+          <label for="enrollment-athlete">Atleta cadastrado *</label>
+          <select id="enrollment-athlete" name="athlete" required>
+            <option value="">Selecione um atleta</option>
           </select>
         </div>
 
@@ -74,53 +74,13 @@
           <h3 id="selection-title">Resumo da seleção</h3>
           <p id="athlete-summary">Modalidade do atleta: não selecionada</p>
           <p id="competition-summary">Modalidade da competição: não selecionada</p>
-          <strong id="capacity-summary">Selecione uma competição para consultar as vagas.</strong>
         </section>
 
         <div class="form-actions">
-          <button class="button button--primary" id="enrollment-action" type="submit">
-            Confirmar inscrição
-          </button>
-          <a class="button button--secondary" href="inscricoesAtivas.html">
-            Ver inscrições
-          </a>
+          <button class="button button--primary" id="btInscricao">Inscrever</button>
         </div>
+        <p id="mensagem-inscricao" class="notice notice--neutral" role="status" aria-live="polite" hidden></p>
       </form>
-
-      <aside class="side-stack">
-        <section class="panel validation-panel">
-          <h2>Validação automática</h2>
-          <p class="validation-message" id="validation-message">A inscrição não foi concluída.</p>
-          <!-- JS: atualizar cada regra de acordo com o resultado da validação da inscrição. -->
-          <dl class="validation-list">
-            <div>
-              <dt>Cadastro prévio</dt>
-              <dd class="validation-result" id="check-athlete">Não verificado</dd>
-              <dd id="check-athlete-detail">Aguardando validação.</dd>
-            </div>
-            <div>
-              <dt>Mesma modalidade</dt>
-              <dd class="validation-result" id="check-modality">Não verificado</dd>
-              <dd id="check-modality-detail">Aguardando validação.</dd>
-            </div>
-            <div>
-              <dt>Disponibilidade de vagas</dt>
-              <dd class="validation-result" id="check-capacity">Não verificado</dd>
-              <dd id="check-capacity-detail">Aguardando validação.</dd>
-            </div>
-            <div>
-              <dt>Sem duplicidade</dt>
-              <dd class="validation-result" id="check-duplicate">Não verificado</dd>
-              <dd id="check-duplicate-detail">Aguardando validação.</dd>
-            </div>
-          </dl>
-        </section>
-        <section class="side-note">
-          <h2>Sem etapa de pagamento</h2>
-          <p>Ao inscrever, o sistema valida as quatro regras e confirma a inscrição imediatamente se todas forem
-            atendidas.</p>
-        </section>
-      </aside>
     </div>
     <p class="page-note">* Campos obrigatórios. A inscrição é confirmada no ato da validação, sem etapa intermediária de
       pagamento.</p>

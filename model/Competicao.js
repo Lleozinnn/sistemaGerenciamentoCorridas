@@ -121,43 +121,12 @@ export class Competicao {
         return relatorio;
     }
     inscreverAtleta (atleta) {
-        this.#validarModalidade(atleta);
-        this.#validarVagas();
-        this.#validarDuplicidade(atleta);
-        this.#atletasInscritos.push(atleta);
-        this.atualizarStatusCompeticao();
-        return true;
-    }
-
-    #validarModalidade(atleta) {
-        if (!(atleta instanceof Atleta) || atleta.modalidade !== this.modalidade) {
-            throw new ErroValidacaoInscricao(
-                "O atleta não atende à modalidade desta competição.",
-                "modalidade",
-            );
-        }
-    }
-
-    #validarVagas() {
-        if (this.vagasDisponiveis() <= 0) {
-            throw new ErroValidacaoInscricao(
-                "Não há vagas disponíveis nesta competição.",
-                "capacidade",
-            );
-        }
-    }
-
-    #validarDuplicidade(atleta) {
-        const jaInscrito = this.#atletasInscritos.some(
-            (atletaInscrito) =>
-                atletaInscrito.cpf === atleta.cpf ||
-                atletaInscrito.id === atleta.id,
-        );
-        if (jaInscrito) {
-            throw new ErroValidacaoInscricao(
-                "Este atleta já está inscrito nesta competição.",
-                "duplicidade",
-            );
+        if (atleta instanceof Atleta) {
+            const jaInscrito = this.#atletasInscritos.find(atletaInscr => atletaInscr.cpf == atleta.cpf);
+            if (jaInscrito == undefined) {
+                this.#atletasInscritos.push(atleta);
+                return true;
+            }
         }
     }
 }  
